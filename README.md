@@ -15,12 +15,15 @@
 4. [UX](#ux)
 
     i. [Application Goals](#application-goals)
+
     ii. [User Stories](#user-stories)
 
 5. [UI](#ui)
 
     i. [Design Choices](#design-choices)
+
     ii. [Wireframes](#wireframes)
+
     iii. [Site Map](#site-map)
 
 6. [Application Features](#application-features)
@@ -40,14 +43,12 @@
 10. [Testing](#testing)
 
     i. [Test Environment](#test-environment)
-        i.a. [Running Tests in Django](#running-tests-in-django)
+
     ii. [Manual Testing](#manual-testing)
+
     iii. [Automated Testing](#automated-testing)
+
     iv. [Code Validation](#code-validation)
-        iv.a. [HTML5 Validation](#html5-validation)
-        iv.b. [CSS3 Validation](#css3-validation)
-        iv.c. [Python3 PEP8 Compliance](#python3-pep8-compliance)
-        iv.d. [JavaScript Linting](#javascript-linting)
 
 11. [Deployment](#deployment)
 
@@ -58,14 +59,12 @@
 12. [References & Acknowledgements](#references--acknowledgements)
 
     i. [Code](#code)
+
     ii. [Media](#media)
-        ii.a. [Images](#images)
+
     iii. [Icons](#icons)
-        iii.a. [Font Awesome Icons](#font-awesome-icons)
+
     iv. [Fonts](#fonts)
-        iv.a. [Google Fonts](#google-fonts)
-
-
 
 
 ## Milestone Project 4
