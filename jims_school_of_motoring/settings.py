@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'allauth.account',
 
     'home',
+    'userprofile',
 ]
 
 MIDDLEWARE = [
