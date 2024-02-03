@@ -1,110 +1,197 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Contents
 
-Welcome USER_NAME,
+1. [Milestone Project 4](#milestone-project-4)
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+    i. [Assessment Criteria](docs/assessment_criteria.pdf)
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+    ii. [Project Brief](#project-brief)
+    
+    iii. [Main Technologies](#main-technologies)
 
-## Gitpod Reminders
+2. [About](#about)
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+3. 
 
-`python3 -m http.server`
 
-A blue button should appear to click: _Make Public_,
+## Milestone Project 4
+This project is my submission for Milestone Project 4: Full Stack Frameworks with Django. The final project for the Level 5 Diploma in Web Applications Development.
 
-Another blue button should appear to click: _Open Browser_.
+### [Assessment Criteria](docs/assessment_criteria.pdf)
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+### Project Brief
 
-A blue button should appear to click: _Make Public_,
+1. Django Full Stack Project
 
-Another blue button should appear to click: _Open Browser_.
+    - Build a Django project backend by a relational database to create a website that allows users to store and manipulate data about a particular domain. 
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+2. Multiple Apps
 
-To log into the Heroku toolbelt CLI:
+    - The project must be a brand new Django project, composed of multiple apps (an app for each potentially reusable component in the project).
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+3. Data Modelling
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+    - Put some effort into designing a relational database schema well-suited for the domain. Make sure to put some thought into the relationships between entities. Create at least two custom Django models beyond the examples shown on the course. 
 
-------
+4. User Authentication
 
-## Release History
+    - The project should include an authentication mechanism, allowing a user to register and log in. There should be a good reason as to why the user would need to do so.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+5. User Interaction
 
-**September 20 2023:** Update Python version to 3.9.17.
+    - Include at least one form with validation that will allow users to create and edit models in the back-end (in addition to the authentication mechanism).
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+6. Use of Stripe
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+     - At least one of the Django apps should contain some e-commerce functionality using Stripe. This may be a shopping cart checkout or single payments. After paying successfully, the user would gain access to additional functionality/content on the site. Not that for this project, Stripe's test functionality should be used, rather than actual live payments.
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+7. Structure and Navigation
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+    - Incorporate a main navigation menu and structured layout. This could be achieved using Bootstrap, for example.
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+8. Use of JavaScript
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+    - The front-end should contain some JavaScript logic which enhances the user experience.
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+9. Documentation
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+    - Write a README.md file that explains what the project does and the value it provides to its users.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+10. Version Control
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+    - Use Git and GitHub for version control.
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+11. Attribution
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+    - Maintain a clear separation between code written by oneself and code from external sources. Attribute any code from external sources to its source via comments above the code or for larger dependencies, in the README.
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+12. Deployment
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+    - Deploy the final version to a hosting platform such as Heroku.
 
-------
+13. Security
 
-## FAQ about the uptime script
+    - Make sure not to include any passwords or secret keys in the project repository. Make sure to turn off the Django DEBUG mode which could expose secrets.
 
-**Why have you added this script?**
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+### Technologies Used
 
-**How will this affect me?**
+| Languages  |       |            |
+|------------|-------|------------|
+| HTML 5     | CSS 3 | JavaScript |
+| Python 3   |       |            |
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+| Frameworks       |             |
+|------------------|-------------|
+| Django 3.2 (LTS) | Bootstrap 5 |
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+| Libraries & CDNs     |               |              |
+|----------------------|---------------|--------------|
+| Bootstrap 5          | FontAwesome 6 | Google Fonts |
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+| APIs                      |           |     |
+|---------------------------|-----------|-----|
+| Amazon Web Services (AWS) |           |     |
+| S3                        | S3 Bucket | IAM |
 
-**So….?**
+| Data & Databases |              |
+|------------------|--------------|
+| JSON             | CSV          |
+| SQL              | PostgreSQL   |
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+| Security & Authentication |           |
+|---------------------------|-----------|
+| Django Allauth            | IAM (AWS) |
 
-**Can I opt out?**
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+# About
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+This website is for "Jim's School of Motoring" a fictional driving school which uses it's online platform to manage learner driver's lesson bookings and collect payments.
 
-**Anything more?**
+The site is centered on user profile functionality. In this way, it provides an online portal allowing learners to register for an account and book their lessons online.
+This means no more phone calls, no more waiting lists and no having to talk to a human being.
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+The booking process displays the dates and times that are available and will save their booking preference if their payment details are validated by Stripe.
 
----
 
-Happy coding!
+# Design Phase
+
+## UX
+
+### Application Goals
+<!-- Document what application sets out to achieve -->
+
+### User Stories
+<!-- Document user stories and give insight as to how application might achieve them -->
+
+## UI
+<!-- Document importance of UI and its value it provides to UX -->
+
+### Design Choices
+<!-- Document UI (front-end) Design Choices -->
+
+#### Wireframes
+
+#### Site Map
+<!-- Document Link Path (flowcharts) -->
+
+## Application Features
+<!-- Document features and link to user stories to give evidence of value they provide to user and how they meet user stories. -->
+
+## Version Control
+
+### Git & GitHub
+
+
+## Testing
+
+### Test Environment
+
+#### Running Tests in Django
+
+
+### Manual Testing
+
+
+### Automated Testing
+
+
+### Code Validation
+
+#### HTML5 Validation
+
+#### CSS3 Validation
+
+#### Python3 PEP8 Compliance
+
+#### JavaScript Linting
+
+## Debugging
+<!-- Document Debugging Procedure Any bugs found and their fixes -->
+
+### Error Handling
+<!-- Document how you handle errors and the value this provides to debugging -->
+
+
+## Deployment
+<!-- Document Deployment Procedure -->
+
+### ElephantSQL
+<!-- Document database setup -->
+
+### Amazon Web Services (AWS)
+<!-- Document AWS S3 Bucket Setup -->
+
+### Heroku
+<!-- Document value of using Heroku -->
+
+## References & Acknowledgements
+
+### Code
+
+### Media
+
+#### Images
+
+#### Icons
+
+##### Font Awesome Icons
