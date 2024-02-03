@@ -10,7 +10,62 @@
 
 2. [About](#about)
 
-3. 
+3. [Design Phase](#design-phase)
+
+4. [UX](#ux)
+
+    i. [Application Goals](#application-goals)
+    ii. [User Stories](#user-stories)
+
+5. [UI](#ui)
+
+    i. [Design Choices](#design-choices)
+    ii. [Wireframes](#wireframes)
+    iii. [Site Map](#site-map)
+
+6. [Application Features](#application-features)
+
+7. [Accessibility](#accessibility)
+    
+    i. [Google Lighthouse](#google-lighthouse)
+
+8. [Version Control](#version-control)
+
+    i. [Git & GitHub](#git--github)
+
+9. [Debugging](#debugging)
+
+    i. [Error Handling](#error-handling)
+
+10. [Testing](#testing)
+
+    i. [Test Environment](#test-environment)
+        i.a. [Running Tests in Django](#running-tests-in-django)
+    ii. [Manual Testing](#manual-testing)
+    iii. [Automated Testing](#automated-testing)
+    iv. [Code Validation](#code-validation)
+        iv.a. [HTML5 Validation](#html5-validation)
+        iv.b. [CSS3 Validation](#css3-validation)
+        iv.c. [Python3 PEP8 Compliance](#python3-pep8-compliance)
+        iv.d. [JavaScript Linting](#javascript-linting)
+
+11. [Deployment](#deployment)
+
+    i. [ElephantSQL](#elephantsql)
+    ii. [Amazon Web Services (AWS)](#amazon-web-services-aws)
+    iii. [Heroku](#heroku)
+
+12. [References & Acknowledgements](#references--acknowledgements)
+
+    i. [Code](#code)
+    ii. [Media](#media)
+        ii.a. [Images](#images)
+    iii. [Icons](#icons)
+        iii.a. [Font Awesome Icons](#font-awesome-icons)
+    iv. [Fonts](#fonts)
+        iv.a. [Google Fonts](#google-fonts)
+
+
 
 
 ## Milestone Project 4
@@ -123,75 +178,84 @@ The booking process displays the dates and times that are available and will sav
 ### User Stories
 <!-- Document user stories and give insight as to how application might achieve them -->
 
-## UI
+# UI
 <!-- Document importance of UI and its value it provides to UX -->
 
-### Design Choices
+## Design Choices
 <!-- Document UI (front-end) Design Choices -->
 
-#### Wireframes
+### Wireframes
 
-#### Site Map
+### Site Map
 <!-- Document Link Path (flowcharts) -->
 
-## Application Features
+# Application Features
 <!-- Document features and link to user stories to give evidence of value they provide to user and how they meet user stories. -->
 
-## Version Control
+# Accessibility
 
-### Git & GitHub
-
-
-## Testing
-
-### Test Environment
-
-#### Running Tests in Django
+### Google Lighthouse
 
 
-### Manual Testing
+# Version Control
+
+## Git & GitHub
 
 
-### Automated Testing
-
-
-### Code Validation
-
-#### HTML5 Validation
-
-#### CSS3 Validation
-
-#### Python3 PEP8 Compliance
-
-#### JavaScript Linting
-
-## Debugging
+# Debugging
 <!-- Document Debugging Procedure Any bugs found and their fixes -->
 
-### Error Handling
+## Error Handling
 <!-- Document how you handle errors and the value this provides to debugging -->
 
+# Testing
 
-## Deployment
+## Test Environment
+
+### Running Tests in Django
+
+
+## Manual Testing
+
+
+## Automated Testing
+
+
+## Code Validation
+
+### HTML5 Validation
+
+### CSS3 Validation
+
+### Python3 PEP8 Compliance
+
+### JavaScript Linting
+
+
+# Deployment
 <!-- Document Deployment Procedure -->
 
-### ElephantSQL
+## ElephantSQL
 <!-- Document database setup -->
 
-### Amazon Web Services (AWS)
+## Amazon Web Services (AWS)
 <!-- Document AWS S3 Bucket Setup -->
 
-### Heroku
+## Heroku
 <!-- Document value of using Heroku -->
 
-## References & Acknowledgements
+# References & Acknowledgements
 
-### Code
+## Code
 
-### Media
+## Media
 
-#### Images
+### Images
 
-#### Icons
+## Icons
 
-##### Font Awesome Icons
+### Font Awesome Icons
+
+## Fonts
+
+### Google Fonts
