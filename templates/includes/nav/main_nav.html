@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+        <!-- Brand -->
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 me-3 link-body-emphasis text-decoration-none">
+            <img class="img-fluid" src="{% media 'logo.png' %}" alt="logo" height="32" width="32">
+            <span class="brand">Jim's School of Motoring</span>
+        </a>
+
+        {% if request.user.is_authenticated %}
+            <!-- User Accounts -->
+            <div class="ms-auto dropdown text-end">
+                <!-- Account Dropdown Toggler -->
+                <a class="d-block link-body-emphasis text-decoration-none dropdown-toggle" href="#"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <!-- User Profile Pic Icon -->
+                    {% if profile.first_name and profile.last_name %}
+                        <!-- Profile Icon | Small -->
+                        <div class="default-profile default-profile-sm">
+                            {{ profile.first_name|slice:":1" }}{{ profile.last_name|slice:":1" }}
+                        </div>
+                    {% else %}
+                        <!-- Default Profile Icon | Small -->
+                        <div class="default-profile default-profile-sm"
+                            alt="Default Profile Picture. Initials ({{ user.first_name|slice:':1' }}{{ user.last_name|slice:':1' }}) against a red background.">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu text-small">
+                    {% if request.user.is_superuser %}
+                        <!-- Admin | Dropdown Options -->
+                        <li><a class="dropdown-item" href="https://ozpc99-jims-school-of-motoring-cfe12e488279.herokuapp.com/admin/">Admin Panel</a></li>
+                        <li><a class="dropdown-item" id="profileLink" href="{% url 'profile' %}">My Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a></li>
+                    {% else %}
+                        <!-- Student | Dropdown Options -->
+                        <li><a class="dropdown-item" href="{% url 'BookingPart1' %}">Book Lesson</a></li>
+                        <!-- All Accounts | Dropdown Options -->
+                        <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</div>

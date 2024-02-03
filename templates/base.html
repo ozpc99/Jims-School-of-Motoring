@@ -1,0 +1,90 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    {% block meta %}
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock %}
+
+    {% block extra_meta %}
+    {% endblock %}
+
+    <link rel="shortcut icon" href="{% static '/favicon.ico' %}">
+
+    {% block corecss %}
+        <!-- Bootstrap 5.3.2 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% endblock %}
+
+    {% block extra_css %}
+    {% endblock %}
+    
+    {% block corejs %}
+        <!-- jQuery Min 3.5.1 -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous">
+        </script>
+        <!-- Font Awesome 6 -->
+        <script src="https://kit.fontawesome.com/abda6128c4.js" crossorigin="anonymous"></script>
+        <!-- Bootstrap 5.3.2 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+        <!-- Stripe -->
+        <script src="https://js.stripe.com/v3/"></script>
+    {% endblock %}
+
+    {% block extra_js %}
+    {% endblock %}
+    
+    <title>Jim's School of Motoring {% block extra_title %}{% endblock %}</title>
+</head>
+
+<body>
+    <header class="p-3 border-bottom">
+        {% include 'includes/main-nav.html' %}
+    </header>
+
+    <!-- Message Alert Container -->
+    {% if messages %}
+        {% for message in messages %}
+            {% with message.level as level %}
+                {% if level  == 40 %} <!-- Error (40) -->
+                    {% include 'includes/alerts/alert_error.html' %}
+                {% elif level == 30 %} <!-- Warning (30) -->
+                    {% include 'includes/alerts/alert_warning.html' %}
+                {% elif level == 25 %} <!-- Success (25) -->
+                    {% include 'includes/alerts/alert_success.html' %}
+                {% else %} <!-- Info -->
+                    {% include 'includes/alerts/alert_info.html' %}
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+    {% endif %}
+
+    {% block page_header %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% block footer %}
+    <footer class="my-5 pt-5 text-body-secondary text-center text-small">
+        <p class="mb-1">© 2024 Jim's School of Motoring</p>
+    </footer>
+    {% endblock %}
+
+    {% block postloadjs %}
+    {% endblock %}
+
+</body>
+
+</html>
