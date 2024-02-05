@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Share+Tech&display=swap');
+
+/* Core Theme Variables */
+:root {
+    /* Color Variables */
+    --bootstrap_danger: #dc3545;
+    --brand_red: #c10009;
+    --red: #b02a37;
+    --deep_red: #a32733;
+    --light_gray: #525558;
+    --dark_gray: #4d4d4d;
+    --pure_white: #fff;
+    ---pure_black: #000;
+    /* Font Variables */
+    --montserrat: 'Montserrat', sans-serif;
+    --share_tech: 'Share Tech', sans-serif;
+    --thin: 100;
+    --extra_light: 200;
+    --light: 300;
+    --regular: 400;
+    --medium: 500;
+    --semi_bold: 600;
+    --bold: 700;
+    --extra_bold: 800;
+    --black: 900;
+    --italic: italic;
+}
+
+body {
+    font-family: var(--share_tech);
+}
+
+/* Brand Styling */
+.brand {
+    font-family: var(--share_tech);
+    text-transform: uppercase;
+    font-style: oblique;
+}
+
+.brand-lg {
+    font-size: 2rem;
+}
+
+.brand-text {
+    color: var(--deep_red);
+    font-family: var(--share_tech);
+    text-transform: uppercase;
+    font-style: oblique;
+}
+
+.brand-text-sm {
+    font-family: var(--share_tech);
+}
+
+/* Nav and Links */
+.dropdown-menu {
+    font-family: var(--share_tech);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: var(--red);
+}
+
+/* Custom Button Classes */
+.btn-xs {
+    --bs-btn-padding-y: .25rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .75rem;
+}
+
+.btn-danger-secondary {
+    color: var(--pure_white);
+    background-color: var(--red);
+    border-color: var(--red);
+}
+
+.btn-danger-secondary:hover {
+    color: var(--pure_white);
+    background-color: var(--deep_red);
+    border-color: var(--red);
+}
+
+/* Default Profile Icon */
+.default-profile {
+    font-family: var(--montserrat);
+    background-color: var(--deep_red);
+    color: var(--pure_white);
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+}
+
+.default-profile-sm {
+    height: 32px;
+    width: 32px;
+    line-height: 32px;
+    font-size: 1rem;
+}

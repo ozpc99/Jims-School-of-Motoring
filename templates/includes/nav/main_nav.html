@@ -3,7 +3,7 @@
 
         <!-- Brand -->
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 me-3 link-body-emphasis text-decoration-none">
-            <img class="img-fluid" src="#" alt="logo" height="32" width="32">
+            <img class="img-fluid" src="media/logo.png" alt="logo" height="32" width="32">
             <span class="brand">Jim's School of Motoring</span>
         </a>
 
@@ -30,13 +30,13 @@
                 <ul class="dropdown-menu text-small">
                     {% if request.user.is_superuser %}
                         <!-- Admin | Dropdown Options -->
-                        <li><a class="dropdown-item" href="https://ozpc99-jims-school-of-motoring-cfe12e488279.herokuapp.com/admin/">Admin Panel</a></li>
+                        <li><a class="dropdown-item" href="#">Admin Panel</a></li>
                         <li><a class="dropdown-item" id="profileLink" href="{% url 'profile' %}">My Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a></li>
                     {% else %}
                         <!-- Student | Dropdown Options -->
-                        <li><a class="dropdown-item" href="{% url 'BookingPart1' %}">Book Lesson</a></li>
+                        <li><a class="dropdown-item" href="{% url 'booking' %}">Book Lesson</a></li>
                         <!-- All Accounts | Dropdown Options -->
                         <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
                         <li>

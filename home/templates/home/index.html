@@ -5,10 +5,51 @@
     <link rel="stylesheet" href="{% static 'home/css/home.css' %}">
 {% endblock %}
 
-{% block page_header %}
-    <h1 class="text-center">Home Page</h1>
-{% endblock %}
-
 {% block content %}
-    
+<!-- Hero -->
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse g-5 py-5">
+        <!-- Hero Image -->
+        <div class="col-10 col-sm-8 col-lg-6">
+            <img class="d-block mx-lg-auto img-fluid rounded-3" src="media/hero.jpg"
+                alt="Man driving car from rear view" style="transform: scaleX(-1);" loading="lazy">
+        </div>
+        <!-- Scroller -->
+        <div class="col-lg-6 d-flex flex-column justify-content-between scroller-container">
+            <div class="scroller-content display-5">
+                <span class="scroller-header">Where will your license take you?</span>
+                <!-- Scroller | Start -->
+                <div class="scroller-text my-5 py-4 d-sm-flex justify-content-md-start">
+                    <span class="text-uppercase">
+                        On a trip of a lifetime
+                        <br>
+                        Out with mates
+                        <br>
+                        To the drive-thru
+                        <br>
+                        To work or college
+                    </span>
+                </div>
+            </div>
+            <!-- Scroller | End -->
+            {% if user.is_authenticated %}
+            <div class="scroller-tagline mt-3 mt-lg-0">
+                Get on the road today
+                <br>
+                <span>
+                    <a class="phone-num" href="tel:07700123456">
+                        <small><i class="fa-solid fa-phone"></i></small> 07700 123 456
+                    </a>
+                    <a href="{% url 'booking' %}" role="button" class="btn btn-sm btn-danger-secondary ms-3">Book Online</a>
+                </span>
+            </div>
+            {% else %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-md-3">
+                <a href="{% url 'account_login' %}" role="button" class="btn btn-danger-secondary btn-lg px-4 me-md-2">Sign In</a>
+                <a href="{% url 'account_signup' %}" role="button" class="btn btn-outline-dark btn-lg px-4">Register</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
