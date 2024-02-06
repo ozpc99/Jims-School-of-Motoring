@@ -1,1 +1,44 @@
 @import "static/css/base.css";
+
+/* Profile Icon */
+.default-profile-lg {
+    height: 150px;
+    width: 150px;
+    line-height: 150px;
+    font-size: 5rem;
+}
+
+/* Pill Badge Styling */
+.badge {
+    background-color: #b02a37;
+    font-family: var(--montserrat);
+    font-weight: var(--regular);
+}
+
+.badge:hover {
+    background-color: #a32733;
+}
+
+
+/* Profile Edit Icon | (fa-pen) */
+.edit-icon {
+    font-size: .9rem;
+    color: var(--red);
+}
+
+.edit-icon:hover {
+    color: var(--deep_red);
+}
+
+/* Counter number circle for ordered lists */
+.counter {
+    color: var(--pure_white);
+    background-color: var(--deep_red);
+    height: 1.5rem;
+    width: 1.5rem;
+    font-size: 1rem;
+    display: inline-block;
+    text-align: center;
+    line-height: 1.5rem;
+    border-radius: 50%;
+}

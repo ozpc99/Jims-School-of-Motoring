@@ -5,14 +5,327 @@
     <link rel="stylesheet" href="{% static 'userprofile/css/userprofile.css' %}">
 {% endblock %}
 
+{% block extra_js %}
+    <!--<script src="{% static 'userprofile/js/userprofile.js' %}"></script>-->
+{% endblock %}
+
 {% block page_header %}
-    <h1 class="text-center">Profile Page</h1>
+    <div id="profileHeaderContainer">
+        <h1 class="text-center my-5" id="profileTitle">Welcome, {{ user.username }}</h1>
+    </div>
+    <h3 class="text-center mb-0" id="setupMessage1"></h3>
+    <h3 class="text-center mb-0" id="setupMessage2"></h3>
 {% endblock %}
 
 {% block content %}
-    <p class="text-center">Profile Page Content HERE</p>
-{% endblock %}
 
-{% block post_load_js %}
-    <script src="{% static 'userprofile/js/userprofile.js' %}"></script>
+<div class="container" id="profileContainer">
+    
+    <div class="main-body" id="profileBody">
+        <!--Nav Tabs-->
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">
+                    <h5>Profile</h5>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <h5 class="fst-italic text-danger">myLessons</h5>
+                </a>
+            </li>
+        </ul>
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a href="{% url 'profile' %}">
+                            <span class="badge rounded-pill">@{{ user.username }}</span>
+                        </a>
+                        <div class="d-flex flex-column align-items-center text-center">
+                            {% if profile.first_name and profile.last_name %}
+                            <!-- Profile Icon | Large -->
+                            <div class="default-profile default-profile-lg">
+                                {{ profile.first_name|slice:":1" }}{{ profile.last_name|slice:":1" }}
+                            </div>
+                            {% else %}
+                            <!-- Default Profile Icon | Large -->
+                            <div class="default-profile default-profile-lg">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            {% endif %}
+
+                            <div class="mt-3">
+                                {% if profile.first_name and profile.last_name %}
+                                <h4>{{ profile.first_name }} {{ profile.last_name }}</h4>
+                                {% endif %}
+                                <p class="text-secondary mb-1">
+                                    {% if request.user.is_superuser %}
+                                    Admin
+                                    {% else %}
+                                    Student
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Lessons Preview Card -->
+                <div class="card mt-3">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h5 class="mb-0">
+                                <em class="text-danger">myLessons</em> <small>Coming Up</small>
+                            </h5>
+                        </li>
+                        <!-- Displays 5 soonest lessons -->
+                        {% for booking in upcoming_bookings|slice:":5" %}
+                        <a class="list-group-item list-group-item-action"
+                            href="#" target="_blank">
+                            <li class="h6 d-flex align-items-center flex-wrap">
+                                <span class="counter me-5">
+                                    <span>{{ forloop.counter }}</span>
+                                </span>
+                                <span class="text-secondary mx-2">{{ booking.lesson_date|date:"d/m/y" }}</span>
+                                <span class="text-secondary mx-2">{{ booking.lesson_time|time:"H:i" }}</span>
+                                <span class="text-secondary mx-2">{{ booking.lesson_type }}</span>
+                            </li>
+                        </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0"><i class="fa-solid fa-user"></i> Full Name</h6>
+                            </div>
+                            {% if profile.first_name and profile.last_name %}
+                            <div class="col-sm-9 text-secondary">
+                                {{ profile.first_name }} {{ profile.last_name }}
+                            </div>
+                            {% else %}
+                            <div class="col-sm-9 text-secondary">
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#" role="button"
+                                    data-bs-toggle="modal">
+                                    <i class="fa-solid fa-square-plus"></i> Add Name
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0"><i class="fa-solid fa-desktop"></i> Username</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @{{ user.username }}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="mb-0">
+                                    <span class="h6"><i class="fa-solid fa-envelope"></i> Email</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-9 text-secondary">{{ user.email }}</div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0"><i class="fa-solid fa-phone"></i> Phone</h6>
+                            </div>
+                            {% if profile.phone %}
+                            <div class="col-sm-9 phoneContainer">
+                                <span class="text-secondary">{{ profile.phone|slice:":5" }}
+                                    {{ profile.phone|slice:"5:11" }}</span>
+                                <a class="edit-icon mx-2" href="#" role="button" data-bs-toggle="modal">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+                            </div>
+                            {% else %}
+                            <div class="col-sm-9 text-secondary phoneContainer">
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#" role="button"
+                                    data-bs-toggle="modal">
+                                    <i class="fa-solid fa-square-plus"></i> Add Phone No.
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0"> <i class="fa-solid fa-house"></i>Home Address</h6>
+                            </div>
+                            {% if profile.home_house_no and profile.home_street and profile.home_town and profile.home_post_code %}
+                            <div class="col-sm-9 text-secondary">
+                                {{ profile.home_house_no }}
+                                <a class="edit-icon mx-2" href="#" role="button"
+                                    data-bs-toggle="modal">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+                                <br>
+                                {{ profile.home_street }}
+                                <br>
+                                {{ profile.home_town }}
+                                <br>
+                                {{ profile.home_post_code }}
+                            </div>
+                            {% else %}
+                            <div class="col-sm-9 text-secondary">
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#" role="button"
+                                    data-bs-toggle="modal">
+                                    <i class="fa-solid fa-square-plus"></i> Add Home Address
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0"><i class="fa-solid fa-id-card"></i> License</h6>
+                            </div>
+                            {% if profile.license_no and profile.license_expiry %}
+                            <div class="col-sm-9 text-secondary">
+                                {{ profile.license_no }}
+                                <a class="edit-icon mx-2" href="#" role="button"
+                                    data-bs-toggle="modal">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+                                <br>
+                                Expires: {{ profile.license_expiry|date:"d/m/y" }}
+                            </div>
+                            {% else %}
+                            <div class="col-sm-9">
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#" role="button"
+                                    data-bs-toggle="modal">
+                                    <i class="fa-solid fa-square-plus"></i> Add Provisional License
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theory Test Details -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            {% if profile.theory_test_date and profile.theory_test_center %}
+                            <div class="col-sm-3">
+                                <div class="mb-0">
+                                    <h6><i class="fa-solid fa-calendar-check"></i> Theory Test</h6>
+                                </div>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <span class="fw-bold">{{ profile.theory_test_date|date:"H:i" }}</span>
+                                on
+                                <span class="fw-bold">{{ profile.theory_test_date|date:"d/m/y" }}</span>
+                                at
+                                <span class="fw-bold">{{ profile.theory_test_center }} Test Center</span>
+                                <a class="edit-icon mx-2" href="#" role="button"
+                                    data-bs-toggle="modal">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+                            </div>
+                            {% else %}
+                            <div class="col-sm-3">
+                                <div class="mb-0">
+                                    <h6><i class="fa-solid fa-calendar-day"></i> Theory Test Date</h6>
+                                </div>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#"
+                                    role="button" data-bs-toggle="modal">
+                                    <i class="fa-solid fa-square-plus"></i> Add Theory Test Details
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <hr>
+
+                        <!-- Mock Test Details -->
+                        <div class="row">
+                            {% if mock_test_booking %}
+                            <div class="col-sm-3">
+                                <div class="mb-0">
+                                    <h6><i class="fa-solid fa-calendar-check"></i> Mock Test</h6>
+                                </div>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <span class="fw-bold">{{ mock_test_booking.1|time:"H:i" }}</span> on
+                                <span class="fw-bold">{{ mock_test_booking.0|date:"d/m/y" }}</span> at
+                                <span class="fw-bold">{{ mock_test_booking.2 }}</span>,
+                                <span class="fw-bold">{{ mock_test_booking.3 }}</span>
+                            </div>
+                            {% else %}
+                            <div class="col-sm-3">
+                                <div class="mb-0">
+                                    <h6><i class="fa-solid fa-calendar-day"></i> Mock Test</h6>
+                                </div>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <a class="btn btn-sm btn-outline-danger w-100" id="mockTestLink" href="{% url 'booking' %}?defaultLessonType=Mock Test" role="button"><i
+                                        class="fa-solid fa-calendar-day"></i> Book Mock Test</a>
+                            </div>
+                            {% endif %}
+
+                        </div>
+                        <hr>
+
+                        <!-- Practical Test Details -->
+                        <div class="row">
+                            {% if profile.practical_test_date and profile.practical_test_center %}
+                            <div class="col-sm-3">
+                                <div class="mb-0">
+                                    <h6><i class="fa-solid fa-calendar-check"></i> Practical Test</h6>
+                                </div>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <span class="fw-bold">{{ profile.practical_test_date|date:"H:i" }}</span>
+                                on
+                                <span class="fw-bold">{{ profile.practical_test_date|date:"d/m/y" }}</span>
+                                at
+                                <span class="fw-bold">{{ profile.practical_test_center }} Test Center</span>
+
+                                <a class="edit-icon mx-2" href="#" role="button"
+                                    data-bs-toggle="modal">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+                            </div>
+                            {% else %}
+                            <div class="col-sm-3">
+                                <div class="mb-0">
+                                    <h6><i class="fa-solid fa-calendar-day"></i> Practical Test Date</h6>
+                                </div>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#"
+                                    role="button" data-bs-toggle="modal">
+                                    <i class="fa-solid fa-square-plus"></i> Add Practical Test Details
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Snippets | Modals | Edit Profile Details -->
+    
+</div>
 {% endblock %}

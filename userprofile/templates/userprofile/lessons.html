@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+<h1 class="text-center my-5"><em class="fst-italic text-danger">myLessons</em></h1>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="main-body">
+        <!--Nav Tabs-->
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' %}">
+                    <h5>Profile</h5>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'lessons' %}">
+                    <h5 class="fst-italic text-danger">myLessons</h5>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Lesson Nav -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="all_tab" data-bs-toggle="tab" data-bs-target="#all_tab_pane"
+                    type="button" role="tab" aria-controls="all_tab_pane" aria-selected="true">
+                    All Lessons
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="coming_up_tab" data-bs-toggle="tab" data-bs-target="#coming_up_tab_pane"
+                    type="button" role="tab" aria-controls="coming_up_tab_pane" aria-selected="false">
+                    <i class="fa-regular fa-clock"></i> Coming Up
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="previous_tab" data-bs-toggle="tab" data-bs-target="#previous_tab_pane"
+                    type="button" role="tab" aria-controls="previous_tab_pane" aria-selected="false">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Previous
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="myTabContent">
+            <!-- All Lessons Tab Pane -->
+            <div class="tab-pane fade show active" id="all_tab_pane" role="tabpanel" aria-labelledby="all_tab"
+                tabindex="0">
+                <!-- All Lessons Card Content -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h4>All Lessons</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-rounded">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Type</th>
+                                        <th>Meeting Point</th>
+                                        <th>Booking Reference</th>
+                                        <th>Booked On</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for booking in all_bookings %}
+                                    <tr>
+                                        <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
+                                        <td>{{ booking.lesson_time|time:"H:i" }}</td>
+                                        <td>{{ booking.lesson_type }}</td>
+                                        <td>{{ booking.house_no }},
+                                            <br>
+                                            {{booking.street}},
+                                            <br>
+                                            {{booking.post_code}}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'invoice' booking.booking_reference %}" target="_blank">
+                                                {{ booking.booking_reference }}
+                                            </a>
+                                        </td>
+                                        <td>{{ booking.booked_on|date:"d/m/Y" }} <small>({{ booking.booked_on|date:"H:i" }})</small></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coming Up Tab Pane -->
+            <div class="tab-pane fade" id="coming_up_tab_pane" role="tabpanel" aria-labelledby="coming_up_tab"
+                tabindex="0">
+                <!-- Coming Up Card -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h4><i class="fa-regular fa-clock"></i> Coming Up</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-rounded">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Type</th>
+                                        <th>Meeting Point</th>
+                                        <th>Booking Reference</th>
+                                        <th>Booked On</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for booking in upcoming_bookings %}
+                                    <tr>
+                                        <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
+                                        <td>{{ booking.lesson_time|time:"H:i" }}</td>
+                                        <td>{{ booking.lesson_type }}</td>
+                                        <td>{{ booking.house_no }},
+                                            <br>
+                                            {{booking.street}},
+                                            <br>
+                                            {{booking.post_code}}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'invoice' booking.booking_reference %}" target="_blank">
+                                                {{ booking.booking_reference }}
+                                            </a>
+                                        </td>
+                                        <td>{{ booking.booked_on|date:"d/m/Y" }} <small>({{ booking.booked_on|date:"H:i" }})</small></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Previous Tab Pane -->
+            <div class="tab-pane fade" id="previous_tab_pane" role="tabpanel" aria-labelledby="previous_tab"
+                tabindex="0">
+                <!-- Previous Card Content -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h4><i class="fa-solid fa-clock-rotate-left"></i> Previous</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-rounded">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Type</th>
+                                        <th>Meeting Point</th>
+                                        <th>Booking Reference</th>
+                                        <th>Booked On</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for booking in previous_bookings %}
+                                    <tr>
+                                        <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
+                                        <td>{{ booking.lesson_time|time:"H:i" }}</td>
+                                        <td>{{ booking.lesson_type }}</td>
+                                        <td>{{ booking.house_no }},
+                                            <br>
+                                            {{booking.street}},
+                                            <br>
+                                            {{booking.post_code}}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'invoice' booking.booking_reference %}" target="_blank">
+                                                {{ booking.booking_reference }}
+                                            </a>
+                                        </td>
+                                        <td>{{ booking.booked_on|date:"d/m/Y" }} <small>({{ booking.booked_on|date:"H:i" }})</small></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
