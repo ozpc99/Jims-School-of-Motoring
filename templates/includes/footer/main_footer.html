@@ -1,0 +1,225 @@
+<style>
+    footer img {
+        opacity: var(--washed_out);
+    }
+
+    footer img:hover {
+        opacity: 1;
+    }
+</style>
+
+{% if request.user.is_authenticated %}
+{% if request.user.is_superuser %}
+<div class="container">
+    <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+            <!-- Logo -->
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                <img class="img-fluid" src="/media/logo.png" alt="logo" width="32" height="32">
+            </a>
+            <!-- Copyright Info -->
+            <span class="mb-3 mb-md-0 text-body-secondary">
+                © <span id="copyright_year">
+                    <!--inserted via js--></span> Jim's School of Motoring
+            </span>
+        </div>
+
+        <div class="col mb-3">
+            <h5>Site</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="/" target="_blank">
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="/" target="_blank">
+                        About
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="/" target="_blank">
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col mb-3">
+            <h5>Site</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="/" target="_blank">
+                        Profile
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="/" target="_blank">
+                        Booking
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="/" target="_blank">
+                        Checkout
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col mb-3">
+            <h5>Developer Toolbox</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="admin/" target="_blank">
+                        <i class="fa-solid fa-user-tie"></i> Django Admin
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="https://github.com/ozpc99/Jims-School-of-Motoring"
+                        target="_blank">
+                        <i class="fa-brands fa-github"></i> Source Code
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="https://www.heroku.com/" target="_blank">
+                        <i class="fa-solid fa-globe"></i> Deployment Settings
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="https://aws.amazon.com/" target="_blank">
+                        <i class="fa-brands fa-aws"></i> Content Management
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="https://forms.gle/cenYp4yAPMv9ctTx7"
+                        target="_blank">
+                        <i class="fa-solid fa-bug"></i> Report a Bug
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+</div>
+{% endif %}
+{% elif request.user.is_staff %}
+<div class="container">
+    <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+            <!-- Logo -->
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                <img class="img-fluid" src="/media/logo.png" alt="logo" width="32" height="32">
+            </a>
+            <!-- Copyright Info -->
+            <span class="mb-3 mb-md-0 text-body-secondary">
+                © <span id="copyright_year">
+                    <!--inserted via js--></span> Jim's School of Motoring
+            </span>
+        </div>
+
+        <div class="col mb-3">
+            <h5>Site</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="/" target="_blank">
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="/" target="_blank">
+                        About
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="/" target="_blank">
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col mb-3">
+            <h5>Site</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="/" target="_blank">
+                        Profile
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="/" target="_blank">
+                        Booking
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="/" target="_blank">
+                        Checkout
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col mb-3">
+            <h5>Staff Toolbox</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="admin/" target="_blank">
+                        <i class="fa-solid fa-user-tie"></i>Site Admin Panel
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link p-0 text-body-secondary" href="https://forms.gle/cenYp4yAPMv9ctTx7"
+                        target="_blank">
+                        <i class="fa-solid fa-bug"></i> Report a Bug
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+</div>
+{% else %}
+<div class="container">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+            <!-- Logo -->
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                <img class="img-fluid" src="/media/logo.png" alt="logo" width="32" height="32">
+            </a>
+            <!-- Copyright Info -->
+            <span class="mb-3 mb-md-0 text-body-secondary">
+                © <span id="copyright_year">
+                    <!--inserted via js--></span> Jim's School of Motoring
+            </span>
+        </div>
+
+        <!-- Footer Links -->
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+            <li class="ms-3">
+                <a class="text-body-secondary" href="#">
+                    Contact
+                </a>
+            </li>
+            <li class="ms-3">
+                <a class="text-body-secondary" href="#">
+                    About
+                </a>
+            </li>
+            <li class="ms-3">
+                <a class="text-body-secondary" href="#">
+                    Site Map
+                </a>
+            </li>
+        </ul>
+    </footer>
+</div>
+{% endif %}
+
+<script>
+    // Automatically updates the copyright year
+    const d = new Date();
+    console.log('Current Date:', d);
+
+    let current_year = d.getFullYear();
+    console.log('Current Year:', current_year);
+
+    document.getElementById('copyright_year').innerHTML = current_year;
+</script>

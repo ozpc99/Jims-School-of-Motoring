@@ -10,7 +10,9 @@
     --light_gray: #525558;
     --dark_gray: #4d4d4d;
     --pure_white: #fff;
-    ---pure_black: #000;
+    --pure_black: #000;
+    /* Opacity Variables */
+    --washed_out: 0.75;
     /* Font Variables */
     --montserrat: 'Montserrat', sans-serif;
     --share_tech: 'Share Tech', sans-serif;
@@ -28,6 +30,16 @@
 
 body {
     font-family: var(--share_tech);
+}
+
+/* Divider in lieu of default '<hr>' */
+.divider {
+    width: 100%;
+    height: 3rem;
+    background-color: rgba(0, 0, 0, .1);
+    border: solid rgba(0, 0, 0, .15);
+    border-width: 1px 0;
+    box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, .1), inset 0 0.125em 0.5em rgba(0, 0, 0, .15);
 }
 
 /* Brand Styling */
