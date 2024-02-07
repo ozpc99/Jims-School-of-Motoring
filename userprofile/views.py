@@ -299,6 +299,7 @@ def update_practical_test(request):
     return render(request, 'userprofile/profile.html', context)
 
 
+# Lessons Page View
 def lessons(request):
     """ Gets all objects associated with the user's profile. """
     profile = get_object_or_404(UserProfile, user=request.user)
