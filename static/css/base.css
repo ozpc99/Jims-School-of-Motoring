@@ -113,3 +113,37 @@ a:hover {
     line-height: 32px;
     font-size: 1rem;
 }
+
+/* Custom Toast Container */
+.toast-container {
+    position: fixed;
+    z-index: 9999999;
+    top: 75px;
+    animation: fadeInAnimation ease 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.toast-header {
+    color: var(--pure_white);
+    background-color: var(--deep_red);
+}
+
+@media (max-width: 1325px) {
+    .toast-container {
+        position: fixed;
+        top: 150px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}

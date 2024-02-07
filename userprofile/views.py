@@ -7,6 +7,8 @@ from django.conf import settings
 
 from datetime import datetime, timedelta
 
+from django.contrib.auth.models import User
+
 from .models import UserProfile
 from booking.models import Booking
 
@@ -16,8 +18,87 @@ now = datetime.now()
 
 # Profile Page View
 def profile(request):
+
+    # Profile Info:
+
+    """ Gets user object """
+    user = request.user
+
     """ Gets all objects associated with the user's profile. """
     profile = get_object_or_404(UserProfile, user=request.user)
+
+    """
+    Checks if user has completed profile or not.
+    Displays welcome message.
+    """
+    if profile.first_name:
+        welcome_message = f"Welcome back, {profile.first_name}"
+    else:
+        welcome_message = f"Welcome, {user.username}"
+
+    """
+    Checks if user has completed profile.
+    Checks which parts of profile are incomplete.
+    Displays toast/s to prompt user to finish filling in their profile.
+    """
+    if (
+        hasattr(request.user, 'username') and request.user.username # Checks if user has a username
+        and hasattr(request.user, 'email') and request.user.email # Checks if user has an email address
+        and all(# Checks if user profile is not complete
+                not getattr(profile, field.name) 
+                for field in profile._meta.fields 
+                if (
+                    field.name != 'id'
+                    and field.name != 'user'
+                    and field.name != 'theory_test_date'
+                    and field.name != 'theory_test_center'
+                    and field.name != 'mock_test_date'
+                    and field.name != 'practical_test_date'
+                    and field.name != 'practical_test_center'
+                )
+            )
+    ):
+        messages.info(request, "Please finish setting up your profile.")
+
+
+
+    """
+    if not profile.first_name or not profile.last_name:
+        messages.info(request, "You haven't told us your name")
+    elif not profile.phone:
+        messages.info(request, "Please provide your phone number. \
+            We might need it if we need to get in touch on the day \
+                of your lesson.")
+    elif not profile.license_no:
+        messages.info(request, "Please provide your \
+            provisional license number. \
+                Your instructor will need to verify your identity \
+                    before you hit the road.")
+    elif not profile.license_expiry:
+        messages.info(request, "Please provide your \
+            provisional license's expiry date. \
+                We need to check it is valid.")
+    elif (
+        not profile.home_house_no
+        or not profile.home_street
+        or not profile.home_town
+        or not profile.home_post_code
+    ):
+        messages.error(request, "Please finish filling out your \
+            home address details.")
+    elif not user.username:
+        messages.error(request, "Hmm, that's odd. \
+            It seems your username wasn't saved \
+            to your profile when you registered. \
+                Please contact us and we'll get this fixed.")
+    elif not user.email:
+        messages.error(request, "Hmm, that's odd. \
+            It seems your email address wasn't saved \
+            to your profile when you registered. \
+                Please contact us and we'll get this fixed.")
+    """
+
+    # Booking Info:
 
     """ Gets all bookings made by and associated with the user """
     all_bookings = profile.bookings.all().order_by('lesson_date', 'lesson_time')
@@ -44,13 +125,13 @@ def profile(request):
                 return booking.lesson_date, booking.lesson_time, booking.house_no, booking.post_code
     mock_test_booking = find_mock_test_booking(all_bookings)
 
-    profile_first_name = profile.first_name
 
+    # Template and Context:
     """ A view to render the User Profile page. """
     template = 'userprofile/profile.html'
     context = {
         'profile': profile,
-        'profile_first_name': profile_first_name,
+        'welcome_message': welcome_message,
         'now': now,
         'all_bookings': all_bookings,
         'upcoming_bookings': upcoming_bookings,

@@ -44,6 +44,5 @@ class UserProfile(models.Model):
     practical_test_date = models.DateTimeField(default=None, blank=True, null=True)
     practical_test_center = models.CharField(choices=PRACTICAL_TEST_CENTERS, max_length=100, null=True, blank=True)
 
-
     def __str__(self):
         return self.user.username
