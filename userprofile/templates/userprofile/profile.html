@@ -111,7 +111,7 @@
                             </div>
                             {% else %}
                             <div class="col-sm-9 text-secondary">
-                                <a class="btn btn-sm w-100 btn-outline-danger" href="#" role="button"
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#addNameModal" role="button"
                                     data-bs-toggle="modal">
                                     <i class="fa-solid fa-square-plus"></i> Add Name
                                 </a>
@@ -147,13 +147,13 @@
                             <div class="col-sm-9 phoneContainer">
                                 <span class="text-secondary">{{ profile.phone|slice:":5" }}
                                     {{ profile.phone|slice:"5:11" }}</span>
-                                <a class="edit-icon mx-2" href="#" role="button" data-bs-toggle="modal">
+                                <a class="edit-icon mx-2" href="#updatePhoneModal" role="button" data-bs-toggle="modal">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
                             </div>
                             {% else %}
                             <div class="col-sm-9 text-secondary phoneContainer">
-                                <a class="btn btn-sm w-100 btn-outline-danger" href="#" role="button"
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#updatePhoneModal" role="button"
                                     data-bs-toggle="modal">
                                     <i class="fa-solid fa-square-plus"></i> Add Phone No.
                                 </a>
@@ -170,7 +170,7 @@
                             {% if profile.home_house_no and profile.home_street and profile.home_town and profile.home_post_code %}
                             <div class="col-sm-9 text-secondary">
                                 {{ profile.home_house_no }}
-                                <a class="edit-icon mx-2" href="#" role="button" data-bs-toggle="modal">
+                                <a class="edit-icon mx-2" href="#updateAddressModal" role="button" data-bs-toggle="modal">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
                                 <br>
@@ -182,7 +182,7 @@
                             </div>
                             {% else %}
                             <div class="col-sm-9 text-secondary">
-                                <a class="btn btn-sm w-100 btn-outline-danger" href="#" role="button"
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#updateAddressModal" role="button"
                                     data-bs-toggle="modal">
                                     <i class="fa-solid fa-square-plus"></i> Add Home Address
                                 </a>
@@ -199,7 +199,7 @@
                             {% if profile.license_no and profile.license_expiry %}
                             <div class="col-sm-9 text-secondary">
                                 {{ profile.license_no }}
-                                <a class="edit-icon mx-2" href="#" role="button" data-bs-toggle="modal">
+                                <a class="edit-icon mx-2" href="#updateLicenseModal" role="button" data-bs-toggle="modal">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
                                 <br>
@@ -207,7 +207,7 @@
                             </div>
                             {% else %}
                             <div class="col-sm-9">
-                                <a class="btn btn-sm w-100 btn-outline-danger" href="#" role="button"
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#updateLicenseModal" role="button"
                                     data-bs-toggle="modal">
                                     <i class="fa-solid fa-square-plus"></i> Add Provisional License
                                 </a>
@@ -233,7 +233,7 @@
                                 <span class="fw-bold">{{ profile.theory_test_date|date:"d/m/y" }}</span>
                                 at
                                 <span class="fw-bold">{{ profile.theory_test_center }} Test Center</span>
-                                <a class="edit-icon mx-2" href="#" role="button" data-bs-toggle="modal">
+                                <a class="edit-icon mx-2" href="#updateTheoryTestModal" role="button" data-bs-toggle="modal">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
                             </div>
@@ -244,7 +244,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <a class="btn btn-sm w-100 btn-outline-danger" href="#" role="button"
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#updateTheoryTestModal" role="button"
                                     data-bs-toggle="modal">
                                     <i class="fa-solid fa-square-plus"></i> Add Theory Test Details
                                 </a>
@@ -298,7 +298,7 @@
                                 at
                                 <span class="fw-bold">{{ profile.practical_test_center }} Test Center</span>
 
-                                <a class="edit-icon mx-2" href="#" role="button" data-bs-toggle="modal">
+                                <a class="edit-icon mx-2" href="#updatePracticalTestModal" role="button" data-bs-toggle="modal">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
                             </div>
@@ -309,7 +309,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <a class="btn btn-sm w-100 btn-outline-danger" href="#" role="button"
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#updatePracticalTestModal" role="button"
                                     data-bs-toggle="modal">
                                     <i class="fa-solid fa-square-plus"></i> Add Practical Test Details
                                 </a>
@@ -321,6 +321,207 @@
             </div>
         </div>
     </div>
-    <!-- Snippets | Modals | Edit Profile Details -->
+
+    <!-- Modals | Edit Profile Details -->
+
+    <!-- Add Name Modal -->
+    <div class="modal fade" id="addNameModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="addNameModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addNameModalLabel">
+                        Add Name
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Update Phone Form -->
+                    <form method="POST" action="{% url 'update_name' %}">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="text" id="first_name" name="first_name" class="form-control"
+                                placeholder="First Name" required>
+                            <input type="text" id="last_name" name="last_name" class="form-control"
+                                placeholder="Last Name" required>
+                            <button class="btn btn-outline-danger" type="submit">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Update Phone No. Modal -->
+    <div class="modal fade" id="updatePhoneModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="updatePhoneModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="updatePhoneModalLabel">
+                        {% if profile.phone %}Update Phone No.{% else %}Add Phone No.{% endif %}
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Update Phone Form -->
+                    <form method="POST" action="{% url 'update_phone' %}">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number"
+                                required>
+                            <button class="btn btn-outline-danger" type="submit">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Update Home Address Modal -->
+    <div class="modal fade" id="updateAddressModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="updateAddressModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="updateAddressModalLabel">
+                        Edit Home Address
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Update Phone Form -->
+                    <form method="POST" action="{% url 'update_address' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="text" id="home_house_no" name="home_house_no" class="form-control mb-3"
+                                placeholder="House Name/No." required>
+                            <input type="text" id="home_street" name="home_street" class="form-control mb-3"
+                                placeholder="Street" required>
+                            <input type="text" id="home_town" name="home_town" class="form-control mb-3"
+                                placeholder="Town" required>
+                            <input type="text" id="home_post_code" name="home_post_code" class="form-control mb-3"
+                                placeholder="Post Code" required>
+                            <button class="btn btn-outline-danger mb-3" type="submit">
+                                <i class="fa-solid fa-floppy-disk"></i> Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add License Modal -->
+    <div class="modal fade" id="updateLicenseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="updateLicenseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="updateLicenseModalLabel">
+                        Add Provisional License
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Update Phone Form -->
+                    <form method="POST" action="{% url 'update_license' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="text" id="license_no" name="license_no" class="form-control mb-3"
+                                placeholder="License No." required>
+                            <input type="date" id="license_expiry" name="license_expiry" class="form-control mb-3"
+                                min="{{ now }}" placeholder="Expiry Date" required>
+                            <button class="btn btn-outline-danger mb-3" type="submit">
+                                <i class="fa-solid fa-floppy-disk"></i> Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Theory Test Modal -->
+    <div class="modal fade" id="updateTheoryTestModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="updateTheoryTestModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="updateTheoryTestModalLabel">
+                        Edit Theory Test Details
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Update Phone Form -->
+                    <form method="POST" action="{% url 'update_theory_test' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="datetime-local" id="theory_test_date" name="theory_test_date"
+                                class="form-control mb-3" min="{{ now }}" placeholder="Theory Test Date" required>
+                            <select name="theory_test_center" id="theory_test_center" class="form-select mb-3">
+                                <option selected disabled>Test Center</option>
+                                <option value="Alnwick">Alnwick</option>
+                                <option value="Bishop Auckland">Bishop Auckland</option>
+                                <option value="Hexham">Hexham</option>
+                                <option value="Middlesbrough">Middlesbrough</option>
+                                <option value="Newcastle">Newcastle</option>
+                                <option value="Sunderland">Sunderland</option>
+                            </select>
+                            <button class="btn btn-outline-danger mb-3" type="submit">
+                                <i class="fa-solid fa-floppy-disk"></i> Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Practical Test Modal -->
+    <div class="modal fade" id="updatePracticalTestModal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="updatePracticalTestModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="updatePracticalTestModalLabel">
+                        Edit Practical Test Details
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Update Phone Form -->
+                    <form method="POST" action="{% url 'update_practical_test' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="datetime-local" id="practical_test_date" name="practical_test_date"
+                                class="form-control mb-3" min="{{ now }}" placeholder="Practical Test Date" required>
+                            <select name="practical_test_center" id="practical_test_center" class="form-select mb-3">
+                                <option selected disabled>Test Center</option>
+                                <option value="Blyth">Blyth</option>
+                                <option value="Darlington">Darlington</option>
+                                <option value="Durham">Durham</option>
+                                <option value="Gateshead">Gateshead</option>
+                                <option value="Gosforth">Gosforth</option>
+                                <option value="Hartlepool">Hartlepool</option>
+                                <option value="Hexham">Hexham</option>
+                                <option value="Middlesbrough">Middlesbrough</option>
+                                <option value="Sunderland">Sunderland</option>
+                            </select>
+                            <button class="btn btn-outline-danger mb-3" type="submit">
+                                <i class="fa-solid fa-floppy-disk"></i> Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 {% endblock %}
