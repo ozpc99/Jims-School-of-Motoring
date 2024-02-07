@@ -6,7 +6,39 @@
 {% endblock %}
 
 {% block extra_js %}
-<!--<script type="text/javascript" src="{% static 'booking/js/booking.js' %}"></script>-->
+<script>
+    // Tab Selection by Query
+    $(document).ready(function () {
+        console.log("JavaScript code is running!");
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const tab = urlParams.get('tab');
+        console.log("Tab parameter:", tab);
+
+        if (tab) {
+            const triggerEl = document.querySelector(`#myTab button[data-bs-target="#${tab}-pane"]`);
+            console.log("Trigger element:", triggerEl);
+            if (triggerEl) {
+                const tabTrigger = new bootstrap.Tab(triggerEl);
+                tabTrigger.show();
+            } else {
+                console.error("Trigger element not found!");
+            }
+        } else {
+            const triggerFirstTabEl = document.querySelector('#myTab li:first-child button');
+            bootstrap.Tab.getInstance(triggerFirstTabEl).show();
+        }
+
+        const triggerTabList = document.querySelectorAll('#myTab button')
+        triggerTabList.forEach(triggerEl => {
+            const tabTrigger = new bootstrap.Tab(triggerEl)
+            triggerEl.addEventListener('click', event => {
+                event.preventDefault()
+                tabTrigger.show()
+            })
+        })
+    });
+</script>
 {% endblock %}
 
 {% block page_header %}
@@ -21,39 +53,39 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="lesson-type-tab" data-bs-toggle="tab"
                 data-bs-target="#lesson-type-tab-pane" type="button" role="tab" aria-controls="meeting-point-tab-pane"
-                aria-selected="true">
+                aria-selected="true" disabled>
                 Lesson Type
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="meeting-point-tab" data-bs-toggle="tab"
                 data-bs-target="#meeting-point-tab-pane" type="button" role="tab" aria-controls="meeting-point-tab-pane"
-                aria-selected="false">
+                aria-selected="false" disabled>
                 Meeting Point
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="date-tab" data-bs-toggle="tab" data-bs-target="#date-tab-pane" type="button"
-                role="tab" aria-controls="date-tab-pane" aria-selected="false">
+                role="tab" aria-controls="date-tab-pane" aria-selected="false" disabled>
                 Date
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="time-tab" data-bs-toggle="tab" data-bs-target="#time-tab-pane" type="button"
-                role="tab" aria-controls="time-tab-pane" aria-selected="false">
+                role="tab" aria-controls="time-tab-pane" aria-selected="false" disabled>
                 Time
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="pay-tab" data-bs-toggle="tab" data-bs-target="#pay-tab-pane" type="button"
-                role="tab" aria-controls="pay-tab-pane" aria-selected="false">
+                role="tab" aria-controls="pay-tab-pane" aria-selected="false" disabled>
                 Pay
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="booking-confirmed-tab" data-bs-toggle="tab"
                 data-bs-target="#booking-confirmed-tab-pane" type="button" role="tab"
-                aria-controls="booking-confirmed-tab-pane" aria-selected="false">
+                aria-controls="booking-confirmed-tab-pane" aria-selected="false" disabled>
                 Booking Confirmed
             </button>
         </li>

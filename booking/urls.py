@@ -4,4 +4,5 @@ from . import views
 
 urlpatterns = [
     path('', views.booking, name='booking'),
+    path('<str:tab>/', views.booking, name='booking_with_tab'),
 ]
