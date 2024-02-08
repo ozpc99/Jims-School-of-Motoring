@@ -82,6 +82,12 @@
 }
 
 /* Media Queries */
+@media (min-width: 992px) {
+    .phone-num {
+        pointer-events: none;
+    }
+}
+
 @media (max-width: 992px) {
 
     .col-10 {
