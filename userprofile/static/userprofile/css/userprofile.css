@@ -41,3 +41,44 @@
     line-height: 1.5rem;
     border-radius: 50%;
 }
+
+/* Animation Styling */
+/* Transitions -> (see profile.js) */
+#profileHeaderContainer {
+    opacity: 0;
+    transform: translateY(-50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#profileHeaderContainer.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#setupMessage1, #setupMessage2 {
+    opacity: 0;
+    transform: translateY(-25px);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+#setupMessage1.active, #setupMessage2.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#setupMessage1.vanish, #setupMessage2.vanish {
+    opacity: 0;
+    transform: translateY(0);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+#profileBody {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#profileBody.active {
+    opacity: 1;
+    transform: translateY(0);
+}

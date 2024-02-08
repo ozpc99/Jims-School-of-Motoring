@@ -2,7 +2,45 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="#">
+<style>
+    @import "static/css/base.css";
+
+    ul {
+        padding: 0;
+        list-style-type: none;
+    }
+
+    /* Media Queries */
+    @media print {
+        header {
+            display: none;
+        }
+
+        h1 {
+            display: none;
+        }
+
+        .progress {
+            display: none;
+        }
+
+        .title {
+            display: none;
+        }
+
+        .alert {
+            display: none;
+        }
+
+        .btn {
+            display: none;
+        }
+
+        footer {
+            display: none;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block content %}

@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block extra_js %}
-<!--<script src="{% static 'userprofile/js/userprofile.js' %}"></script>-->
+<script src="{% static 'userprofile/js/userprofile.js' %}"></script>
 {% endblock %}
 
 {% block page_header %}
@@ -170,7 +170,8 @@
                             {% if profile.home_house_no and profile.home_street and profile.home_town and profile.home_post_code %}
                             <div class="col-sm-9 text-secondary">
                                 {{ profile.home_house_no }}
-                                <a class="edit-icon mx-2" href="#updateAddressModal" role="button" data-bs-toggle="modal">
+                                <a class="edit-icon mx-2" href="#updateAddressModal" role="button"
+                                    data-bs-toggle="modal">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
                                 <br>
@@ -199,7 +200,8 @@
                             {% if profile.license_no and profile.license_expiry %}
                             <div class="col-sm-9 text-secondary">
                                 {{ profile.license_no }}
-                                <a class="edit-icon mx-2" href="#updateLicenseModal" role="button" data-bs-toggle="modal">
+                                <a class="edit-icon mx-2" href="#updateLicenseModal" role="button"
+                                    data-bs-toggle="modal">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
                                 <br>
@@ -233,7 +235,8 @@
                                 <span class="fw-bold">{{ profile.theory_test_date|date:"d/m/y" }}</span>
                                 at
                                 <span class="fw-bold">{{ profile.theory_test_center }} Test Center</span>
-                                <a class="edit-icon mx-2" href="#updateTheoryTestModal" role="button" data-bs-toggle="modal">
+                                <a class="edit-icon mx-2" href="#updateTheoryTestModal" role="button"
+                                    data-bs-toggle="modal">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
                             </div>
@@ -244,8 +247,8 @@
                                 </div>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <a class="btn btn-sm w-100 btn-outline-danger" href="#updateTheoryTestModal" role="button"
-                                    data-bs-toggle="modal">
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#updateTheoryTestModal"
+                                    role="button" data-bs-toggle="modal">
                                     <i class="fa-solid fa-square-plus"></i> Add Theory Test Details
                                 </a>
                             </div>
@@ -298,7 +301,8 @@
                                 at
                                 <span class="fw-bold">{{ profile.practical_test_center }} Test Center</span>
 
-                                <a class="edit-icon mx-2" href="#updatePracticalTestModal" role="button" data-bs-toggle="modal">
+                                <a class="edit-icon mx-2" href="#updatePracticalTestModal" role="button"
+                                    data-bs-toggle="modal">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
                             </div>
@@ -309,8 +313,8 @@
                                 </div>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <a class="btn btn-sm w-100 btn-outline-danger" href="#updatePracticalTestModal" role="button"
-                                    data-bs-toggle="modal">
+                                <a class="btn btn-sm w-100 btn-outline-danger" href="#updatePracticalTestModal"
+                                    role="button" data-bs-toggle="modal">
                                     <i class="fa-solid fa-square-plus"></i> Add Practical Test Details
                                 </a>
                             </div>
@@ -524,4 +528,11 @@
     </div>
 
 </div>
+
+<script>
+    // Global variables for userName and firstName to be passed to userprofile.js
+    let userName = '{{ user.username }}';
+    let firstName = '{{ profile.first_name }}';
+</script>
+
 {% endblock %}
