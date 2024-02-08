@@ -86,21 +86,24 @@ def profile(request):
                 if len(incomplete_fields) > 1:
                     incomplete_fields_html = ''.join(
                         [
-                            f'<li class="list-group-item">{field}</li>'
-                            for field in incomplete_fields
-                            ]
+                            f'<li class="list-group-item">\
+                                <span class="counter me-2">{index + 1}</span>\
+                                <span class="fw-bold">{field}</span>\
+                            </li>'
+                            for index, field in enumerate(incomplete_fields)
+                        ]
                     )
                     message = mark_safe(
                         f'<i class="fa-solid fa-circle-info"></i> \
-                            <span class="fs-6"> \
-                                Please provide the following information: \
-                                    </span> \
-                                        <ul class="list-group \
-                                            list-group-numbered \
-                                                list-group-flush"> \
-                                                    {incomplete_fields_html} \
-                                                        </ul>')
+                        <span class="fs-6"> \
+                            Please provide the following information: \
+                        </span> \
+                        <ul class="list-group list-group-flush"> \
+                            {incomplete_fields_html} \
+                        </ul>'
+                    )
                     messages.info(request, message)
+
                 else:
                     incomplete_fields_html = ''.join(
                         [
