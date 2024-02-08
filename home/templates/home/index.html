@@ -19,7 +19,7 @@
                 alt="Man driving car from rear view" style="transform: scaleX(-1);" loading="lazy">
         </div>
         <!-- Scroller -->
-        <div class="col-lg-6 d-flex flex-column justify-content-between">
+        <div class="col-lg-6 d-flex flex-column">
             <div class="display-5">
                 <span class="scroller-header">Where will your license take you?</span>
                 <!-- Scroller | Start -->
@@ -35,7 +35,7 @@
             </div>
             <!-- Scroller | End -->
             {% if user.is_authenticated %}
-            <div class="scroller-tagline my-3 mt-lg-0">
+            <div class="scroller-tagline my-3 mt-lg-3">
                 Get on the road today
                 <br>
                 <span>
@@ -47,7 +47,7 @@
                 </span>
             </div>
             {% else %}
-            <div class="scroller-tagline my-3 mt-lg-0">
+            <div class="scroller-tagline my-3 mt-lg-3">
                 Get on the road today
                 <br>
                 <span>
