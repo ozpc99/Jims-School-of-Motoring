@@ -6,247 +6,68 @@
 {% endblock %}
 
 {% block extra_js %}
-<script>
-    // Tab Selection by Query
-    $(document).ready(function () {
-        console.log("JavaScript code is running!");
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const tab = urlParams.get('tab');
-        console.log("Tab parameter:", tab);
-
-        if (tab) {
-            const triggerEl = document.querySelector(`#myTab button[data-bs-target="#${tab}-pane"]`);
-            console.log("Trigger element:", triggerEl);
-            if (triggerEl) {
-                const tabTrigger = new bootstrap.Tab(triggerEl);
-                tabTrigger.show();
-            } else {
-                console.error("Trigger element not found!");
-            }
-        } else {
-            const triggerFirstTabEl = document.querySelector('#myTab li:first-child button');
-            bootstrap.Tab.getInstance(triggerFirstTabEl).show();
-        }
-
-        const triggerTabList = document.querySelectorAll('#myTab button')
-        triggerTabList.forEach(triggerEl => {
-            const tabTrigger = new bootstrap.Tab(triggerEl)
-            triggerEl.addEventListener('click', event => {
-                event.preventDefault()
-                tabTrigger.show()
-            })
-        })
-    });
-</script>
+<script src="{% static 'booking/js/booking.js' %}"></script>
 {% endblock %}
 
 {% block page_header %}
-<h1 class="text-center py-5">Online Booking</h1>
+<h1 class="text-center">Online Booking</h1>
 {% endblock %}
 
 {% block content %}
-<div class="container pb-5">
+<div class="container">
+    <!-- Progress Bar -->
 
-    <!-- Nav Tabs -->
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="lesson-type-tab" data-bs-toggle="tab"
-                data-bs-target="#lesson-type-tab-pane" type="button" role="tab" aria-controls="meeting-point-tab-pane"
-                aria-selected="true" disabled>
-                Lesson Type
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="meeting-point-tab" data-bs-toggle="tab"
-                data-bs-target="#meeting-point-tab-pane" type="button" role="tab" aria-controls="meeting-point-tab-pane"
-                aria-selected="false" disabled>
-                Meeting Point
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="date-tab" data-bs-toggle="tab" data-bs-target="#date-tab-pane" type="button"
-                role="tab" aria-controls="date-tab-pane" aria-selected="false" disabled>
-                Date
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="time-tab" data-bs-toggle="tab" data-bs-target="#time-tab-pane" type="button"
-                role="tab" aria-controls="time-tab-pane" aria-selected="false" disabled>
-                Time
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pay-tab" data-bs-toggle="tab" data-bs-target="#pay-tab-pane" type="button"
-                role="tab" aria-controls="pay-tab-pane" aria-selected="false" disabled>
-                Pay
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="booking-confirmed-tab" data-bs-toggle="tab"
-                data-bs-target="#booking-confirmed-tab-pane" type="button" role="tab"
-                aria-controls="booking-confirmed-tab-pane" aria-selected="false" disabled>
-                Booking Confirmed
-            </button>
-        </li>
-    </ul>
+    <form class="brand-text-sm mt-5 text-center" method="POST" action="{% url 'booking' %}">
+        {% csrf_token %}
+        <!-- Selection | Lesson Type -->
+        <select class="form-select mb-3" id="session_lesson_type" name="session_lesson_type" aria-label="Lesson Type"
+            required oninvalid="this.setCustomValidity('Please select a lesson type')"
+            oninput="this.setCustomValidity('')">
+            <option selected disabled>Lesson Type</option>
+            <option value="Manual">Manual</option>
+            <option value="Automatic">Automatic</option>
+            <option value="Mock Test">Mock Test</option>
+        </select>
 
-    <div class="tab-content" id="myTabContent">
-
-        <!-- Tab Pane | Lesson Type -->
-        <div class="tab-pane fade show active" id="lesson-type-tab-pane" role="tabpanel"
-            aria-labelledby="lesson-type-tab" tabindex="0">
-
-            <!-- Progress Bar | 20% -->
-            <div class="progress mb-3" role="progressbar" aria-label="Step 1 out of 6" aria-valuenow="20"
-                aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width: 20%"></div>
-            </div>
-
-            <h3 class="text-center my-5">Please Select a Lesson Type</h3>
-
-            <!-- Form | Lesson Type -->
-            <form class="brand-text-sm mt-5 text-center" method="POST" action="{% url 'booking' %}">
-                {% csrf_token %}
-                <!-- Selection | Lesson Type -->
-                <select class="form-select mb-3" id="session_lesson_type" name="session_lesson_type"
-                    aria-label="Lesson Type" required oninvalid="this.setCustomValidity('Please select a lesson type')"
-                    oninput="this.setCustomValidity('')">
-                    <option selected disabled>Lesson Type</option>
-                    <option value="Manual">Manual</option>
-                    <option value="Automatic">Automatic</option>
-                    <option value="Mock Test">Mock Test</option>
-                </select>
-
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-danger">Continue</button>
-            </form>
+        <!-- Inputs | Meeting Location -->
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="session_house_no" name="session_house_no"
+                placeholder="House/Building Name/No." required
+                oninvalid="this.setCustomValidity('Please complete your address details')"
+                oninput="this.setCustomValidity('')">
+            <label for="session_house_no">House/Building Name/No.</label>
         </div>
-
-        <!-- Tab Pane | Meeting Point -->
-        <div class="tab-pane fade" id="meeting-point-tab-pane" role="tabpanel" aria-labelledby="meeting-point-tab"
-            tabindex="0">
-
-            <!-- Progress Bar | 35% -->
-            <div class="progress mb-3" role="progressbar" aria-label="Step 2 out of 6" aria-valuenow="35"
-                aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width: 35%"></div>
-            </div>
-
-            <h3 class="text-center my-5">Meeting Point</h3>
-
-            <!-- Form | Meeting Location -->
-            <form class="brand-text-sm mt-5 text-center" method="POST" action="{% url 'booking' %}">
-                {% csrf_token %}
-                <!-- Inputs | Meeting Location -->
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="session_house_no" name="session_house_no"
-                        placeholder="House/Building Name/No." required
-                        oninvalid="this.setCustomValidity('Please complete your address details')"
-                        oninput="this.setCustomValidity('')">
-                    <label for="session_house_no">House/Building Name/No.</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="session_street" name="session_street"
-                        placeholder="Street" required
-                        oninvalid="this.setCustomValidity('Please complete your address details')"
-                        oninput="this.setCustomValidity('')">
-                    <label for="session_street_1">Street</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="session_town" name="session_town" placeholder="Town"
-                        required oninvalid="this.setCustomValidity('Please complete your address details')"
-                        oninput="this.setCustomValidity('')">
-                    <label for="session_town">Town</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="session_post_code" name="session_post_code"
-                        placeholder="Post Code" required
-                        oninvalid="this.setCustomValidity('Please complete your address details')"
-                        oninput="this.setCustomValidity('')">
-                    <label for="session_post_code">Post Code</label>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-danger">Continue</button>
-            </form>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="session_street" name="session_street" placeholder="Street"
+                required oninvalid="this.setCustomValidity('Please complete your address details')"
+                oninput="this.setCustomValidity('')">
+            <label for="session_street_1">Street</label>
         </div>
-
-        <!-- Tab Pane | Lesson Date -->
-        <div class="tab-pane fade" id="date-tab-pane" role="tabpanel" aria-labelledby="date-tab" tabindex="0">
-
-            <!-- Progress Bar | 50% -->
-            <div class="progress mb-3" role="progressbar" aria-label="Step 3 out of 6" aria-valuenow="50"
-                aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width: 50%"></div>
-            </div>
-
-            <h3 class="text-center my-5">Please Select a Date</h3>
-            <!-- Form | Lesson Date -->
-            <form class="brand-text-sm mt-5 text-center" method="POST" action="{% url 'booking' %}">
-                {% csrf_token %}
-                <!-- Input | Date -->
-                <select class="form-select mb-3" id="session_lesson_date" name="session_lesson_date" aria-label="Date"
-                    required oninvalid="this.setCustomValidity('Please select a date')"
-                    oninput="this.setCustomValidity('')">
-                    <option selected disabled>Date</option>
-                    {% for availableDate in availableDates %}
-                    <option value="{{ availableDate|date:'Y-m-d' }}">{{ availableDate|date:'D, d/m/y' }}</option>
-                    {% endfor %}
-                </select>
-
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-danger">Continue</button>
-            </form>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="session_town" name="session_town" placeholder="Town" required
+                oninvalid="this.setCustomValidity('Please complete your address details')"
+                oninput="this.setCustomValidity('')">
+            <label for="session_town">Town</label>
         </div>
-
-        <!-- Tab Pane | Lesson Time -->
-        <div class="tab-pane fade" id="time-tab-pane" role="tabpanel" aria-labelledby="time-tab" tabindex="0">
-
-            <!-- Progress Bar | 65% -->
-            <div class="progress mb-3" role="progressbar" aria-label="Step 4 out of 6" aria-valuenow="65"
-                aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width: 65%"></div>
-            </div>
-
-            <h3 class="text-center my-5">Please Select a Time</h3>
-            <!-- Form | Lesson Time -->
-            <form class="text-center" method="POST" action="{% url 'booking' %}">
-                {% csrf_token %}
-                <!-- Input | Time -->
-                <select class="form-select mb-3" id="session_lesson_time" name="session_lesson_time" aria-label="Time"
-                    required oninvalid="this.setCustomValidity('Please select a time')"
-                    oninput="this.setCustomValidity('')">
-                    <option selected disabled>Time</option>
-                    {% for timeSlot in timeSlots %}
-                    <option value="{{ timeSlot }}">{{ timeSlot }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit" class="btn btn-danger">Continue</button>
-            </form>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="session_post_code" name="session_post_code"
+                placeholder="Post Code" required
+                oninvalid="this.setCustomValidity('Please complete your address details')"
+                oninput="this.setCustomValidity('')">
+            <label for="session_post_code">Post Code</label>
         </div>
+        <!-- Input | Date -->
+        <select class="form-select mb-3" id="session_lesson_date" name="session_lesson_date" aria-label="Date" required
+            oninvalid="this.setCustomValidity('Please select a date')" oninput="this.setCustomValidity('')">
+            <option selected disabled>Date</option>
+            {% for availableDate in availableDates %}
+            <option value="{{ availableDate|date:'Y-m-d' }}">{{ availableDate|date:'D, d/m/y' }}</option>
+            {% endfor %}
+        </select>
 
-        <!-- Tab Pane | Pay -->
-        <div class="tab-pane fade" id="pay-tab-pane" role="tabpanel" aria-labelledby="pay-tab" tabindex="0">
-            <!-- Progress Bar | 80% -->
-            <div class="progress mb-3" role="progressbar" aria-label="Step 5 out of 6" aria-valuenow="80"
-                aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width: 80%"></div>
-            </div>
-        </div>
-
-        <!-- Tab Pane | Booking Confirmed (Success) -->
-        <div class="tab-pane fade" id="booking-confirmed-tab-pane" role="tabpanel"
-            aria-labelledby="booking-confirmed-tab" tabindex="0">
-            <!-- Progress Bar | 100% -->
-            <div class="progress mb-3" role="progressbar" aria-label="Step 6 out of 6" aria-valuenow="100"
-                aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar bg-danger" style="width: 100%"></div>
-            </div>
-        </div>
-
-    </div>
-
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-danger">Continue</button>
+    </form>
 </div>
 
 {% endblock %}
