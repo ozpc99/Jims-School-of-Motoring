@@ -6,9 +6,192 @@
 {% endblock %}
 
 {% block page_header %}
-    <h1 class="text-center">Checkout Page</h1>
+<h1 class="text-center">Online Booking</h1>
 {% endblock %}
 
 {% block content %}
+<div class="container pb-5 brand-text-sm">
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'booking' %}">Lesson Type</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'booking_2' %}">Meeting Point</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'booking_3' %}">Date</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'booking_4' %}">Time</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'checkout' %}">Pay</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Booking Confirmed</a>
+        </li>
+        <!--
+        <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+        -->
+    </ul>
+
+    <!-- Progress Bar 5/6 (90%) -->
+    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width: 90%"></div>
+    </div>
+
+    <h3 class="text-center my-5">Pay Now</h3>
     
+    <!-- Checkout Forms: -->
+    <main>
+        <div class="py-5 text-center">
+          <img class="img-fluid d-block mx-auto" src="/media/logo.png" alt="logo" width="72" height="72">
+          <span class="brand brand-lg mb-4">Jim's School of Motoring</span>
+        </div>
+    
+        <div class="row g-5">
+          <div class="col-md-5 col-lg-4 order-md-last">
+            <!-- Payment Form -->
+            <form id="payment-form" action="#" method="POST">
+              {% csrf_token %}
+              <!-- Lesson Details -->
+              <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="brand-text">Your Lesson</span>
+              </h4>
+              <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="brand-text-sm fw-semibold my-0">Lesson Type</h6>
+                    <input type="text" class="form-control-plaintext text-body-secondary" id="lesson_type"
+                      name="lesson_type" value="{{ session_lesson_type }}" readonly></input>
+                  </div>
+                  <small class="text-body-secondary">2 Hours</small>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="brand-text-sm fw-semibold my-0">Date</h6>
+                    <span class="form-control-plaintext text-body-secondary">{{ session_lesson_date_formatted }}</span>
+                    <input type="hidden" id="lesson_date" name="lesson_date" value="{{ session_lesson_date }}">
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="brand-text-sm fw-semibold my-0">Time</h6>
+                    <input type="text" class="form-control-plaintext text-body-secondary" id="lesson_time"
+                      name="lesson_time" value="{{ session_lesson_time_str }}" readonly></input>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="brand-text-sm fw-semibold my-0">Meeting Point</h6>
+                    <input type="text" class="form-control-plaintext text-body-secondary" id="house_no" name="house_no"
+                      value="{{ session_house_no }}" readonly></input>
+                    <input type="text" class="form-control-plaintext text-body-secondary" id="street" name="street"
+                      value="{{ session_street }}" readonly></input>
+                    <input type="text" class="form-control-plaintext text-body-secondary" id="town" name="town"
+                      value="{{ session_town }}" readonly></input>
+                    <input type="text" class="form-control-plaintext text-body-secondary" id="post_code" name="post_code"
+                      value="{{ session_post_code }}" readonly></input>
+    
+    
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span class="brand-text-sm fw-semibold my-0">Total (GBP)</span>
+                  <span class="fw-semibold">£{{ total }}</span>
+                </li>
+    
+                <!-- Student Details -->
+                <h4 class="d-flex justify-content-between align-items-center my-3">
+                  <span class="brand-text">Student Details</span>
+                </h4>
+                <ul class="list-group mb-3">
+                  <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                      <h6 class="brand-text-sm fw-semibold my-0">Name</h6>
+                      <input type="text" class="form-control-plaintext text-body-secondary" id="full_name" name="full_name"
+                        value="{{ profile.first_name }} {{ profile.last_name }}" readonly></input>
+                    </div>
+                    <small class="text-body-secondary">@{{ user.username }}</small>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                      <h6 class="brand-text-sm fw-semibold my-0">Email</h6>
+                      <input type="text" class="form-control-plaintext text-body-secondary" id="email" name="email"
+                        value="{{ user.email }}" readonly></input>
+                    </div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                      <h6 class="brand-text-sm fw-semibold my-0">Phone</h6>
+                      <input type="text" class="form-control-plaintext text-body-secondary" id="phone" name="phone"
+                        value="{{ profile.phone }}" readonly></input>
+                    </div>
+                  </li>
+                </ul>
+    
+          </div>
+    
+          <div class="col-md-7 col-lg-8">
+            <!-- Stripe | Billing Address -->
+            <h4 class="brand mb-3">Billing Address</h4>
+            <div class="col-md-4">
+              <label for="billpayer_house_no" class="form-label brand-text-sm">House Name/No. <span class="text-danger">*</span></label>
+              <input type="text" class="form-control mb-3" id="billpayer_house_no" name="billpayer_house_no" required>
+            </div>
+            <div class="col-sm-6">
+              <label for="billpayer_street" class="form-label brand-text-sm">Street <span class="text-danger">*</span></label>
+              <input type="text" class="form-control mb-3" id="billpayer_street" name="billpayer_street" required>
+            </div>
+            <div class="col-md-3">
+              <label for="billpayer_town" class="form-label brand-text-sm">Town/City <span class="text-danger">*</span></label>
+              <input type="text" class="form-control mb-3" id="billpayer_town" name="billpayer_town" required>
+            </div>
+            <div class="col-md-2">
+              <label for="billpayer_post_code" class="form-label brand-text-sm">Post Code <span class="text-danger">*</span></label>
+              <input type="text" class="form-control mb-3" id="billpayer_post_code" name="billpayer_post_code" required>
+            </div>
+    
+    
+            <hr class="my-4">
+    
+            <!-- Stripe | Payment Details -->
+            <h4 class="brand mb-3">Payment Details</h4>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="billpayer_name" class="form-label brand-text-sm">Cardholder's Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="billpayer_name" name="billpayer_name" required>
+                <small class="text-body-secondary">Full name as displayed on card</small>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label brand-text-sm">Card Details <span class="text-danger">*</span></label>
+                <!-- Stripe | Card Element Will Go Here: -->
+                <div class="form-control" id="card-element"></div>
+                <!-- Stripe | Card Errors Alerts Will Go Here: -->
+                <small class="text-body-secondary" id="card-errors"></small>
+              </div>
+            </div>
+    
+            <hr class="my-4">
+    
+            <button class="w-100 btn btn-danger btn-lg" id="submit-button" type="submit">Pay Now</button>
+            </form>
+          </div>
+      </main>
+    
+      <!-- Loading Overlay on Form Submit -->
+      <div id="loading-overlay">
+        <h1 class="text-light logo-font loading-spinner">
+          <span class="icon">
+            <i class="fas fa-3x fa-sync-alt fa-spin"></i>
+          </span>
+        </h1>
+      </div>
+    </div>
+
+</div>
 {% endblock %}

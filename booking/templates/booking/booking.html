@@ -16,6 +16,38 @@
 {% block content %}
 <div class="container pb-5">
 
+    <!-- Tabs -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'booking' %}">Lesson Type</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'booking_2' %}">Meeting Point</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'booking_3' %}">Date</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'booking_4' %}">Time</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'checkout' %}">Pay</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Booking Confirmed</a>
+        </li>
+        <!--
+        <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+        -->
+    </ul>
+
+    <!-- Progress Bar 1/6 (15%) -->
+    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width: 15%"></div>
+    </div>
+
     <h3 class="text-center my-5">Please Select a Lesson Type</h3>
     <form class="brand-text-sm mt-5 text-center" method="POST" action="{% url 'booking' %}">
         {% csrf_token %}
