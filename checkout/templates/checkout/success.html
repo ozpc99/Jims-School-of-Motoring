@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
+{% block page_header %}
+<h1 class="text-center">Booking Confirmed!</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container pb-5 brand-text-sm">
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'booking' %}">Lesson Type</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'booking_2' %}">Meeting Point</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'booking_3' %}">Date</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'booking_4' %}">Time</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'checkout' %}">Pay</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'success' %}">Booking Confirmed</a>
+        </li>
+        <!--
+        <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+        -->
+    </ul>
+
+    <!-- Progress Bar 5/6 (100%) -->
+    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar bg-danger" style="width: 100%"></div>
+    </div>
+
+    <div class="card container mt-3">
+        <div class="card-body">
+            <div class="card-title">
+                <h1 class="text-center my-3 title"><em class="fst-italic text-danger">myLessons</em>
+                    <small>Invoice</small>
+                </h1>
+            </div>
+
+            <!-- Messages Info Alert -->
+            <div class="alert alert-light alert-dismissible fade show text-center" role="alert">
+                <h6>
+                    <i class="fa-solid fa-circle-info"></i>
+                    Invoice for lesson: <strong>{{ booking.booking_reference }}</strong>
+                </h6>
+                <h6>
+                    {% if booking.lesson_type == "Mock Test" %}
+                    A <strong>{{ booking.lesson_type }}</strong>
+                    {% elif booking.lesson_type == "Automatic" %}
+                    An <strong>{{ booking.lesson_type }}</strong> Lesson
+                    {% else %}
+                    A <strong>{{ booking.lesson_type }}</strong> Lesson
+                    {% endif %}
+                    at <strong>{{ booking.lesson_time|time:"H:i" }}</strong>
+                    on <strong>{{ booking.lesson_date|date:"d/m/Y" }}</strong>
+                </h6>
+                A confirmation email was sent to <strong>{{ booking.email }}</strong>
+                <br>
+                <button type="button" class="btn btn-sm btn-outline-secondary mt-2">Resend Confirmation Email</button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <!-- Company Details -->
+            <div class="d-flex flex-row-reverse">
+                <ul class="text-end">
+                    <a href="{% url 'home' %}">
+                        <h5>Jim's School of Motoring</h5>
+                    </a>
+                    <li class="fw-semibold fst-italic">James Stanhope</li>
+                    <li>123, Heaton Rd</li>
+                    <li>Newcastle upon Tyne</li>
+                    <li class="mb-2">NE1 234</li>
+                    <li>
+                        <small class="fw-lighter">07700 100200</small>
+                    </li>
+                    <li>
+                        <a href="mailto:jims_school_of_motoring@gmail.com">
+                            <small class="fw-light">
+                                jims_school_of_motoring@gmail.com
+                            </small>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="d-flex flex-row">
+                <!-- Student Details -->
+                <ul>
+                    <li class="fw-semibold fst-italic">{{ profile.first_name }} {{ profile.last_name }}</li>
+                    <li>{{ profile.home_house_no }}</li>
+                    <li>{{ profile.home_street }}</li>
+                    <li class="mb-2">{{ profile.home_post_code }}</li>
+                    <li>
+                        <small class="fw-lighter">{{ profile.phone|slice:":5" }}
+                            {{ profile.phone|slice:"5:11" }}
+                        </small>
+                    </li>
+                    <li>
+                        <small class="fw-light">
+                            {{ user.email }}
+                        </small>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="row">
+                <!-- Booking Date & Ref No. -->
+                <div class="col">
+                    <h6 class="fw-bold"><u>{{ booking.booked_on|date:"d/m/Y" }}</u></h6>
+                    <h6>Ref:<small><em> {{ booking.booking_reference }}</em></small></h6>
+                </div>
+                <!-- Button to print invoice -->
+                <div class="col d-flex justify-content-end">
+                    <button class="btn btn-sm btn-outline-danger" onclick="window.print()">
+                        <i class="fa-solid fa-print"></i> Print Invoice
+                    </button>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- Lesson Details -->
+            <table class="table table-sm table-responsive">
+                <h5 class="mb-3">Lesson Details</h5>
+                <thead>
+                    <tr>
+                        <th>Lesson Type</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Meeting Point</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ booking.lesson_type }}</td>
+                        <td>{{ booking.lesson_date|date:"d/m/y" }}</td>
+                        <td>{{ booking.lesson_time|time:"H:i" }}</td>
+                        <td>
+                            <ul>
+                                <li>{{ booking.house_no }}</li>
+                                <li>{{ booking.street }}</li>
+                                <li>{{ booking.post_code }}</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-sm table-responsive">
+                <h5 class="mb-3">Billing Details</h5>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ booking.booked_on|date:"d/m/y" }}</td>
+                        <td>{{ booking.billpayer_name }}</td>
+                        <td>
+                            <ul>
+                                <li>{{ booking.billpayer_house_no }}</li>
+                                <li>{{ booking.billpayer_street }}</li>
+                                <li>{{ booking.billpayer_town }}</li>
+                                <li>{{ booking.billpayer_post_code }}</li>
+                            </ul>
+                        </td>
+                        <td>£{{ booking.price }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

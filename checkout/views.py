@@ -9,3 +9,12 @@ def checkout(request):
     context = {}
 
     return render(request, template, context)
+
+
+def success(request):
+
+    """ A view to return the checkout page """
+    template = 'checkout/success.html'
+    context = {}
+
+    return render(request, template, context)
