@@ -10,36 +10,26 @@ from .models import Booking
 from userprofile.models import UserProfile
 
 
-# Booking 1/5: The 'bookingPart1' Function
+# Booking Part 1 (Lesson Type)
 def booking(request):
     profile = get_object_or_404(UserProfile, user=request.user)
-    allDates = datesInNext30Days(31)
-    availableDates = isDateAvailable(allDates)
 
     template = 'booking/booking.html'
     context = {
         'profile': profile,
-        'allDates': allDates,
-        'availableDates': availableDates,
     }
 
     if request.method == 'POST':
         session_lesson_type = request.POST.get('session_lesson_type')
-        session_lesson_date = request.POST.get('session_lesson_date')
-        session_house_no = request.POST.get('session_house_no')
-        session_street = request.POST.get('session_street')
-        session_town = request.POST.get('session_town')
-        session_post_code = request.POST.get('session_post_code')
 
         # Stores in Django session
         request.session['session_lesson_type'] = session_lesson_type
-        request.session['session_lesson_date'] = session_lesson_date
-        request.session['session_house_no'] = session_house_no
-        request.session['session_street'] = session_street
-        request.session['session_town'] = session_town
-        request.session['session_post_code'] = session_post_code
 
-        # Redirects to BookingPart2 page when form is submitted.
+        # Prints Values to Terminal (for debugging purposes)
+        print('Chosen Values (Stored to Session) =>')
+        print(f'Lesson Type:', session_lesson_type)
+
+        # Redirects to Part 2 page when form is submitted.
         return redirect('booking_2')
 
     # Checks if the user profile is complete
@@ -58,8 +48,105 @@ def booking(request):
         return redirect('profile')
 
 
-# Booking 2/5: The 'bookingPart2' Function
+# Booking Part 2 (Address)
 def booking_2(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+
+    template = 'booking/booking_2.html'
+    context = {
+        'profile': profile,
+    }
+
+    if request.method == 'POST':
+        session_house_no = request.POST.get('session_house_no')
+        session_street = request.POST.get('session_street')
+        session_town = request.POST.get('session_town')
+        session_post_code = request.POST.get('session_post_code')
+
+        # Stores in Django session
+        request.session['session_house_no'] = session_house_no
+        request.session['session_street'] = session_street
+        request.session['session_town'] = session_town
+        request.session['session_post_code'] = session_post_code
+
+        # Prints Values to Terminal (for debugging purposes)
+        print('Chosen Values (Stored to Session) =>')
+        print('Address =>')
+        print(f'House No:', session_house_no)
+        print(f'Street:', session_street)
+        print(f'Town:', session_town)
+        print(f'Post Code:', session_post_code)
+
+        # Redirects to Part 3 page when form is submitted.
+        return redirect('booking_3')
+
+    # Checks if the user profile is complete
+    if (
+        profile.first_name and
+        profile.last_name and
+        profile.phone and
+        profile.home_house_no and
+        profile.home_street and
+        profile.home_town and
+        profile.home_post_code
+    ): 
+        return render(request, template, context)
+    else:
+        messages.warning(request, "Please finish setting up your profile before making a booking.")
+        return redirect('profile')
+
+
+# Booking Part 3 (Date) =>
+def booking_3(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    user = request.user
+    today = datetime.now()
+    allDates = datesInNext30Days(31)
+    availableDates = isDateAvailable(allDates)
+    minDate = today.strftime('%m-%d-%Y')
+    timeDelta = today + timedelta(days=30)
+    strTimeDelta = timeDelta.strftime('%m-%d-%Y')
+    maxDate = strTimeDelta
+
+    if request.method == 'POST':
+        session_lesson_date = request.POST.get('session_lesson_date')
+        request.session['session_lesson_date'] = session_lesson_date
+
+        session_lesson_date_object = datetime.strptime(session_lesson_date, '%Y-%m-%d').date()
+        session_lesson_date_formatted = session_lesson_date_object.strftime('%a, %d/%m/%y')
+        request.session['session_lesson_date_formatted'] = session_lesson_date_formatted
+
+        print(f'Date:', session_lesson_date)
+        print(f'Date Formatted:', session_lesson_date_formatted)
+
+        # Redirects to Part 4 page when form is submitted.
+        return redirect('booking_4')
+
+    template = 'booking/booking_3.html'
+    context = {
+        'profile': profile,
+        'allDates': allDates,
+        'availableDates': availableDates,
+    }
+
+    # Checks if the user profile is complete
+    if (
+        profile.first_name and
+        profile.last_name and
+        profile.phone and
+        profile.home_house_no and
+        profile.home_street and
+        profile.home_town and
+        profile.home_post_code
+    ): 
+        return render(request, template, context)
+    else:
+        messages.warning(request, "Please finish setting up your profile before making a booking.")
+        return redirect('profile')
+
+
+# Booking Part 4 (Time) =>
+def booking_4(request):
     profile = get_object_or_404(UserProfile, user=request.user)
     user = request.user
     timeChoices = ["07:00", "10:00", "13:00", "16:00", "19:00"]
@@ -75,12 +162,7 @@ def booking_2(request):
     - 'date'
     - Address details for the meeting point location.
     """
-    session_lesson_type = request.session.get('session_lesson_type')
     session_lesson_date = request.session.get('session_lesson_date')
-    session_house_no = request.session.get('session_house_no')
-    session_street = request.session.get('session_street')
-    session_town = request.session.get('session_town')
-    session_post_code = request.session.get('session_post_code')
 
     # Only show times of day that are not already booked.
     timeSlots = isTimeAvailable(timeChoices, session_lesson_date)
@@ -96,10 +178,13 @@ def booking_2(request):
                 # Store time in Django session.
                 request.session['session_lesson_time'] = session_lesson_time
                 request.session['session_lesson_time_str'] = session_lesson_time_str
-                print(f"session_lesson_time: {session_lesson_time}")
-                print(f"session_lesson_time_str: {session_lesson_time_str}")
-                print(f"Available time slots: {timeSlots}")
-                return redirect('checkout')
+
+                # Prints Values to Terminal (for debugging purposes)
+                print(f"Available Time Slots: {timeSlots}")
+                print('Chosen Values (Stored to Session) =>')
+                print(f"Time: {session_lesson_time}")
+                print(f"Time String: {session_lesson_time_str}")
+                return redirect('checkout') # Redirects to checkout
             else:
                 messages.error(request, "Sorry, that time is unavailable")
         else:
@@ -109,17 +194,12 @@ def booking_2(request):
     session_lesson_date_formatted = session_lesson_date_object.strftime('%a, %d/%m/%y')
     request.session['session_lesson_date_formatted'] = session_lesson_date_formatted
 
-    template = 'booking/booking_2.html'
+    template = 'booking/booking_4.html'
     context = {
         'profile': profile,
         'timeSlots': timeSlots,
-        'session_lesson_type': session_lesson_type,
         'session_lesson_date': session_lesson_date,
         'session_lesson_date_formatted': session_lesson_date_formatted,
-        'session_house_no': session_house_no,
-        'session_street': session_street,
-        'session_town': session_town,
-        'session_post_code': session_post_code,
     }
 
     """ Error handling if lesson date has not been selected """
@@ -127,7 +207,7 @@ def booking_2(request):
         return render(request, template, context)
     else:
         messages.error(request, "You haven't picked a time")
-        return request(('booking_2'))
+        return request(('booking_4'))
 
 
 # Required Functions =>

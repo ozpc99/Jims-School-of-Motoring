@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'booking/css/booking.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'booking/js/booking.js' %}"></script>
+{% endblock %}
+
+{% block page_header %}
+<h1 class="text-center">Online Booking</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container pb-5">
+
+    <h3 class="text-center my-5">Please Select a Date</h3>
+    <form class="brand-text-sm mt-5 text-center" method="POST" action="{% url 'booking_3' %}">
+        {% csrf_token %}
+        <!-- Input | Date -->
+        <select class="form-select mb-3" id="session_lesson_date" name="session_lesson_date" aria-label="Date" required
+            oninvalid="this.setCustomValidity('Please select a date')" oninput="this.setCustomValidity('')">
+            <option selected disabled>Date</option>
+            {% for availableDate in availableDates %}
+            <option value="{{ availableDate|date:'Y-m-d' }}">{{ availableDate|date:'D, d/m/y' }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-danger">Continue</button>
+    </form>
+</div>
+
+{% endblock %}

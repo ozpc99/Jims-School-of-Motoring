@@ -14,9 +14,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <!-- Progress Bar -->
+<div class="container pb-5">
 
+    <h3 class="text-center my-5">Please Select a Lesson Type</h3>
     <form class="brand-text-sm mt-5 text-center" method="POST" action="{% url 'booking' %}">
         {% csrf_token %}
         <!-- Selection | Lesson Type -->
@@ -28,43 +28,7 @@
             <option value="Automatic">Automatic</option>
             <option value="Mock Test">Mock Test</option>
         </select>
-
-        <!-- Inputs | Meeting Location -->
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="session_house_no" name="session_house_no"
-                placeholder="House/Building Name/No." required
-                oninvalid="this.setCustomValidity('Please complete your address details')"
-                oninput="this.setCustomValidity('')">
-            <label for="session_house_no">House/Building Name/No.</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="session_street" name="session_street" placeholder="Street"
-                required oninvalid="this.setCustomValidity('Please complete your address details')"
-                oninput="this.setCustomValidity('')">
-            <label for="session_street_1">Street</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="session_town" name="session_town" placeholder="Town" required
-                oninvalid="this.setCustomValidity('Please complete your address details')"
-                oninput="this.setCustomValidity('')">
-            <label for="session_town">Town</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="session_post_code" name="session_post_code"
-                placeholder="Post Code" required
-                oninvalid="this.setCustomValidity('Please complete your address details')"
-                oninput="this.setCustomValidity('')">
-            <label for="session_post_code">Post Code</label>
-        </div>
-        <!-- Input | Date -->
-        <select class="form-select mb-3" id="session_lesson_date" name="session_lesson_date" aria-label="Date" required
-            oninvalid="this.setCustomValidity('Please select a date')" oninput="this.setCustomValidity('')">
-            <option selected disabled>Date</option>
-            {% for availableDate in availableDates %}
-            <option value="{{ availableDate|date:'Y-m-d' }}">{{ availableDate|date:'D, d/m/y' }}</option>
-            {% endfor %}
-        </select>
-
+        
         <!-- Submit Button -->
         <button type="submit" class="btn btn-danger">Continue</button>
     </form>

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'booking/css/booking.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'booking/js/booking.js' %}"></script>
+{% endblock %}
+
+{% block page_header %}
+<h1 class="text-center">Online Booking</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container pb-5 brand-text-sm">
+    <h3 class="text-center my-5">Please Select a Time</h3>
+    <!-- Time Select Form -->
+    <form class="text-center" method="POST" action="{% url 'booking_4' %}">
+        {% csrf_token %}
+        <!-- Input | Time -->
+        <select class="form-select mb-3" id="session_lesson_time" name="session_lesson_time" aria-label="Time" required
+            oninvalid="this.setCustomValidity('Please select a time')"
+            oninput="this.setCustomValidity('')">
+            <option selected disabled>Time</option>
+            {% for timeSlot in timeSlots %}
+                <option value="{{ timeSlot }}">{{ timeSlot }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-danger">Continue</button>
+    </form>
+</div>
+{% endblock %}
