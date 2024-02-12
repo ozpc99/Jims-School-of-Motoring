@@ -44,9 +44,27 @@ form.addEventListener('submit', function(ev) {
     $('#submit-button').attr('disabled', true);
     $('#payment-form').fadeToggle(100);
     $('#loading-overlay').fadeToggle(100);
+
     stripe.confirmCardPayment(clientSecret, {
         payment_method: {
             card: card,
+            billing_details: {
+                name: $.trim(form.billpayer_name.value),
+                address:{
+                    line1: $.trim(form.billpayer_house_no.value),
+                    line2: $.trim(form.billpayer_street.value),
+                    city: $.trim(form.billpayer_town.value),
+                }
+            }
+        },
+        shipping: {
+            name: $.trim(form.full_name.value),
+            address:{
+                line1: $.trim(form.house_no.value),
+                line2: $.trim(form.street.value),
+                city: $.trim(form.town.value),
+                postal_code: $.trim(form.post_code.value),
+            },
         },
     }).then(function(result) {
         if (result.error) {
