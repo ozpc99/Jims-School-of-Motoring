@@ -56,13 +56,10 @@ def checkout(request):
         }
 
         booking_form = BookingForm(form_data)
-
-
-        print(request.POST)
-
+        
         if booking_form.is_valid():
             booking = booking_form.save(commit=False)
-            pid = intent.client_secret.split('_secret')[0]
+            pid = request.POST.get('client_secret').split('_secret')[0]
             booking.stripe_pid = pid
             booking.save()
             return redirect(reverse('success', args=[booking.booking_reference]))
