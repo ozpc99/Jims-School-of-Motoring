@@ -1,20 +1,190 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
+from django.views.decorators.http import require_POST
 from django.conf import settings
+from django.contrib import messages
 
+from booking.forms import BookingForm
+from booking.models import Booking
+from .models import Price
+from userprofile.models import UserProfile
 
+import stripe
+import json
+
+# Cache Booking Data
+@require_POST
+def cache_booking_data(request):
+    try:
+        pid = request.POST.get('client_secret').split('_secret')[0]
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        stripe.PaymentIntent.modify(pid, metadata={
+            'save_info': True,
+            'username': request.user,
+        })
+        return HttpResponse(status=200)
+    except Exception as e:
+        messages.error(request, 'Sorry, your payment cannot be \
+            processed right now, Please try again later.')
+        return HttpResponse(content=e, status=400)
+
+# Checkout
 def checkout(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    price = Price.get_instance()
 
-    """ A view to return the checkout page """
+    stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    stripe_secret_key =  settings.STRIPE_SECRET_KEY
+
+    total = price.lesson_price # Get lesson_price from Price model
+    stripe_total = round(total * 100)
+    stripe.api_key = stripe_secret_key
+    intent = stripe.PaymentIntent.create(
+        amount=stripe_total,
+        currency=settings.STRIPE_CURRENCY,
+        # success_url="/success",
+    )
+
+    print(intent)
+
+    if request.method == 'POST':
+
+        session_lesson_type = request.session.get('session_lesson_type')
+        session_lesson_date = request.session.get('session_lesson_date')
+        session_lesson_date_formatted = request.session.get('session_lesson_date_formatted')
+        session_lesson_time = request.session.get('session_lesson_time')
+        session_lesson_time_str = request.session.get('session_lesson_time_str')
+        session_house_no = request.session.get('session_house_no')
+        session_street = request.session.get('session_street')
+        session_town = request.session.get('session_town')
+        session_post_code = request.session.get('session_post_code')
+
+        form_data = {
+            'full_name': request.POST['full_name'],
+            'email': request.POST['email'],
+            'lesson_type': request.POST['lesson_type'],
+            'lesson_date': request.POST['lesson_date'],
+            'lesson_time': request.POST['lesson_time'],
+            'house_no': request.POST['house_no'],
+            'street': request.POST['street'],
+            'town': request.POST['town'],
+            'post_code': request.POST['post_code'],
+            'billpayer_name': request.POST['billpayer_name'],
+            'billpayer_house_no': request.POST['billpayer_house_no'],
+            'billpayer_street': request.POST['billpayer_street'],
+            'billpayer_town': request.POST['billpayer_town'],
+            'billpayer_post_code': request.POST['billpayer_post_code'],
+        }
+
+        booking_form = BookingForm(form_data)
+
+
+        print(request.POST)
+
+        if booking_form.is_valid():
+            booking = booking_form.save(commit=False)
+            pid = intent.client_secret.split('_secret')[0]
+            booking.stripe_pid = pid
+            booking.save()
+            # return redirect(reverse('success', args=[booking.booking_reference]))
+        else:
+            print(booking_form.errors)
+            messages.error(request, 'There was an error with your form \
+                Please double check your information.')
+            booking_form = BookingForm()
+
+    else:
+        session_lesson_type = request.session.get('session_lesson_type')
+        session_lesson_date = request.session.get('session_lesson_date')
+        session_lesson_date_formatted = request.session.get('session_lesson_date_formatted')
+        session_lesson_time = request.session.get('session_lesson_time')
+        session_lesson_time_str = request.session.get('session_lesson_time_str')
+        session_house_no = request.session.get('session_house_no')
+        session_street = request.session.get('session_street')
+        session_town = request.session.get('session_town')
+        session_post_code = request.session.get('session_post_code')
+
+        booking_form = BookingForm()
+
+    if not stripe_public_key:
+        messages.warning(request, 'Stripe public key is missing. \
+        Did you forget to set it in your environment?')
+
+    if not stripe_secret_key:
+        messages.warning(request, 'Stripe secret key is missing. \
+            Did you forget to set it in your environment?')
+
+
     template = 'checkout/checkout.html'
-    context = {}
+    context = {
+        'profile': profile,
+        'booking_form': booking_form, #
+        'stripe_public_key': stripe_public_key, #
+        'client_secret': intent.client_secret, #
+        'total': total, #
+        'session_lesson_type': session_lesson_type,
+        'session_lesson_date': session_lesson_date,
+        'session_lesson_date_formatted': session_lesson_date_formatted,
+        'session_lesson_time': session_lesson_time,
+        'session_lesson_time_str': session_lesson_time_str,
+        'session_house_no': session_house_no,
+        'session_street': session_street,
+        'session_town': session_town,
+        'session_post_code': session_post_code,
+    }
 
+    """
+    A view to render the Payment page.
+    """
     return render(request, template, context)
 
 
-def success(request):
+# Success Page
 
-    """ A view to return the checkout page """
+def success(request):
+    """
+    Handle Successful Checkouts
+    
+    booking = get_object_or_404(Booking, booking_reference=booking_reference)
+
+    if 'session_lesson_type' in request.session:
+        del request.session['session_lesson_type']
+
+    if 'session_lesson_date' in request.session:
+        del request.session['session_lesson_date']
+
+    if 'session_lesson_date_formatted' in request.session:
+        del request.session['session_lesson_date_formatted']
+
+    if 'session_lesson_time' in request.session:
+        del request.session['session_lesson_time']
+
+    if 'session_lesson_time_str' in request.session:
+        del request.session['session_lesson_time_str']
+
+    if 'session_house_no' in request.session:
+        del request.session['session_house_no']
+
+    if 'session_street' in request.session:
+        del request.session['session_street']
+
+    if 'session_town' in request.session:
+        del request.session['session_town']
+
+    if 'session_post_code' in request.session:
+        del request.session['session_post_code']
+
+    profile = UserProfile.objects.get(user=request.user)
+    booking.user_profile = profile
+    booking.save()
+
+    messages.success(request, f'Booking successful! \
+            Your booking reference number is: {booking.booking_reference} \
+            A confirmation email will be sent to: {booking.email}')
+    """
     template = 'checkout/success.html'
-    context = {}
+    context = {
+        # 'booking': booking,
+        # 'profile': profile,
+    }
 
     return render(request, template, context)

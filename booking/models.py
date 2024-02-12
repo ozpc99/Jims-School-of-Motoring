@@ -63,3 +63,7 @@ class Booking(models.Model):
 
     def __str__(self):
         return self.booking_reference
+
+    class Meta:
+        verbose_name = 'Lesson Booking'
+        verbose_name_plural = 'Lesson Bookings'

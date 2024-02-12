@@ -3,20 +3,24 @@ from .models import Booking
 
 
 class BookingAdmin(admin.ModelAdmin):
-    readonly_fields = ('booking_reference', 'booked_on',
-                        'price', 'stripe_pid',)
+    readonly_fields = (
+        'booking_reference',
+        'booked_on',
+        'price',
+        'stripe_pid',
+    )
 
-    fields = ('booking_reference', 'booked_on',
+    fields = (
               'full_name', 'email',
               'lesson_type', 'lesson_date', 'lesson_time',
               'house_no', 'street',
               'town', 'post_code',
-              'price', 'stripe_pid',
               'billpayer_name',
               'billpayer_house_no',
               'billpayer_street',
               'billpayer_town',
-              'billpayer_post_code',)
+              'billpayer_post_code',
+            )
 
     list_display = ('booking_reference', 'booked_on',
                     'full_name',
@@ -31,7 +35,8 @@ class BookingAdmin(admin.ModelAdmin):
                     'billpayer_house_no',
                     'billpayer_street',
                     'billpayer_town',
-                    'billpayer_post_code',)
+                    'billpayer_post_code',
+                )
 
     ordering = ('-booked_on',)
 
