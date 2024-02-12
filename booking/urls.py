@@ -7,5 +7,4 @@ urlpatterns = [
     path('booking_2', views.booking_2, name='booking_2'),
     path('booking_3', views.booking_3, name='booking_3'),
     path('booking_4', views.booking_4, name='booking_4'),
-    # path('<str:tab>/', views.booking, name='booking_with_tab'),
 ]

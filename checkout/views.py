@@ -84,7 +84,7 @@ def checkout(request):
             pid = intent.client_secret.split('_secret')[0]
             booking.stripe_pid = pid
             booking.save()
-            # return redirect(reverse('success', args=[booking.booking_reference]))
+            return redirect(reverse('success', args=[booking.booking_reference]))
         else:
             print(booking_form.errors)
             messages.error(request, 'There was an error with your form \
@@ -139,11 +139,11 @@ def checkout(request):
 
 # Success Page
 
-def success(request):
-    profile = get_object_or_404(UserProfile, user=request.user)
+def success(request, booking_reference):
     """
     Handle Successful Checkouts
-    
+    """
+    profile = get_object_or_404(UserProfile, user=request.user)
     booking = get_object_or_404(Booking, booking_reference=booking_reference)
 
     if 'session_lesson_type' in request.session:
@@ -173,17 +173,13 @@ def success(request):
     if 'session_post_code' in request.session:
         del request.session['session_post_code']
 
-    profile = UserProfile.objects.get(user=request.user)
-    booking.user_profile = profile
-    booking.save()
-
     messages.success(request, f'Booking successful! \
             Your booking reference number is: {booking.booking_reference} \
             A confirmation email will be sent to: {booking.email}')
-    """
+
     template = 'checkout/success.html'
     context = {
-        # 'booking': booking,
+        'booking': booking,
         'profile': profile,
     }
 
