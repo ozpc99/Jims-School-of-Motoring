@@ -43,7 +43,6 @@ def checkout(request):
         currency=settings.STRIPE_CURRENCY,
         # success_url="/success",
     )
-
     print(intent)
 
     if request.method == 'POST':
@@ -141,6 +140,7 @@ def checkout(request):
 # Success Page
 
 def success(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
     """
     Handle Successful Checkouts
     
@@ -184,7 +184,7 @@ def success(request):
     template = 'checkout/success.html'
     context = {
         # 'booking': booking,
-        # 'profile': profile,
+        'profile': profile,
     }
 
     return render(request, template, context)
