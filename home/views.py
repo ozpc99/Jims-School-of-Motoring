@@ -4,10 +4,11 @@ from django.conf import settings
 from userprofile.models import UserProfile
 
 def index(request):
+    username = request.user.username
+    print("Username:", username)
+    
     if request.user.is_authenticated:
         profile = get_object_or_404(UserProfile, user=request.user)
-        username = request.user.username
-        print("Username:", username)
 
     """ A view to return the index page """
     template = 'home/index.html'
