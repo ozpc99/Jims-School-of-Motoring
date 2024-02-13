@@ -19,6 +19,7 @@ from booking.models import Booking
 from .forms import *
 
 now = datetime.now()
+timeZoneNow = timezone.now()
 
 # Profile Page View
 @login_required
@@ -127,11 +128,23 @@ def profile(request):
                         and we'll get this fixed."
         )
 
-    # Template and Context:
-    """ A view to render the User Profile page. """
+    """
+    Gets all bookings with a 'lesson_date' that is
+    greater than or equal to the date now and greater than the time now.
+    (today or in the future)
+    """
+    upcoming_bookings = profile.bookings.all().filter(
+        models.Q(lesson_date__gt=now.date()) |
+        (models.Q(lesson_date=now.date(), lesson_time__gt=now.time()))
+        ).order_by(
+            'lesson_date', 'lesson_time')
+
+
+    # A view to render the User Profile page.
     template = 'userprofile/profile.html'
     context = {
         'profile': profile,
+        'upcoming_bookings': upcoming_bookings,
         'welcome_message': welcome_message,
         'on_profile_page': True,
     }
@@ -262,16 +275,41 @@ def lessons(request):
     """ Gets all objects associated with the user's profile. """
     profile = get_object_or_404(UserProfile, user=request.user)
 
-    timeZoneNow = timezone.now()
-
     """ Gets all bookings made by that user """
-    all_bookings = profile.bookings.all().order_by('lesson_date', 'lesson_time')
+    all_bookings = profile.bookings.all().order_by(
+        'lesson_date', 'lesson_time'
+    )
+
+    """
+    Gets all bookings with a 'lesson_date' that is
+    greater than or equal to the date now and greater than the time now.
+    (today or in the future)
+    """
+    upcoming_bookings = profile.bookings.filter(
+        models.Q(lesson_date__gt=now.date()) |
+        (models.Q(lesson_date=now.date(), lesson_time__gt=now.time()))
+        ).order_by(
+            'lesson_date', 'lesson_time')
+
+    """
+    Gets all bookings with a 'lesson_date' that is
+    less than the time now.
+    (in the past)
+    """
+    # Descending Order (Newest to Oldest) displays oldest lessons at bottom
+    previous_bookings = profile.bookings.filter(
+        models.Q(lesson_date__lt=timezone.now().date())
+        | models.Q(lesson_date=timezone.now().date(),
+                    lesson_time__lt=timezone.now().time())).order_by(
+                        '-lesson_date', '-lesson_time')
 
     """ A view to render the Lessons page. """
     template = 'userprofile/lessons.html'
     context = {
         'profile': profile,
         'all_bookings': all_bookings,
+        'upcoming_bookings': upcoming_bookings,
+        'previous_bookings': previous_bookings,
         'on_lesson_page': True,
     }
     return render(request, template, context)
