@@ -1,9 +1,9 @@
 import uuid
 
 from django.db import models
-from datetime import datetime
 from django.conf import settings
 
+from datetime import datetime
 from decimal import Decimal
 
 from userprofile.models import UserProfile

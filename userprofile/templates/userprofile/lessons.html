@@ -8,6 +8,12 @@
 {% block content %}
 <div class="container">
     <div class="main-body">
+
+        {% for booking in all_bookings %}
+            {{ booking.booking_reference }}
+        {% endfor %}
+
+
         <!--Nav Tabs-->
         <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -80,7 +86,7 @@
                                             {{booking.post_code}}
                                         </td>
                                         <td>
-                                            <a href="{% url 'invoice' booking.booking_reference %}" target="_blank">
+                                            <a href="#" target="_blank">
                                                 {{ booking.booking_reference }}
                                             </a>
                                         </td>
@@ -129,7 +135,7 @@
                                             {{booking.post_code}}
                                         </td>
                                         <td>
-                                            <a href="{% url 'invoice' booking.booking_reference %}" target="_blank">
+                                            <a href="#" target="_blank">
                                                 {{ booking.booking_reference }}
                                             </a>
                                         </td>
@@ -178,7 +184,7 @@
                                             {{booking.post_code}}
                                         </td>
                                         <td>
-                                            <a href="{% url 'invoice' booking.booking_reference %}" target="_blank">
+                                            <a href="#" target="_blank">
                                                 {{ booking.booking_reference }}
                                             </a>
                                         </td>

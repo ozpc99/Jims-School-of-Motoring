@@ -12,4 +12,5 @@ urlpatterns = [
     path('update_theory_test/', views.update_theory_test, name='update_theory_test'),
     path('update_practical_test/', views.update_practical_test, name='update_practical_test'),
     path('lessons/', views.lessons, name='lessons'),
+    path('invoice/<booking_reference>/', views.invoice, name='invoice'),
 ]

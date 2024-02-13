@@ -28,6 +28,7 @@
       "allauth"
    ],
    "cSpell.ignoreWords": [
+      "billpayer",
       "postloadjs"
    ]
 }
