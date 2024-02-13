@@ -16,6 +16,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEVELOPMENT', '')
 
+# DEBUG = 'DEVELOPMENT' in os.environ # => Replace line above with this line after debugging.
+
 ALLOWED_HOSTS = ['jims-school-of-motoring-19a5b545c631.herokuapp.com', 'localhost']
 
 
