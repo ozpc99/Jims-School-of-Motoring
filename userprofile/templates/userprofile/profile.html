@@ -82,7 +82,7 @@
                         </li>
                         <!-- Displays 5 soonest lessons -->
                         {% for booking in upcoming_bookings|slice:":5" %}
-                        <a class="list-group-item list-group-item-action" href="#" target="_blank">
+                        <a class="list-group-item list-group-item-action" href="{% url 'invoice' booking.booking_reference %}" target="_blank">
                             <li class="h6 d-flex align-items-center flex-wrap">
                                 <span class="counter me-5">
                                     <span>{{ forloop.counter }}</span>
