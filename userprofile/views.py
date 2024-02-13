@@ -24,6 +24,7 @@ timeZoneNow = timezone.now()
 # Profile Page View
 @login_required
 def profile(request):
+    user = request.user
     """ Gets all objects associated with the user's profile. """
     profile = get_object_or_404(UserProfile, user=request.user)
 
@@ -272,6 +273,8 @@ def update_practical_test(request):
 
 # Lessons Page View
 def lessons(request):
+    user = request.user
+
     """ Gets all objects associated with the user's profile. """
     profile = get_object_or_404(UserProfile, user=request.user)
 
