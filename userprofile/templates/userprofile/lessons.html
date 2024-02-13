@@ -56,42 +56,49 @@
                         <h4>All Lessons</h4>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-rounded">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Type</th>
-                                        <th>Meeting Point</th>
-                                        <th>Booking Reference</th>
-                                        <th>Booked On</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for booking in all_bookings %}
-                                    <tr>
-                                        <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
-                                        <td>{{ booking.lesson_time|time:"H:i" }}</td>
-                                        <td>{{ booking.lesson_type }}</td>
-                                        <td>{{ booking.house_no }},
-                                            <br>
-                                            {{booking.street}},
-                                            <br>
-                                            {{booking.post_code}}
-                                        </td>
-                                        <td>
-                                            <a href="#" target="_blank">
-                                                {{ booking.booking_reference }}
-                                            </a>
-                                        </td>
-                                        <td>{{ booking.booked_on|date:"d/m/Y" }}
-                                            <small>({{ booking.booked_on|date:"H:i" }})</small></td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                        {% if all_bookings %}
+                            <div class="table-responsive">
+                                <table class="table table-rounded">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Type</th>
+                                            <th>Meeting Point</th>
+                                            <th>Booking Reference</th>
+                                            <th>Booked On</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for booking in all_bookings %}
+                                        <tr>
+                                            <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
+                                            <td>{{ booking.lesson_time|time:"H:i" }}</td>
+                                            <td>{{ booking.lesson_type }}</td>
+                                            <td>{{ booking.house_no }},
+                                                <br>
+                                                {{booking.street}},
+                                                <br>
+                                                {{booking.post_code}}
+                                            </td>
+                                            <td>
+                                                <a href="#" target="_blank">
+                                                    {{ booking.booking_reference }}
+                                                </a>
+                                            </td>
+                                            <td>{{ booking.booked_on|date:"d/m/Y" }}
+                                                <small>({{ booking.booked_on|date:"H:i" }})</small></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                            <div class="text-center">
+                                <h6 class="text-center">You haven't booked any lessons yet.</h6>
+                                <a href="{% url 'booking' %}" class="btn btn-sm btn-danger">Book Lesson</a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -105,42 +112,49 @@
                         <h4><i class="fa-regular fa-clock"></i> Coming Up</h4>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-rounded">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Type</th>
-                                        <th>Meeting Point</th>
-                                        <th>Booking Reference</th>
-                                        <th>Booked On</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for booking in upcoming_bookings %}
-                                    <tr>
-                                        <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
-                                        <td>{{ booking.lesson_time|time:"H:i" }}</td>
-                                        <td>{{ booking.lesson_type }}</td>
-                                        <td>{{ booking.house_no }},
-                                            <br>
-                                            {{booking.street}},
-                                            <br>
-                                            {{booking.post_code}}
-                                        </td>
-                                        <td>
-                                            <a href="#" target="_blank">
-                                                {{ booking.booking_reference }}
-                                            </a>
-                                        </td>
-                                        <td>{{ booking.booked_on|date:"d/m/Y" }}
-                                            <small>({{ booking.booked_on|date:"H:i" }})</small></td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                        {% if upcoming_bookings %}
+                            <div class="table-responsive">
+                                <table class="table table-rounded">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Type</th>
+                                            <th>Meeting Point</th>
+                                            <th>Booking Reference</th>
+                                            <th>Booked On</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for booking in upcoming_bookings %}
+                                        <tr>
+                                            <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
+                                            <td>{{ booking.lesson_time|time:"H:i" }}</td>
+                                            <td>{{ booking.lesson_type }}</td>
+                                            <td>{{ booking.house_no }},
+                                                <br>
+                                                {{booking.street}},
+                                                <br>
+                                                {{booking.post_code}}
+                                            </td>
+                                            <td>
+                                                <a href="#" target="_blank">
+                                                    {{ booking.booking_reference }}
+                                                </a>
+                                            </td>
+                                            <td>{{ booking.booked_on|date:"d/m/Y" }}
+                                                <small>({{ booking.booked_on|date:"H:i" }})</small></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                            <div class="text-center">
+                                <h6 class="text-center">You have no upcoming lessons.</h6>
+                                <a href="{% url 'booking' %}" class="btn btn-sm btn-danger">Book Lesson</a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -154,42 +168,46 @@
                         <h4><i class="fa-solid fa-clock-rotate-left"></i> Previous</h4>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-rounded">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Type</th>
-                                        <th>Meeting Point</th>
-                                        <th>Booking Reference</th>
-                                        <th>Booked On</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for booking in previous_bookings %}
-                                    <tr>
-                                        <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
-                                        <td>{{ booking.lesson_time|time:"H:i" }}</td>
-                                        <td>{{ booking.lesson_type }}</td>
-                                        <td>{{ booking.house_no }},
-                                            <br>
-                                            {{booking.street}},
-                                            <br>
-                                            {{booking.post_code}}
-                                        </td>
-                                        <td>
-                                            <a href="#" target="_blank">
-                                                {{ booking.booking_reference }}
-                                            </a>
-                                        </td>
-                                        <td>{{ booking.booked_on|date:"d/m/Y" }}
-                                            <small>({{ booking.booked_on|date:"H:i" }})</small></td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                        {% if previous_bookings %}
+                            <div class="table-responsive">
+                                <table class="table table-rounded">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Type</th>
+                                            <th>Meeting Point</th>
+                                            <th>Booking Reference</th>
+                                            <th>Booked On</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for booking in previous_bookings %}
+                                        <tr>
+                                            <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
+                                            <td>{{ booking.lesson_time|time:"H:i" }}</td>
+                                            <td>{{ booking.lesson_type }}</td>
+                                            <td>{{ booking.house_no }},
+                                                <br>
+                                                {{booking.street}},
+                                                <br>
+                                                {{booking.post_code}}
+                                            </td>
+                                            <td>
+                                                <a href="#" target="_blank">
+                                                    {{ booking.booking_reference }}
+                                                </a>
+                                            </td>
+                                            <td>{{ booking.booked_on|date:"d/m/Y" }}
+                                                <small>({{ booking.booked_on|date:"H:i" }})</small></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                            <h6 class="text-center">You have no previous lessons.</h6>
+                        {% endif %}
                     </div>
                 </div>
             </div>
