@@ -1,1 +1,19 @@
 {% extends "base.html" %}
+
+{% block content %}
+    <div class="container header-container">
+        <div class="overlay">
+            <div class="row">
+                <div class="col text-center">
+                    <!--Logo-->
+                    <img class="img-fluid mb-4" src="https://jims-school-of-motoring.s3.eu-west-1.amazonaws.com/media/logo.png" alt="logo" width="72" height="72">
+                    <span class="brand brand-lg">Jim's School of Motoring</span>
+                    <div class="allauth-form-inner-content">
+                        {% block inner_content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
