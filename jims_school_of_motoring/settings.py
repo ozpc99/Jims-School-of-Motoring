@@ -16,7 +16,12 @@ SECRET_KEY = os.getenv('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['jims-school-of-motoring-19a5b545c631.herokuapp.com', '8000-ozpc99-jimsschoolofmoto-xec4wu6vgpz.ws-eu108.gitpod.io']
+ALLOWED_HOSTS = [
+    # Heroku
+    'jims-school-of-motoring-19a5b545c631.herokuapp.com',
+    # LocalHost
+    '8000-ozpc99-jimsschoolofmoto-xec4wu6vgpz.ws-eu108.gitpod.io',
+    ]
 
 
 # Application definition
@@ -86,7 +91,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
