@@ -1,4 +1,4 @@
-/* @import "static/css/base.css"; */
+@import "static/css/base.css";
 
 /* Styled to Match Bootstrap 'form-control' Class */
 .StripeElement {
@@ -45,62 +45,4 @@
     justify-content: center;
     margin: 0;
     height: 100%;
-}
-
-/* Invoice Styling */
-ul {
-    padding: 0;
-    list-style-type: none;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-a:hover {
-    color: #b02a37;
-}
-
-/* Media Queries For Print */
-@media print {
-    h1 {
-        display: none;
-    }
-
-    .divider {
-        display: none;
-    }
-
-    footer {
-        display: none;
-    }
-
-    .nav {
-        display: none;
-    }
-
-    .progress {
-        display: none;
-    }
-
-    header {
-        display: none;
-    }
-
-    .title {
-        display: none;
-    }
-
-    .alert {
-        display: none;
-    }
-
-    .btn {
-        display: none;
-    }
-
-    footer {
-        display: none;
-    }
 }
