@@ -14,11 +14,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEVELOPMENT', '')
+DEBUG = 'DEVELOPMENT' in os.environ
 
-# DEBUG = 'DEVELOPMENT' in os.environ # => Replace line above with this line after debugging.
-
-ALLOWED_HOSTS = ['jims-school-of-motoring-19a5b545c631.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['jims-school-of-motoring-19a5b545c631.herokuapp.com', '8000-ozpc99-jimsschoolofmoto-xec4wu6vgpz.ws-eu108.gitpod.io']
 
 
 # Application definition
