@@ -1,0 +1,8 @@
+[15/Feb/2024 11:38:01] WARNING [django.request:224] Not Found: /static/css/base.css
+[15/Feb/2024 11:38:01] WARNING [django.request:224] Not Found: /static/home/css/home.css
+[15/Feb/2024 11:38:01] WARNING [django.request:224] Not Found: /static/home/js/home.js
+[15/Feb/2024 11:38:02] WARNING [django.request:224] Not Found: /favicon.ico
+[15/Feb/2024 11:38:24] WARNING [django.request:224] Not Found: /static/home/css/home.css
+[15/Feb/2024 11:38:24] WARNING [django.request:224] Not Found: /static/css/base.css
+[15/Feb/2024 11:38:24] WARNING [django.request:224] Not Found: /static/home/js/home.js
+[15/Feb/2024 11:38:25] WARNING [django.request:224] Not Found: /static/css/base.css
