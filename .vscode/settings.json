@@ -28,7 +28,10 @@
       "allauth"
    ],
    "cSpell.ignoreWords": [
+      "CREDS",
       "billpayer",
+      "gspread",
+      "jims",
       "postloadjs"
    ]
 }

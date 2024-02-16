@@ -8,9 +8,15 @@ from booking.models import Booking
 from .models import Price
 from userprofile.models import UserProfile
 
+import datetime
+
 import stripe
 
+import gspread
+from google.oauth2.service_account import Credentials
+
 # Checkout
+""" Cache Booking Data """
 @require_POST
 def cache_booking_data(request):
     try:
@@ -27,6 +33,48 @@ def cache_booking_data(request):
         return HttpResponse(content=e, status=400)
 
 
+""" Post Data to Google Sheet """
+def post_to_google_sheet(booking):
+
+    data = {
+        'booking_reference': booking.booking_reference,
+        'booked_on': booking.booked_on.date(),
+        'booked_at': booking.booked_on.time(),
+        'full_name': booking.full_name,
+        'email': booking.email,
+        'lesson_type': booking.lesson_type,
+        'lesson_date': booking.lesson_date,
+        'lesson_time': booking.lesson_time,
+        'house_no': booking.house_no,
+        'street': booking.street,
+        'town': booking.town,
+        'post_code': booking.post_code,
+    }
+
+    for key, value in data.items():
+        if isinstance(value, datetime.date):
+            data[key] = value.strftime("%d/%m/%Y")
+        elif isinstance(value, datetime.time):
+            data[key] = value.strftime("%H:%M")
+
+    SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+    ]
+
+    CREDS = Credentials.from_service_account_file('creds.json')
+    SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+    GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+    SHEET = GSPREAD_CLIENT.open('jims_school_of_motoring')
+
+    print("Updating bookings worksheet...\n")
+    bookings_worksheet = SHEET.worksheet("bookings")
+    bookings_worksheet.append_row(list(data.values()))
+    print("Bookings worksheet updated successfully.\n")
+
+
+""" Checkout View """
 def checkout(request):
     profile = get_object_or_404(UserProfile, user=request.user)
 
@@ -81,6 +129,9 @@ def checkout(request):
             booking.stripe_pid = pid
             booking.save()
             save_info = True
+
+            post_to_google_sheet(booking)
+
             return redirect(reverse('success', args=[booking.booking_reference]))
         else:
             print(booking_form.errors)
