@@ -68,8 +68,6 @@ def post_to_google_sheet(booking):
 
     if 'DEVELOPMENT' in os.environ:
         CREDS = Credentials.from_service_account_file('creds.json')
-        SCOPED_CREDS = CREDS.with_scopes(SCOPE)
-        GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
     else:
         credentials = {
             "type": os.environ.get("GOOGLE_SHEETS_TYPE"),
@@ -85,8 +83,9 @@ def post_to_google_sheet(booking):
             "universe_domain": os.environ.get("GOOGLE_SHEETS_UNIVERSE_DOMAIN"),
         }
         CREDS = Credentials.from_service_account_info(credentials)
-        SCOPED_CREDS = CREDS.with_scopes(SCOPE)
-        GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+
+    SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+    GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
     SHEET = GSPREAD_CLIENT.open('jims_school_of_motoring')
 
     print("Updating bookings worksheet...\n")
