@@ -1,3 +1,5 @@
+import os
+
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from django.views.decorators.http import require_POST
 from django.conf import settings
@@ -69,7 +71,20 @@ def post_to_google_sheet(booking):
         SCOPED_CREDS = CREDS.with_scopes(SCOPE)
         GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
     else:
-        CREDS = Credentials.from_service_account_info(settings.CREDENTIALS)
+        credentials = {
+            "type": os.environ.get("GOOGLE_SHEETS_TYPE"),
+            "project_id": os.environ.get("GOOGLE_SHEETS_PROJECT_ID"),
+            "private_key_id": os.environ.get("GOOGLE_SHEETS_PRIVATE_KEY_ID"),
+            "private_key": os.environ.get("GOOGLE_SHEETS_PRIVATE_KEY").replace('\\n', '\n'),
+            "client_email": os.environ.get("GOOGLE_SHEETS_CLIENT_EMAIL"),
+            "client_id": os.environ.get("GOOGLE_SHEETS_CLIENT_ID"),
+            "auth_uri": os.environ.get("GOOGLE_SHEETS_AUTH_URI"),
+            "token_uri": os.environ.get("GOOGLE_SHEETS_TOKEN_URI"),
+            "auth_provider_x509_cert_url": os.environ.get("GOOGLE_SHEETS_AUTH_PROVIDER_X509_CERT_URL"),
+            "client_x509_cert_url": os.environ.get("GOOGLE_SHEETS_CLIENT_X509_CERT_URL"),
+            "universe_domain": os.environ.get("GOOGLE_SHEETS_UNIVERSE_DOMAIN"),
+        }
+        CREDS = Credentials.from_service_account_info(credentials)
         SCOPED_CREDS = CREDS.with_scopes(SCOPE)
         GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
     SHEET = GSPREAD_CLIENT.open('jims_school_of_motoring')
