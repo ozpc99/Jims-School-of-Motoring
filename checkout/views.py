@@ -14,6 +14,7 @@ import stripe
 
 import gspread
 from google.oauth2.service_account import Credentials
+import json
 
 # Checkout
 """ Cache Booking Data """
@@ -63,9 +64,14 @@ def post_to_google_sheet(booking):
     "https://www.googleapis.com/auth/drive"
     ]
 
-    CREDS = Credentials.from_service_account_file('creds.json')
-    SCOPED_CREDS = CREDS.with_scopes(SCOPE)
-    GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+    if 'DEVELOPMENT' in os.environ:
+        CREDS = Credentials.from_service_account_file('creds.json')
+        SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+        GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+    else:
+        CREDS = Credentials.from_service_account_info(settings.CREDENTIALS)
+        SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+        GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
     SHEET = GSPREAD_CLIENT.open('jims_school_of_motoring')
 
     print("Updating bookings worksheet...\n")
