@@ -32,6 +32,11 @@ body {
     font-family: var(--share_tech);
 }
 
+footer {
+    background-color: #fff;
+    z-index: 2;
+}
+
 /* Divider in lieu of default '<hr>' */
 .divider {
     width: 100%;

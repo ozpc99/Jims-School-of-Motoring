@@ -141,11 +141,43 @@ def profile(request):
             'lesson_date', 'lesson_time')
 
 
+    """
+    Queries the UserProfile booking object for a booking with a 
+    lesson_type that matches 'Mock Test'.
+    Singles out that specific booking object.
+    Finds the latest mock test booking.
+    Returns it's associated values. 
+    """
+    all_bookings = profile.bookings.all()
+    def find_mock_test_booking(all_bookings):
+        latest_mock_test_date = None
+        latest_mock_test = None
+        
+        for booking in all_bookings:
+            if booking.lesson_type == "Mock Test":
+                if (latest_mock_test_date is None 
+                    or booking.lesson_date > latest_mock_test_date
+                ):
+                    latest_mock_test_date = booking.lesson_date
+                    latest_mock_test = booking
+        
+        if latest_mock_test:
+            return (latest_mock_test.lesson_date,
+                    latest_mock_test.lesson_time,
+                    latest_mock_test.house_no,
+                    latest_mock_test.post_code
+                )
+
+    # Assuming all_bookings is defined and populated
+    mock_test_booking = find_mock_test_booking(all_bookings)        
+
+
     # A view to render the User Profile page.
     template = 'userprofile/profile.html'
     context = {
         'profile': profile,
         'upcoming_bookings': upcoming_bookings,
+        'mock_test_booking': mock_test_booking,
         'welcome_message': welcome_message,
         'on_profile_page': True,
     }

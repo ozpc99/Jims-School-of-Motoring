@@ -245,8 +245,7 @@ def success(request, booking_reference):
             booking.save()
 
     messages.success(request, f'Booking successful! \
-            Your booking reference number is: {booking.booking_reference} \
-            A confirmation email will be sent to: {booking.email}')
+            Your booking reference number is: {booking.booking_reference}')
 
     template = 'checkout/success.html'
     context = {
