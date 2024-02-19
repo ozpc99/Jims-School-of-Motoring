@@ -1,5 +1,50 @@
 @import "static/css/base.css";
 
+@import url('https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap');
+
+/* Styling for Amend/Cancel table cells if Booking is Cancelled */
+.cancelled-booking {
+    border-color: #dee2e6;
+}
+
+.cancelled-text-cell {
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.cancelled-text-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancelled-text {
+    color: var(--brand_red);
+    font-family: "Stardos Stencil", sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 2px solid var(--brand_red);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 5px 7.5px;
+    font-size: 15px;
+}
+
+/* Amend/Cancel Booking Buttons */
+.button-container {
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Profile Icon */
 .default-profile-lg {
     height: 150px;
@@ -81,4 +126,11 @@
 #profileBody.active {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Media Queries */
+@media (max-width: 767px) {
+    .cancelled-text-cell {
+        width: 100%; /* Ensure the cell stretches to full width on mobile */
+    }
 }

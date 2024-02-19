@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}
+| Cancel Lesson
+{% endblock %}
+
+{% block content %}
+<div class="card container my-5">
+    <div class="card-body text-center">
+        <div class="card-title">
+            <h1 class="text-center my-3 title"><em class="fst-italic text-danger">myLessons</em> <small>Cancel
+                    Lesson</small>
+            </h1>
+        </div>
+
+        <h4>
+            You are about to cancel your
+            {% if booking.lesson_type == "Mock Test" %}
+            <strong>{{ booking.lesson_type }}</strong>
+            {% else %}
+            <strong>{{ booking.lesson_type }}</strong> Lesson
+            {% endif %}
+        </h4>
+
+        <h5>
+            At <strong>{{ booking.lesson_time|time:"H:i" }}</strong>
+            On <strong>{{ booking.lesson_date|date:"d/m/Y" }}</strong>
+        </h5>
+
+        <h6 class="my-4 fw-semibold">Booking Reference: {{ booking.booking_reference }}</h6>
+
+        <hr>
+
+        <form method="POST" action="#">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="terms" class="form-label">I understand the Terms and Conditions</label>
+                <input type="checkbox" name="terms" id="terms" class="form-check-input" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">To confirm, please enter your password:</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+                    required>
+            </div>
+            <button class="btn btn-outline-danger" type="submit">
+                <i class="fa-solid fa-ban"></i> Confirm Cancellation
+            </button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,22 +1,31 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.utils.safestring import mark_safe
-from django.utils import timezone
-from django.db import models
+import os
 
-from django.db.models import Q
+import gspread
+from google.oauth2.service_account import Credentials
+import json
+
+from django.shortcuts import render, redirect, get_object_or_404
+
+from django.contrib import messages
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
+from django.utils import timezone
+from django.utils.safestring import mark_safe
 
 from django.conf import settings
 
-from datetime import datetime, timedelta
+from django.db import models
+from django.db.models import Q
 
-from django.contrib.auth.models import User
+from booking.models import Booking
+from booking.forms import BookingForm
 
 from .models import UserProfile
-from booking.models import Booking
-
 from .forms import *
+
+from datetime import datetime, timedelta
 
 now = datetime.now()
 timeZoneNow = timezone.now()
@@ -337,6 +346,41 @@ def lessons(request):
         | models.Q(lesson_date=timezone.now().date(),
                     lesson_time__lt=timezone.now().time())).order_by(
                         '-lesson_date', '-lesson_time')
+    
+
+    # Combine booking.lesson_date and booking.lesson_time into a datetime object.
+    def lessonDateTime(booking):
+        lesson_date = booking.lesson_date
+        lesson_time = booking.lesson_time
+
+        lesson_datetime = datetime.combine(lesson_date, lesson_time)
+        return lesson_datetime
+
+    # Bookings can be amended or cancelled up to 24h prior to the lesson date and time.
+    def isOver24h(booking_reference):
+        try:
+            booking = Booking.objects.get(booking_reference=booking_reference)
+        except Booking.DoesNotExist:
+            print('Booking not found.')
+            return False
+
+        lesson_datetime = lessonDateTime(booking)
+        now = datetime.now()
+        delta = lesson_datetime - now
+
+        return delta.total_seconds() > 24 * 60 * 60
+
+    all_bookings = Booking.objects.all()
+
+    editable_bookings = []
+
+    for booking in all_bookings:
+        if isOver24h(booking):
+            booking.editable = True
+            editable_bookings.append(booking)
+        else:
+            booking.editable = False
+
 
     """ A view to render the Lessons page. """
     template = 'userprofile/lessons.html'
@@ -345,6 +389,7 @@ def lessons(request):
         'all_bookings': all_bookings,
         'upcoming_bookings': upcoming_bookings,
         'previous_bookings': previous_bookings,
+        'editable_bookings': editable_bookings,
         'on_lesson_page': True,
     }
     return render(request, template, context)
@@ -356,6 +401,86 @@ def invoice(request, booking_reference):
     booking = get_object_or_404(Booking, booking_reference=booking_reference)
 
     template = 'userprofile/invoice.html'
+    context = {
+        'profile': profile,
+        'booking': booking,
+    }
+
+    return render(request, template, context)
+
+
+# Delete Row on Google Sheet
+""" Delete Booking Row on Google Sheet """
+def delete_row_google_sheet(booking_reference):
+
+    if 'DEVELOPMENT' in os.environ:
+        CREDS = Credentials.from_service_account_file('creds.json')
+    else:
+        credentials = {
+            "type": os.environ.get("GOOGLE_SHEETS_TYPE"),
+            "project_id": os.environ.get("GOOGLE_SHEETS_PROJECT_ID"),
+            "private_key_id": os.environ.get("GOOGLE_SHEETS_PRIVATE_KEY_ID"),
+            "private_key": os.environ.get("GOOGLE_SHEETS_PRIVATE_KEY").replace('\\n', '\n'),
+            "client_email": os.environ.get("GOOGLE_SHEETS_CLIENT_EMAIL"),
+            "client_id": os.environ.get("GOOGLE_SHEETS_CLIENT_ID"),
+            "auth_uri": os.environ.get("GOOGLE_SHEETS_AUTH_URI"),
+            "token_uri": os.environ.get("GOOGLE_SHEETS_TOKEN_URI"),
+            "auth_provider_x509_cert_url": os.environ.get("GOOGLE_SHEETS_AUTH_PROVIDER_X509_CERT_URL"),
+            "client_x509_cert_url": os.environ.get("GOOGLE_SHEETS_CLIENT_X509_CERT_URL"),
+            "universe_domain": os.environ.get("GOOGLE_SHEETS_UNIVERSE_DOMAIN"),
+        }
+        CREDS = Credentials.from_service_account_info(credentials)
+
+    SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+    ]
+
+    SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+    GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+    SHEET = GSPREAD_CLIENT.open('jims_school_of_motoring')
+
+    bookings_worksheet = SHEET.worksheet("bookings")
+
+    booking_cells = bookings_worksheet.findall(booking_reference)
+
+    if booking_cells:
+        for cell in booking_cells:
+            if cell.value == booking_reference:
+                bookings_worksheet.delete_rows(cell.row)
+        print(f"Deleted {len(booking_cells)} row(s) associated with {booking_reference}")
+    else:
+        print(f"No rows found associated with {booking_reference}")
+
+
+# Cancel Page View
+def cancel(request, booking_reference):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    booking = get_object_or_404(Booking, booking_reference=booking_reference)
+    user = request.user
+
+    if request.method == 'POST':
+        password = request.POST.get('password')
+        terms = request.POST.get('terms')
+
+        user = authenticate(request, username=request.user.username, password=password)
+
+        if user is not None:
+            if terms:
+                booking.cancelled = True
+                booking.save()
+
+                delete_row_google_sheet(booking_reference)
+
+                messages.success(request, "Lesson Cancelled!")
+                return redirect('lessons')
+            else:
+                messages.warning(request, "Please accept the terms and conditions")
+        else:
+            messages.error(request, "Incorrect password")
+
+    template = 'userprofile/cancel.html'
     context = {
         'profile': profile,
         'booking': booking,

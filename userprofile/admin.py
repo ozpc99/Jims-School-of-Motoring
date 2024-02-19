@@ -9,6 +9,10 @@ class UserProfileAdmin(admin.ModelAdmin):
         'phone',
         'home_house_no',
         'home_post_code',
+        'credit',
+    )
+    readonly_fields = (
+        'credit',
     )
     fields = (
         'user',
@@ -27,6 +31,5 @@ class UserProfileAdmin(admin.ModelAdmin):
         'mock_test_address',
         'practical_test_date',
         'practical_test_center',
-
     )
 admin.site.register(UserProfile, UserProfileAdmin)

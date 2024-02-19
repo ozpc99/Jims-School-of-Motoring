@@ -26,3 +26,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 2000);
     }
 });
+
+// Applies either 7deg or -7deg rotation to 'CANCELLED' text at random.
+function applyRandomRotation() {
+    var elements = document.querySelectorAll('.cancelled-text');
+    elements.forEach(function (element) {
+        var random = Math.random();
+        if (random < 0.5) {
+            element.style.transform = 'rotate(7deg)';
+        } else {
+            element.style.transform = 'rotate(-7deg)';
+        }
+    });
+}
+window.addEventListener('load', applyRandomRotation);

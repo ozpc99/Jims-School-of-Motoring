@@ -15,6 +15,7 @@ class BookingAdmin(admin.ModelAdmin):
               'lesson_type', 'lesson_date', 'lesson_time',
               'house_no', 'street',
               'town', 'post_code',
+              'cancelled',
               'billpayer_name',
               'billpayer_house_no',
               'billpayer_street',
@@ -23,6 +24,7 @@ class BookingAdmin(admin.ModelAdmin):
             )
 
     list_display = ('booking_reference', 'booked_on',
+                    'cancelled',
                     'full_name',
                     'email',
                     'lesson_type', 'lesson_date', 'lesson_time',

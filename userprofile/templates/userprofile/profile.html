@@ -82,16 +82,18 @@
                         </li>
                         <!-- Displays 5 soonest lessons -->
                         {% for booking in upcoming_bookings|slice:":5" %}
-                        <a class="list-group-item list-group-item-action" href="{% url 'invoice' booking.booking_reference %}" target="_blank">
-                            <li class="h6 d-flex align-items-center flex-wrap">
-                                <span class="counter me-5">
-                                    <span>{{ forloop.counter }}</span>
-                                </span>
-                                <span class="text-secondary mx-2">{{ booking.lesson_date|date:"d/m/y" }}</span>
-                                <span class="text-secondary mx-2">{{ booking.lesson_time|time:"H:i" }}</span>
-                                <span class="text-secondary mx-2">{{ booking.lesson_type }}</span>
-                            </li>
-                        </a>
+                            {% if booking is not booking.cancelled %}
+                                <a class="list-group-item list-group-item-action" href="{% url 'invoice' booking.booking_reference %}" target="_blank">
+                                    <li class="h6 d-flex align-items-center flex-wrap">
+                                        <span class="counter me-5">
+                                            <span>{{ forloop.counter }}</span>
+                                        </span>
+                                        <span class="text-secondary mx-2">{{ booking.lesson_date|date:"d/m/y" }}</span>
+                                        <span class="text-secondary mx-2">{{ booking.lesson_time|time:"H:i" }}</span>
+                                        <span class="text-secondary mx-2">{{ booking.lesson_type }}</span>
+                                    </li>
+                                </a>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </div>
