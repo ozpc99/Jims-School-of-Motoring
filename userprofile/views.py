@@ -142,12 +142,14 @@ def profile(request):
     Gets all bookings with a 'lesson_date' that is
     greater than or equal to the date now and greater than the time now.
     (today or in the future)
+
+    Excludes cancelled bookings.
     """
-    upcoming_bookings = profile.bookings.all().filter(
-        models.Q(lesson_date__gt=now.date()) |
-        (models.Q(lesson_date=now.date(), lesson_time__gt=now.time()))
-        ).order_by(
-            'lesson_date', 'lesson_time')
+    upcoming_bookings = profile.bookings.filter(
+        (models.Q(lesson_date__gt=now.date()) |
+        (models.Q(lesson_date=now.date(), lesson_time__gt=now.time()))) &
+        models.Q(cancelled=False)  # Exclude cancelled bookings
+    ).order_by('lesson_date', 'lesson_time')
 
 
     """
@@ -328,12 +330,14 @@ def lessons(request):
     Gets all bookings with a 'lesson_date' that is
     greater than or equal to the date now and greater than the time now.
     (today or in the future)
+
+    Excludes cancelled bookings.
     """
     upcoming_bookings = profile.bookings.filter(
-        models.Q(lesson_date__gt=now.date()) |
-        (models.Q(lesson_date=now.date(), lesson_time__gt=now.time()))
-        ).order_by(
-            'lesson_date', 'lesson_time')
+        (models.Q(lesson_date__gt=now.date()) |
+        (models.Q(lesson_date=now.date(), lesson_time__gt=now.time()))) &
+        models.Q(cancelled=False)  # Exclude cancelled bookings
+    ).order_by('lesson_date', 'lesson_time')
 
     """
     Gets all bookings with a 'lesson_date' that is
@@ -342,10 +346,9 @@ def lessons(request):
     """
     # Descending Order (Newest to Oldest) displays oldest lessons at bottom
     previous_bookings = profile.bookings.filter(
-        models.Q(lesson_date__lt=timezone.now().date())
-        | models.Q(lesson_date=timezone.now().date(),
-                    lesson_time__lt=timezone.now().time())).order_by(
-                        '-lesson_date', '-lesson_time')
+        (Q(lesson_date__lt=now.date()) |
+        (Q(lesson_date=now.date(), lesson_time__lt=now.time())))
+    ).order_by('-lesson_date', '-lesson_time')
     
 
     # Combine booking.lesson_date and booking.lesson_time into a datetime object.

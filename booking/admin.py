@@ -15,6 +15,7 @@ class BookingAdmin(admin.ModelAdmin):
             'house_no', 'street',
             'town', 'post_code',
             'cancelled',
+            'refunded',
             'price',
             'billpayer_name',
             'billpayer_house_no',
@@ -24,7 +25,7 @@ class BookingAdmin(admin.ModelAdmin):
         )
 
     list_display = ('booking_reference', 'booked_on',
-                    'cancelled',
+                    'cancelled', 'refunded',
                     'full_name',
                     'user_profile',
                     'email',

@@ -69,7 +69,7 @@
                     <div class="card-body">
                         {% if all_bookings %}
                         <div class="table-responsive">
-                            <table class="table table-rounded">
+                            <table class="table table-rounded table-light">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
@@ -83,7 +83,7 @@
                                 </thead>
                                 <tbody>
                                     {% for booking in all_bookings %}
-                                    <tr class="{% if booking.cancelled %}cancelled-booking table-danger{% endif %}">
+                                    <tr class="{% if booking.cancelled %}table-danger{% elif booking in previous_bookings %}table-secondary{% endif %}">
                                         <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
                                         <td>{{ booking.lesson_time|time:"H:i" }}</td>
                                         <td>{{ booking.lesson_type }}</td>
@@ -106,6 +106,12 @@
                                             <td class="cancelled-text-cell">
                                                 <div class="cancelled-text-wrapper">
                                                     <span class="cancelled-text">Cancelled</span>
+                                                </div>
+                                            </td>
+                                        {% elif booking in previous_bookings %}
+                                            <td class="previous-text-cell">
+                                                <div class="previous-text-wrapper">
+                                                    <span class="previous-text">Previous</span>
                                                 </div>
                                             </td>
                                         {% else %}
@@ -148,7 +154,7 @@
                     <div class="card-body">
                         {% if upcoming_bookings %}
                         <div class="table-responsive">
-                            <table class="table table-rounded">
+                            <table class="table table-rounded table-light">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
@@ -162,7 +168,7 @@
                                 </thead>
                                 <tbody>
                                     {% for booking in upcoming_bookings %}
-                                    <tr class="{% if booking.cancelled %}cancelled-booking table-danger{% endif %}">
+                                    <tr>
                                         <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
                                         <td>{{ booking.lesson_time|time:"H:i" }}</td>
                                         <td>{{ booking.lesson_type }}</td>
@@ -225,7 +231,7 @@
                     <div class="card-body">
                         {% if previous_bookings %}
                         <div class="table-responsive">
-                            <table class="table table-rounded">
+                            <table class="table table-rounded table-light">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
@@ -234,12 +240,11 @@
                                         <th>Meeting Point</th>
                                         <th>Booking Reference</th>
                                         <th>Booked On</th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for booking in previous_bookings %}
-                                    <tr class="{% if booking.cancelled %}cancelled-booking table-danger{% endif %}">
+                                    <trs>
                                         <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
                                         <td>{{ booking.lesson_time|time:"H:i" }}</td>
                                         <td>{{ booking.lesson_type }}</td>
@@ -257,14 +262,6 @@
                                         <td>{{ booking.booked_on|date:"d/m/Y" }}
                                             <small>({{ booking.booked_on|date:"H:i" }})</small>
                                         </td>
-                                        <!-- Buttons to trigger Amending/Cancelling Booking Functionality -->
-                                        {% if booking.cancelled %}
-                                            <td class="cancelled-text-cell">
-                                                <div class="cancelled-text-wrapper">
-                                                    <span class="cancelled-text">Cancelled</span>
-                                                </div>
-                                            </td>
-                                        {% endif %}
                                     </tr>
                                     {% endfor %}
                                 </tbody>

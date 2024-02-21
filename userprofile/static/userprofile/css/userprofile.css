@@ -3,33 +3,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap');
 
 /* Styling for Amend/Cancel table cells if Booking is Cancelled */
-.cancelled-booking {
-    border-color: #dee2e6;
-}
-
-.cancelled-text-cell {
+.cancelled-text-cell, .previous-text-cell {
     position: relative;
     text-align: center;
     vertical-align: middle;
 }
 
-.cancelled-text-wrapper {
+.cancelled-text-wrapper, .previous-text-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.cancelled-text {
-    color: var(--brand_red);
+.cancelled-text, .previous-text {
     font-family: "Stardos Stencil", sans-serif;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
-    border: 2px solid var(--brand_red);
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 5px 7.5px;
     font-size: 15px;
+    opacity: 0.6;
+}
+
+.cancelled-text {
+    color: var(--brand_red);
+    border: 2px solid var(--brand_red);
+}
+
+.previous-text {
+    color: black;
+    border: 2px solid black;
 }
 
 /* Amend/Cancel Booking Buttons */
