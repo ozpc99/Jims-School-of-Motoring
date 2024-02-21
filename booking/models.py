@@ -1,13 +1,14 @@
 import uuid
 
 from django.db import models
+
 from django.conf import settings
 
 from datetime import datetime
 from decimal import Decimal
 
 from userprofile.models import UserProfile
-
+from checkout.models import Price
 
 LESSON_TYPE_MANUAL = "Manual"
 LESSON_TYPE_AUTOMATIC = "Automatic"
@@ -40,7 +41,8 @@ class Booking(models.Model):
     post_code = models.CharField(max_length=7, null=False, blank=False, default='')
     
     booked_on = models.DateTimeField(auto_now_add=True)
-    price = models.DecimalField(default=42.99, max_digits=6, decimal_places=2, null=False, blank=False)
+
+    price = models.ForeignKey(Price, on_delete=models.CASCADE)
     stripe_pid = models.CharField(max_length=254, null=False, blank=False, default='')
     
     billpayer_name = models.CharField(max_length=50, null=False, blank=False, default='')

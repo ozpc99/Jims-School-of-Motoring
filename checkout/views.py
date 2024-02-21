@@ -101,8 +101,11 @@ def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key =  settings.STRIPE_SECRET_KEY
     
-    price = Price.get_instance()
-    total = price.lesson_price # Get lesson_price from Price model
+    price_instance = Price.objects.first()
+    lesson_price_value = price_instance.lesson_price
+
+    total = lesson_price_value
+
     stripe_total = round(total * 100)
 
     stripe.api_key = stripe_secret_key
@@ -147,6 +150,7 @@ def checkout(request):
             booking = booking_form.save(commit=False)
             pid = intent.client_secret.split('_secret')[0]
             booking.stripe_pid = pid
+            booking.price = price_instance
             booking.save()
             save_info = True
 

@@ -114,7 +114,7 @@
                                                     <a class="btn btn-sm btn-secondary mx-2" href="#">
                                                         <i class="fa-solid fa-pen-to-square"></i>
                                                     </a>
-                                                    <a class="btn btn-sm btn-danger mx-2" href="{% url 'cancel' booking.booking_reference %}" target="_blank">
+                                                    <a class="btn btn-sm btn-danger mx-2" href="{% url 'cancel' booking.booking_reference %}">
                                                         <i class="fa-solid fa-ban"></i>
                                                     </a>
                                                 </div>
@@ -157,11 +157,12 @@
                                         <th>Meeting Point</th>
                                         <th>Booking Reference</th>
                                         <th>Booked On</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for booking in upcoming_bookings %}
-                                    <tr>
+                                    <tr class="{% if booking.cancelled %}cancelled-booking table-danger{% endif %}">
                                         <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
                                         <td>{{ booking.lesson_time|time:"H:i" }}</td>
                                         <td>{{ booking.lesson_type }}</td>
@@ -177,7 +178,27 @@
                                             </a>
                                         </td>
                                         <td>{{ booking.booked_on|date:"d/m/Y" }}
-                                            <small>({{ booking.booked_on|date:"H:i" }})</small></td>
+                                            <small>({{ booking.booked_on|date:"H:i" }})</small>
+                                        </td>
+                                        <!-- Buttons to trigger Amending/Cancelling Booking Functionality -->
+                                        {% if booking.cancelled %}
+                                            <td class="cancelled-text-cell">
+                                                <div class="cancelled-text-wrapper">
+                                                    <span class="cancelled-text">Cancelled</span>
+                                                </div>
+                                            </td>
+                                        {% else %}
+                                            <td class="button-container">
+                                                <div class="button-wrapper">
+                                                    <a class="btn btn-sm btn-secondary mx-2" href="#">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                    </a>
+                                                    <a class="btn btn-sm btn-danger mx-2" href="{% url 'cancel' booking.booking_reference %}">
+                                                        <i class="fa-solid fa-ban"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        {% endif %}
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -213,11 +234,12 @@
                                         <th>Meeting Point</th>
                                         <th>Booking Reference</th>
                                         <th>Booked On</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for booking in previous_bookings %}
-                                    <tr>
+                                    <tr class="{% if booking.cancelled %}cancelled-booking table-danger{% endif %}">
                                         <td>{{ booking.lesson_date|date:"D, d/m/Y" }}</td>
                                         <td>{{ booking.lesson_time|time:"H:i" }}</td>
                                         <td>{{ booking.lesson_type }}</td>
@@ -233,7 +255,16 @@
                                             </a>
                                         </td>
                                         <td>{{ booking.booked_on|date:"d/m/Y" }}
-                                            <small>({{ booking.booked_on|date:"H:i" }})</small></td>
+                                            <small>({{ booking.booked_on|date:"H:i" }})</small>
+                                        </td>
+                                        <!-- Buttons to trigger Amending/Cancelling Booking Functionality -->
+                                        {% if booking.cancelled %}
+                                            <td class="cancelled-text-cell">
+                                                <div class="cancelled-text-wrapper">
+                                                    <span class="cancelled-text">Cancelled</span>
+                                                </div>
+                                            </td>
+                                        {% endif %}
                                     </tr>
                                     {% endfor %}
                                 </tbody>

@@ -1,31 +1,32 @@
 from django.contrib import admin
 from .models import Booking
-
+from checkout.models import Price
 
 class BookingAdmin(admin.ModelAdmin):
     readonly_fields = (
         'booking_reference',
         'booked_on',
-        'price',
         'stripe_pid',
     )
 
     fields = (
-              'full_name', 'email',
-              'lesson_type', 'lesson_date', 'lesson_time',
-              'house_no', 'street',
-              'town', 'post_code',
-              'cancelled',
-              'billpayer_name',
-              'billpayer_house_no',
-              'billpayer_street',
-              'billpayer_town',
-              'billpayer_post_code',
-            )
+            'full_name', 'email', 'user_profile',
+            'lesson_type', 'lesson_date', 'lesson_time',
+            'house_no', 'street',
+            'town', 'post_code',
+            'cancelled',
+            'price',
+            'billpayer_name',
+            'billpayer_house_no',
+            'billpayer_street',
+            'billpayer_town',
+            'billpayer_post_code',
+        )
 
     list_display = ('booking_reference', 'booked_on',
                     'cancelled',
                     'full_name',
+                    'user_profile',
                     'email',
                     'lesson_type', 'lesson_date', 'lesson_time',
                     'house_no', 
@@ -33,11 +34,6 @@ class BookingAdmin(admin.ModelAdmin):
                     'town',
                     'post_code',
                     'price',
-                    'billpayer_name',
-                    'billpayer_house_no',
-                    'billpayer_street',
-                    'billpayer_town',
-                    'billpayer_post_code',
                 )
 
     ordering = ('-booked_on',)

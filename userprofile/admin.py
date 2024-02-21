@@ -9,10 +9,6 @@ class UserProfileAdmin(admin.ModelAdmin):
         'phone',
         'home_house_no',
         'home_post_code',
-        'credit',
-    )
-    readonly_fields = (
-        'credit',
     )
     fields = (
         'user',

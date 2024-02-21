@@ -28,8 +28,6 @@ PRACTICAL_TEST_CENTERS = (
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    credit = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-
     first_name = models.CharField(max_length=25, null=True, blank=True)
     last_name = models.CharField(max_length=25, null=True, blank=True)
 

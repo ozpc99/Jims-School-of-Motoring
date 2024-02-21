@@ -27,16 +27,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Applies either 7deg or -7deg rotation to 'CANCELLED' text at random.
-function applyRandomRotation() {
-    var elements = document.querySelectorAll('.cancelled-text');
-    elements.forEach(function (element) {
-        var random = Math.random();
-        if (random < 0.5) {
-            element.style.transform = 'rotate(7deg)';
-        } else {
-            element.style.transform = 'rotate(-7deg)';
-        }
+
+/**
+ * Applies rotation (-7deg to 7deg) to 'CANCELLED' stamp at random.
+ * Applies opacity level (0.5 to 1) at random.
+ */
+function CancelledStampRandom() {
+    var stamp = document.querySelectorAll('.cancelled-text');
+    stamp.forEach(function (element) {
+        // Random Rotation
+        var rotation = Math.random() * (7 - (-7)) - 7;
+        element.style.transform = 'rotate(' + rotation + 'deg)';
+        // Random Opacity
+        var opacity = Math.random() * (1 - 0.5) + 0.5;
+        element.style.opacity = opacity;
     });
 }
-window.addEventListener('load', applyRandomRotation);
+window.addEventListener('load', CancelledStampRandom);
