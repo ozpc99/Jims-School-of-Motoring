@@ -9,32 +9,24 @@
     vertical-align: middle;
 }
 
-.cancelled-text-wrapper, .previous-text-wrapper {
+.cancelled-text-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.cancelled-text, .previous-text {
+.cancelled-text {
     font-family: "Stardos Stencil", sans-serif;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
+    color: var(--brand_red);
+    border: 2px solid var(--brand_red);
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 5px 7.5px;
     font-size: 15px;
     opacity: 0.6;
-}
-
-.cancelled-text {
-    color: var(--brand_red);
-    border: 2px solid var(--brand_red);
-}
-
-.previous-text {
-    color: black;
-    border: 2px solid black;
 }
 
 /* Amend/Cancel Booking Buttons */
