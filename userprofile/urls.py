@@ -13,5 +13,4 @@ urlpatterns = [
     path('update_practical_test/', views.update_practical_test, name='update_practical_test'),
     path('lessons/', views.lessons, name='lessons'),
     path('invoice/<booking_reference>/', views.invoice, name='invoice'),
-    path('cancel/<booking_reference>/', views.cancel, name='cancel'),
 ]

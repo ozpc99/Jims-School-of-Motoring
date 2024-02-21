@@ -29,19 +29,6 @@
     opacity: 0.6;
 }
 
-/* Amend/Cancel Booking Buttons */
-.button-container {
-    position: relative;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.button-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 /* Profile Icon */
 .default-profile-lg {
     height: 150px;
