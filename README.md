@@ -712,6 +712,188 @@ For cloning to other virtual IDEs, create a new workspace in your virtual IDE an
 
 ## Manual Testing
 
+<table>
+    <tr>
+        <th>Feature</th>
+        <th>Expectation</th>
+        <th>Test</th>
+        <th>Result</th>
+        <th>Passed?</th>
+    </tr>
+    <tr>
+        <td>Nav-Bar & Dropdown</td>
+        <td>
+            All links should work by redirecting to the corresponding page.
+            Only superuser should have access to superuser links.
+        </td>
+        <td>
+            Clicked all links in turn.
+            Viewed navbar on all pages as superuser and regular user.
+        </td>
+        <td>
+            All links redirected to the correct corresponding page.
+            Superuser links only displayed if superuser.
+        </td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Hero Image, Scroller Text CSS & JS</td>
+        <td>
+            Hero image should resize responsively for mobile devices.
+            Scroller Text, CSS & JS should be applied correctly, each line of text will display at a set interval.
+        </td>
+        <td>
+            Viewed home page in dev tools on multitude of screen sizes. Also viewed on own mobile phone.
+        </td>
+        <td>
+            Hero image resized responsively. CSS & JS applied correctly.
+        </td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Register Button & Form</td>
+        <td>
+            Register button should redirect user to sign up page. Form should collect details and create user in db.
+        </td>
+        <td>Clicked button, filled out form with temp email and submitted.</td>
+        <td>
+            Was redirected to sign up page. Form submitted successfully, was automatically logged in as new user.
+        </td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Sign In Button & Form</td>
+        <td>
+            Sign In button should redirect user to sign in page. Form should collect details and begin django session.
+        </td>
+        <td>Clicked button, filled out and submitted form.</td>
+        <td>Was redirected to home page. Was signed in. Bootstrap alert displayed confirming successful sign in.</td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Sign Out Button</td>
+        <td>
+        Sign out button should redirect user to sign out page. Further confirmation button should sign user out and end django session.
+        </td>
+        <td>
+            Clicked Sign Out link, confirmed sign out by clicking Sign out button on sign out page
+        </td>
+        <td>
+            Was signed out and redirected to home page. Bootstrap alert displayed confirming successful sign out.
+        </td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Forgotten Password Link & Form</td>
+        <td>
+            Link should redirect to reset password page. Form should collect details and email user with secure link to reset password.
+        </td>
+        <td>Clicked link, filled out and submitted form. Checked inbox.</td>
+        <td>
+            Email was not sent but was instead printed to the console. This is due to the Email Backend not being set up to send real emails. This has not been set up due to time constraints and Google changing their security protocol i.e. no longer supporting Less Secure App access to send emails via SMTP. Possible fixes for this include setting up a Gmail API email backend via Google OAUTH Credentials rather than relying on less secure SMTP, adjusting the forgotten password allauth template to not require an email to be sent (less secure) or prompting the user to get in touch- an admin can manually reset the password in Django admin panel. 
+        </td>
+        <td>N</td>
+    </tr>
+    <tr>
+        <td>Profile Page JavaScript and CSS Transitions</td>
+        <td>
+            On page load, a CSS and JS transition will make the profile cards slide into view.
+            The user will be greeted with a welcome message displaying their first name if they have added it to their profile, else their username.
+        </td>
+        <td>Navigated to profile page as user with first name and without.</td>
+        <td>
+            CSS and JS transition displayed correctly. Welcome message was displayed as expected for user with and without first name.
+        </td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Profile Page Edit Details Pen Icon Links</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Profile Page myLessons Coming Up List</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Lessons Page Nav Tabs</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Lessons Page All Lessons Table</td>
+        <td>
+            Any lessons that are cancelled have red background and cancelled stamp applied. Any previous lessons have previous icon.
+        </td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Lessons Page Coming Up Table</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Lessons Page Previous Table</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Online Booking Lesson Type Selection</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Online Booking Lesson Meeting Point Selection</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Online Booking Lesson Date Selection</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Online Booking Lesson Time Selection</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Online Booking Checkout</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <td>Online Booking Checkout Success Page</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+    </tr>
+</table>
+
 ## Code Validation
 
 ### HTML5 Validation
