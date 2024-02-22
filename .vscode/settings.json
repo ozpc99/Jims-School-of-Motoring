@@ -25,7 +25,10 @@
    "terminal.integrated.gpuAcceleration": "canvas",
    "editor.defaultFormatter": "HookyQR.beautify",
    "cSpell.words": [
-      "allauth"
+      "allauth",
+      "datefield",
+      "datepicker",
+      "foreignkey"
    ],
    "cSpell.ignoreWords": [
       "CREDS",
