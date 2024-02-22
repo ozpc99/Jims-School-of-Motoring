@@ -383,33 +383,127 @@ Design, develop and deploy unique user profiles for each user who registers an a
 
 ### Colour Scheme
 
+The site uses a minimalistic colour scheme to project the brand's image.
+The four main colours are red, white, grey and black. Various shades of these colours are used to highlight certain pieces of information or to denote an interactive element such as a button/link.
+
+Red and white are intrinsic to the brand's image as they are the colours of an 'L' plate which learner drivers have to display on their cars.
+
 ### Layout
+
+The site's layout is intuitive and accessible.
+It has been designed with a mobile-first approach to responsive web design and follows the conventions of good practice.
+
+Bootstrap has been used to create the framework for the site's layout.
+It provides a built in grid structure with responsive breakpoints. 
+Alongside the Bootstrap grid, custom CSS and media queries optimise the user experience for mobile users.
+
+Navigation elements are positioned at the top of the page for ease of access from any page.
+
+The footer which contains copyright information is fixed to the very bottom of each page.
+
+Headings and subheadings are of appropriate size level to denote level of importance and separate information into blocks. Each page contains a header to display to the user which page they are on.
+
+Large pieces of information such as a user's lessons are displayed to them in a table.
+By using this layout, the desired information is easily retrieved and digested.
+
+Images are of good resolution and appropriate file size. They resize responsively across all screen sizes and are relevant to the information they support.
+
 
 ### Navigation
 
-- Navbar Dropdown
+The navbar is simple, it features the brand logo and the brand's name which link to the home page. If the user is signed in, it also displays a profile icon with a dropdown menu. If a user has added their name to their profile, their initials are displayed in the icon. Otherwise a default user icon is displayed. The dropdown menu has links to book a lesson, the user's profile, the lessons they've booked as well as the sign out link.
+The idea behind using a dropdown with the user's profile icon is that the site and its features are all centered around the user, all dropdown options are links to user initiated events a learner driver will want to carry out such as booking a lesson, viewing the details of their lessons or updating their profile.
 
-- Nav Tabs on Profile
+![navbar](docs/screenshots/navbar.png)
+
+
+![navbar dropdown](docs/screenshots/navbar-dropdown.png)
+
+The profile page uses Bootstrap nav tabs.
+
+![profile nav tabs](docs/screenshots/profile-nav-tabs.png)
+
+![profile nav tabs](docs/screenshots/lessons-nav-tabs.png)
+
+Links and buttons...
+
+![links]()
+
+![buttons]()
 
 
 # Features
 
 ## User Authentication
-## Register
-## Sign In
-## Sign Out
-## Forgotten Password
 
-## User Profile Page
+All user authentication occurs via Django-Allauth. The base allauth templates have been customised with additional CSS including layout adjustments, colour scheme and brand logo.
 
-### Profile
+### Register
 
-### myLessons
+![]()
+
+### Sign In
+
+![]()
+
+### Sign Out
+
+![]()
+
+### Forgotten Password
+
+![]()
+
+
+## Home Page
+
+The home page features a large hero image alongside a text with a 'scroll' style animation applied via CSS and JavaScript.
+
+![]()
+
+The hero text for an anonymous user, that is a user who is not signed in.
+
+The hero text for an authenticated user who has signed in.
+
+
+## User Profile
+
+### Profile Page
+
+![]()
+
+### myLessons Page
+
+#### All Lessons Tab
+
+![]()
+
+
+#### Upcoming Lessons Tab
+
+![]()
+
+
+#### Previous Lessons Tab
+
+![]()
 
 
 ## Booking System
 
+The booking system is split up into multiple parts.
 
+1. Lesson Type Selection
+
+2. Lesson Date Selection
+
+3. Lesson Time Selection
+
+4. Lesson Meeting Point Address Input
+
+5. Checkout
+
+6. Checkout Success/Booking Confirmed
 
 
 

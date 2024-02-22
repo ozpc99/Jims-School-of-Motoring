@@ -322,9 +322,7 @@ def lessons(request):
     profile = get_object_or_404(UserProfile, user=request.user)
 
     """ Gets all bookings made by that user """
-    all_bookings = profile.bookings.all().order_by(
-        'lesson_date', 'lesson_time'
-    )
+    all_bookings = profile.bookings.all().order_by('lesson_date', 'lesson_time')
 
     """
     Gets all bookings with a 'lesson_date' that is
@@ -351,40 +349,6 @@ def lessons(request):
     ).order_by('-lesson_date', '-lesson_time')
     
 
-    # Combine booking.lesson_date and booking.lesson_time into a datetime object.
-    def lessonDateTime(booking):
-        lesson_date = booking.lesson_date
-        lesson_time = booking.lesson_time
-
-        lesson_datetime = datetime.combine(lesson_date, lesson_time)
-        return lesson_datetime
-
-    # Bookings can be amended or cancelled up to 24h prior to the lesson date and time.
-    def isOver24h(booking_reference):
-        try:
-            booking = Booking.objects.get(booking_reference=booking_reference)
-        except Booking.DoesNotExist:
-            print('Booking not found.')
-            return False
-
-        lesson_datetime = lessonDateTime(booking)
-        now = datetime.now()
-        delta = lesson_datetime - now
-
-        return delta.total_seconds() > 24 * 60 * 60
-
-    all_bookings = Booking.objects.all()
-
-    editable_bookings = []
-
-    for booking in all_bookings:
-        if isOver24h(booking):
-            booking.editable = True
-            editable_bookings.append(booking)
-        else:
-            booking.editable = False
-
-
     """ A view to render the Lessons page. """
     template = 'userprofile/lessons.html'
     context = {
@@ -392,7 +356,6 @@ def lessons(request):
         'all_bookings': all_bookings,
         'upcoming_bookings': upcoming_bookings,
         'previous_bookings': previous_bookings,
-        'editable_bookings': editable_bookings,
         'on_lesson_page': True,
     }
     return render(request, template, context)
