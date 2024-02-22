@@ -419,7 +419,7 @@ The idea behind using a dropdown with the user's profile icon is that the site a
 
 ![navbar dropdown](docs/screenshots/navbar-dropdown.png)
 
-The profile page uses Bootstrap nav tabs.
+The profile page uses Bootstrap nav tabs. This allows for quick and easy flicking between the profile page and the lessons page. Similarly, the lessons page uses tabs to sort the view of lessons by upcoming and previous.
 
 ![profile nav tabs](docs/screenshots/profile-nav-tabs.png)
 
@@ -427,83 +427,173 @@ The profile page uses Bootstrap nav tabs.
 
 Links and buttons...
 
-![links]()
+Buttons are styled using the Bootstrap 'btn' class with subclasses of 'btn-lg', 'btn-sm' and a custom class 'btn-xs'. Buttons are coloured using the Bootstrap 'btn-danger' or 'btn-dark' class as well as custom colour styling.
 
-![buttons]()
+Links have hover attributes applied to change colour which indicate to the user it's an interactive element.
 
 
 # Features
 
 ## User Authentication
 
-All user authentication occurs via Django-Allauth. The base allauth templates have been customised with additional CSS including layout adjustments, colour scheme and brand logo.
+All user authentication occurs via Django-Allauth. The base allauth templates have been customised with additional CSS including layout adjustments, colour scheme, brand name and logo.
 
 ### Register
 
-![]()
+![Sign Up Page](/docs/screenshots/register.png)
+
+User feedback is provided in the form of a Bootstrap alert if registration was successful.
 
 ### Sign In
 
-![]()
+![Sign In Page](/docs/screenshots/sign-in.png)
+
+User feedback is provided in the form of a Bootstrap alert if sign in was successful.
+
+![Sign In Success Alert](/docs/screenshots/sign-in-alert.png)
 
 ### Sign Out
 
-![]()
+![Sign Out Page](/docs/screenshots/sign-out.png)
+
+User feedback is provided in the form of a Bootstrap alert if sign out was successful.
+
+![Sign Out Success Alert](/docs/screenshots/sign-out-alert.png)
 
 ### Forgotten Password
+BUG- No email will be sent as email backend not set up! User will have to get in contact and admin will have to manually reset it.
 
-![]()
-
+![Forgotten Password]()
 
 ## Home Page
 
-The home page features a large hero image alongside a text with a 'scroll' style animation applied via CSS and JavaScript.
+The home page features a large hero image alongside text with a 'scroll' style animation applied via CSS and JavaScript.
 
-![]()
+The home page default for an anonymous user (not signed in):
+![Home Page for Anonymous User](docs/screenshots/home.png)
 
-The hero text for an anonymous user, that is a user who is not signed in.
-
-The hero text for an authenticated user who has signed in.
-
+The home page for an authenticated user (signed in):
+![Home Page for Authenticated User](docs/screenshots/home-authorised.png)
 
 ## User Profile
 
 ### Profile Page
 
-![]()
+If a user has not completed all parts of their profile, a Bootstrap toast message will appear giving them a todo list. The list will tell the user which parts of their profile are missing.
+
+![Incomplete Profile](docs/screenshots/profile-incomplete.png)
+
+Otherwise if their profile is complete, users can edit their details by clicking on the red pen icons which trigger a modal containing a form for them to fill out the new details.
+
+![Profile Completed](docs/screenshots/profile-complete.png)
+
+The myLessons Upcoming section displays the 5 soonest bookings the user has made. If a user has bookings it will look like this:
+
+![Upcoming Lessons](docs/screenshots/upcoming-lessons.png)
+
+Each booking is displayed as a Bootstrap list item and is a link. When clicked it will take the user to the invoice for that lesson.
 
 ### myLessons Page
 
+The myLessons page is split into tabs, this allows for viewing lesson data based on lesson date and time. It has a section to view all lessons, upcoming lessons and previous lessons.
+
 #### All Lessons Tab
 
-![]()
+If a user hasn't booked any lessons yet, they'll be greeted with this message alongside a button linking to the booking page.
+![No Lessons Booked](/docs/screenshots/lessons-no-lessons-booked.png)
 
 
-#### Upcoming Lessons Tab
+If they have made a booking, the bookings are displayed in a table format sorted by soonest lesson date and time.The booking reference is a link which allows the user to view the invoice for that lesson at any time.
 
-![]()
+![All Lessons](docs/screenshots/all-lessons.png)
+
+If the user has previous bookings, the booking will display in the table alongside a previous icon and the table row will have the Bootstrap 'table-secondary' class applied making it greyed out.
+
+![Previous Icon](docs/screenshots/previous-icon.png)
+
+If the user has cancelled their lesson, the lesson is still available to view for their reference but will display a red 'CANCELLED' stamp alongside the booking. The table row will have the Bootstrap 'table-danger' class applied making it red.
+The stamp has JavaScript applied to randomly rotate the stamp at an angle for each instance of the class. This makes it look like a person has stamped it on.
+
+![Cancelled Stamp](docs/screenshots/cancelled-stamp.png)
+
+
+#### Coming Up Lessons Tab
+
+The Coming Up tab pane displays all bookings that are in the future, sorted by soonest lesson date and time.
+
+![Coming Up](docs/screenshots/coming-up.png)
 
 
 #### Previous Lessons Tab
 
-![]()
+If a user doesn't have any previous lessons, the previous tab pane will display like so:
+![Previous No Previous Bookings](docs/screenshots/previous.png)
 
+Otherwise, the previous tab pane displays all bookings that are in the past. Sorted in reverse order so the oldest lesson will be at the bottom.
+
+![Previous](docs/screenshots/previous-2.png)
+
+#### Invoice Page
+The site does not provide booking confirmations via email. Instead, proof of booking is provided in an invoice that is available to access by clicking the booking reference link for the lesson on the lessons page.
+
+![Invoice]()
 
 ## Booking System
 
-The booking system is split up into multiple parts.
+The booking system is split up into multiple parts. For each part, when the user presses 'Continue' the form data is collected and saved to session storage to be displayed and inserted into the booking form on the checkout page.
+The progress bar and disabled nav tabs at the top of the page help the user identify how far along the booking process they are. The progress bar is animated indicating that the process is active and open, awaiting their input. Upon successful checkout, the progress bar is a 100% width static red, indicating they are done.
 
-1. Lesson Type Selection
+### 1. Lesson Type Selection
 
-2. Lesson Date Selection
+The first part of the booking process is the lesson type selection page. Here users can select a lesson type, either for a manual or automatic car or a mock driving test from the dropdown menu.
 
-3. Lesson Time Selection
+![Lesson Type Selection](docs/screenshots/booking-1.png)
 
-4. Lesson Meeting Point Address Input
+![Lesson Type Dropdown](docs/screenshots/lesson-type-dropdown.png)
 
-5. Checkout
+### 2. Lesson Meeting Point Address Input
 
-6. Checkout Success/Booking Confirmed
+Here, the user can enter the address for where they'd like their instructor to meet them and pick them up.
+
+**FUTURE FEATURE*: Since a user needs a full home address to make a booking, there should be a checkbox for them to select if they want meeting at their home address. The user's home address could be retrieved from their user profile and inserted into the form via JavaScript.
+
+![Lesson Meeting Point Address Input](docs/screenshots/booking-2.png)
+
+### 3. Lesson Date Selection
+
+Here, users can choose from any of the available dates in the dropdown selection.
+A Python function queries the Booking model in the database to find all dates in the next 30 days (starting from tomorrow) that are not fully booked and appends them to the list.
+
+When the user clicks 'Continue', the lesson date selected is saved to session storage to be used to calculate which times are available.
+
+![Lesson Date Selection](docs/screenshots/booking-3.png)
+
+![Lesson Date Dropdown](docs/screenshots/lesson-date-dropdown.png)
+
+### 4. Lesson Time Selection
+
+Here, the user can choose a time from the dropdown selection. The times displayed are calculated by a Python function which queries the database for times not already booked on the date selected by the user.
+
+![Lesson Time Selection](docs/screenshots/booking-4.png)
+
+![Lesson Time Dropdown](docs/screenshots/lesson-time-dropdown.png)
+
+
+### 5. Checkout
+The checkout page features a form where users will submit their billing and payment details. To the right of the form the user's lesson details are displayed for their reference, if they wish to amend their booking before paying, they can quit, leave the checkout and go back. Their own personal details are also included here, this is so that the user can check their contact details are up to date before booking.
+
+![Checkout Page](docs/screenshots/checkout.png)
+
+While Stripe is handling the payment, a red overlay with a spinning arrow is displayed blocking off the user's controls until the payment has been processed.
+
+![Checkout Overlay](docs/screenshots/checkout-overlay.png)
+
+### 6. Checkout Success/Booking Confirmed
+The Checkout success page displays after booking and payment were successful. It is displayed via a unique URL which takes the booking reference number as a parameter. An green 'success' alert is displayed to the user upon successful checkout.
+
+The success page displays an invoice for the user to go over the details of their booking.
+
+![Checkout Success/Booking Confirmed Page](docs/screenshots/success.png)
 
 
 
