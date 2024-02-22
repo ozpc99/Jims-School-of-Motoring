@@ -26,11 +26,16 @@
    "editor.defaultFormatter": "HookyQR.beautify",
    "cSpell.words": [
       "allauth",
+      "createsuperuser",
       "datefield",
       "datepicker",
-      "foreignkey"
+      "foreignkey",
+      "gunicorn",
+      "psycopg",
+      "showmigrations"
    ],
    "cSpell.ignoreWords": [
+      "COLLECTSTATIC",
       "CREDS",
       "billpayer",
       "gspread",

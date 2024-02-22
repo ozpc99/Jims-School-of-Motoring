@@ -183,6 +183,8 @@ User profiles can be updated at any time by editing individual personal details 
 
 The booking process queries the database to only display the dates and times that are available (not already booked) and will save the user's booking to the database if their payment details are validated by Stripe and the payment is successful.
 
+To view a live preview of the site, simply navigate to the domain address hosted by Heroku: https://jims-school-of-motoring-19a5b545c631.herokuapp.com/
+
 
 # Design Phase
 
@@ -411,7 +413,8 @@ Images are of good resolution and appropriate file size. They resize responsivel
 
 ### Navigation
 
-The navbar is simple, it features the brand logo and the brand's name which link to the home page. If the user is signed in, it also displays a profile icon with a dropdown menu. If a user has added their name to their profile, their initials are displayed in the icon. Otherwise a default user icon is displayed. The dropdown menu has links to book a lesson, the user's profile, the lessons they've booked as well as the sign out link.
+The navbar is simple, it features the brand logo and the brand's name which link to the home page. If the user is signed in, it also displays a profile icon with a dropdown menu. If a user has added their name to their profile, their initials are displayed in the icon. Otherwise a default user icon is displayed.
+The dropdown menu has links to book a lesson, the user's profile, the lessons they've booked as well as the sign out link.
 The idea behind using a dropdown with the user's profile icon is that the site and its features are all centered around the user, all dropdown options are links to user initiated events a learner driver will want to carry out such as booking a lesson, viewing the details of their lessons or updating their profile.
 
 ![navbar](docs/screenshots/navbar.png)
@@ -440,40 +443,42 @@ All user authentication occurs via Django-Allauth. The base allauth templates ha
 
 ### Register
 
-![Sign Up Page](/docs/screenshots/register.png)
+The sign up page contains a form for users to register for a site account. Upon successful sign up, users will be automatically logged in and feedback will be provided in the form of a Bootstrap alert.
 
-User feedback is provided in the form of a Bootstrap alert if registration was successful.
+![Sign Up Page](/docs/screenshots/register.png)
 
 ### Sign In
 
-![Sign In Page](/docs/screenshots/sign-in.png)
+The sign in page contains a form for users to enter their username or email and password to sign in. Upon successful sign in, users will be redirected to the home page and feedback will be provided in the form of a Bootstrap alert.
 
-User feedback is provided in the form of a Bootstrap alert if sign in was successful.
+![Sign In Page](/docs/screenshots/sign-in.png)
 
 ![Sign In Success Alert](/docs/screenshots/sign-in-alert.png)
 
 ### Sign Out
 
-![Sign Out Page](/docs/screenshots/sign-out.png)
+The sign out page contains a sign out button asking for user confirmation. Upon successful sign out, users will be signed out, redirected to the home page and feedback will be provided in the form of a Bootstrap alert.
 
-User feedback is provided in the form of a Bootstrap alert if sign out was successful.
+![Sign Out Page](/docs/screenshots/sign-out.png)
 
 ![Sign Out Success Alert](/docs/screenshots/sign-out-alert.png)
 
-### Forgotten Password
-BUG- No email will be sent as email backend not set up! User will have to get in contact and admin will have to manually reset it.
-
-![Forgotten Password]()
 
 ## Home Page
 
-The home page features a large hero image alongside text with a 'scroll' style animation applied via CSS and JavaScript.
+The home page features a large hero image alongside text with a 'scroll' style animation applied via CSS and JavaScript. The scrolling text answers the question- "Where will your license take you?", providing examples. This is to show the user the benefits of being able to drive.
+
+The business's telephone number is displayed in large font underneath in case the user needs to get in touch via phone.
 
 The home page default for an anonymous user (not signed in):
 ![Home Page for Anonymous User](docs/screenshots/home.png)
 
+If a user is not signed in, the Sign In and Register buttons are displayed in a Bootstrap btn-lg style below the hero text. The user cannot move on from the home page or interact with anything else on the site unless they have registered for an account. The site acts as a portal for its users to book lessons, therefore only authorised users have access to its content.
+
 The home page for an authenticated user (signed in):
 ![Home Page for Authenticated User](docs/screenshots/home-authorised.png)
+
+If a user is signed in, The sign in buttons are replaced with a Book Online button for users to begin a booking. Links to other pages as well as the Sign Out link are accessed from the nav bar dropdown menu.
 
 ## User Profile
 
@@ -487,19 +492,19 @@ Otherwise if their profile is complete, users can edit their details by clicking
 
 ![Profile Completed](docs/screenshots/profile-complete.png)
 
-The myLessons Upcoming section displays the 5 soonest bookings the user has made. If a user has bookings it will look like this:
+The myLessons Coming Up section underneath the profile icon displays the 5 soonest bookings the user has made. If a user has bookings it will look like this:
 
 ![Upcoming Lessons](docs/screenshots/upcoming-lessons.png)
 
-Each booking is displayed as a Bootstrap list item and is a link. When clicked it will take the user to the invoice for that lesson.
+Each booking is displayed as a Bootstrap list item and is a link. When clicked it will take the user to the invoice for that lesson where they can easily view the entire list of details for that booking.
 
 ### myLessons Page
 
-The myLessons page is split into tabs, this allows for viewing lesson data based on lesson date and time. It has a section to view all lessons, upcoming lessons and previous lessons.
+The myLessons page is split into tabs, this allows for viewing lesson data based on lesson date and time and makes flicking between pieces of data a lot easier. Each nav tab triggers a tab pane to view all lessons, upcoming lessons or previous lessons.
 
 #### All Lessons Tab
 
-If a user hasn't booked any lessons yet, they'll be greeted with this message alongside a button linking to the booking page.
+If a user hasn't booked any lessons yet, they'll be met with this message alongside a button linking to the booking page.
 ![No Lessons Booked](/docs/screenshots/lessons-no-lessons-booked.png)
 
 
@@ -507,14 +512,14 @@ If they have made a booking, the bookings are displayed in a table format sorted
 
 ![All Lessons](docs/screenshots/all-lessons.png)
 
-If the user has previous bookings, the booking will display in the table alongside a previous icon and the table row will have the Bootstrap 'table-secondary' class applied making it greyed out.
+If the user has previous bookings, the booking will display in the all bookings table alongside a previous icon and the table row will have the Bootstrap 'table-secondary' class applied making it greyed out.
 
 ![Previous Icon](docs/screenshots/previous-icon.png)
 
-If the user has cancelled their lesson, the lesson is still available to view for their reference but will display a red 'CANCELLED' stamp alongside the booking. The table row will have the Bootstrap 'table-danger' class applied making it red.
+If the user has cancelled their lesson, the lesson is still available to view in the all bookings table for their reference but will display a red 'CANCELLED' stamp alongside the booking. The table row will have the Bootstrap 'table-danger' class applied making it red.
 The stamp has JavaScript applied to randomly rotate the stamp at an angle for each instance of the class. This makes it look like a person has stamped it on.
 
-![Cancelled Stamp](docs/screenshots/cancelled-stamp.png)
+![Cancelled Stamp](docs/screenshots/cancelled.png)
 
 
 #### Coming Up Lessons Tab
@@ -534,14 +539,14 @@ Otherwise, the previous tab pane displays all bookings that are in the past. Sor
 ![Previous](docs/screenshots/previous-2.png)
 
 #### Invoice Page
-The site does not provide booking confirmations via email. Instead, proof of booking is provided in an invoice that is available to access by clicking the booking reference link for the lesson on the lessons page.
+The site does not provide booking confirmations via email. Instead, proof of booking is provided in an invoice that is available to access by clicking the booking reference link for the lesson on the lessons page. There is a button to print the invoice if the user would prefer a hard copy.
 
-![Invoice]()
+![Invoice](docs/screenshots/invoice.png)
 
 ## Booking System
 
 The booking system is split up into multiple parts. For each part, when the user presses 'Continue' the form data is collected and saved to session storage to be displayed and inserted into the booking form on the checkout page.
-The progress bar and disabled nav tabs at the top of the page help the user identify how far along the booking process they are. The progress bar is animated indicating that the process is active and open, awaiting their input. Upon successful checkout, the progress bar is a 100% width static red, indicating they are done.
+The progress bar and disabled nav tabs at the top of the page help the user identify how far along the booking process they are. The progress bar is animated indicating that the booking process is active and open, awaiting their input. Upon successful checkout, the progress bar is a 100% width static red, indicating they are done.
 
 ### 1. Lesson Type Selection
 
@@ -589,7 +594,7 @@ While Stripe is handling the payment, a red overlay with a spinning arrow is dis
 ![Checkout Overlay](docs/screenshots/checkout-overlay.png)
 
 ### 6. Checkout Success/Booking Confirmed
-The Checkout success page displays after booking and payment were successful. It is displayed via a unique URL which takes the booking reference number as a parameter. An green 'success' alert is displayed to the user upon successful checkout.
+The Checkout success page displays after booking and payment were successful. It is displayed via a unique URL which takes the booking reference number as a parameter. A green 'success' alert is displayed to the user upon successful checkout.
 
 The success page displays an invoice for the user to go over the details of their booking.
 
@@ -599,9 +604,113 @@ The success page displays an invoice for the user to go over the details of thei
 
 # Version Control
 
-## Git & GitHub
+Git and GitHub have been used throughout the development process for the purposes of version control and backups.
+
+The GitHub repository is [ozpc99/Jims-School-of-Motoring](https://github.com/ozpc99/Jims-School-of-Motoring)
+
+The [Code Institute GitPod Full Template](https://github.com/Code-Institute-Org/gitpod-full-template) was used to develop this site in GitPod.
+
+## Cloning the GitHub Repository
+*NB: These instructions are correct as of deployment on:
+22/02/2024.
+Please note, the steps to clone a GitHub repository may have changed since then.
+Please refer to the documentation on GitHub for up to date instructions.*
+
+Further documentation is available on GitHub's website: [Cloning a Repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository?tool=webui)
+
+### Cloning to a Local Repository
+
+1. First of all, ensure you have Git installed on your machine. 
+    - This will allow for full version control by committing to GitHub should you wish to clone this repository and make edits of your own for research and educational purposes. You are free to do this, provided you attribute all source code and assets from this repository as well as any code or assets taken from external repositories, open sources and/or libraries.
+
+    - If you do not have Git installed:
+        - Install Git by navigating to the download page: https://git-scm.com/downloads
+        - Select your operating system. Git supports Windows, MacOS and Linux/Unix.
+        - Follow the installation instructions provided on the next page.
+        (NB: Windows users- ensure you select the correct bit version for your machine.
+        On Windows 10/11, this can be found by opening Settings and navigating to:
+        'About' > 'Device Specifications' > 'System Type'.)
+        - Follow the instructions in the installation wizard.
+        - Once Git is installed, you must restart your machine.
+    
+    - Further documentation on Git is available at: https://git-scm.com/doc
+    - For your reference: You can keep up to date with the latest development version of Git by typing this command into a Git Bash terminal in your IDE: 
+    
+            git clone https://github.com/git/git
+
+2. Navigate to the GitHub repository: [ozpc99/Jims-School-of-Motoring](https://github.com/ozpc99/Jims-School-of-Motoring)
+
+3. Click the green 'Use this template' button and select 'Create a new repository'
+
+4. Fill out the form to initialise your repository.
+
+5. Navigate to your new repository and click the grey '<> Code' button then select the 'Local' tab.
+
+#### Cloning via GitHub Desktop
+
+6. If you have GitHub Desktop installed, then click 'Open with GitHub Desktop' and follow the instructions within the application.
+
+- Download GitHub Desktop if not already installed: https://desktop.github.com/
+
+7. Once the repository has been successfully cloned to your machine, you can click to view the file directory or open the repository in your default IDE for viewing and editing.
+
+8. Now, whenever you make changes to the files, GitHub Desktop will notify you of any changes. VS Code will also display changes in the 'Explorer' and 'Source Control' side bars.
+
+
+#### Cloning via HTTPS URL:
+If you prefer to clone directly, then select 'HTTPS' and copy the link.
+
+6. Open a blank workspace within your IDE
+    - Microsoft Visual Studio Code is the preferred IDE as it was used to develop this application.
+    This repository contains a .vscode folder with specific workspace settings which are available to view and edit in the 'settings.json' file.
+    - Download Microsoft Visual Studio Code: https://code.visualstudio.com/download
+
+7. Open a new Git Bash terminal
+    - In VS Code, select 'Terminal' > 'New Terminal' from the top menu bar. On Windows, you can use the shortcut: Ctrl + Shift + `
+    - To check the terminal is running Git Bash, refer to the icon in the right hand sidebar of the terminal. It should say 'bash'. If it does not, click the '+' icon and select 'Git Bash' from the dropdown menu.
+
+8. In the terminal type: 
+
+        git clone
+
+followed by a space and paste in the URL you copied earlier.
+
+9. Press the Enter key and the repository will be cloned.
+
+
+### Cloning to a Virtual IDE
+*NB: The following instructions are for cloning to GitPod and Codespaces from a GitHub repository page.
+For cloning to other virtual IDEs, create a new workspace in your virtual IDE and follow the instructions for [Cloning via HTTPS URL](#cloning-via-https-url).*
+
+1. Navigate to the GitHub repository: [ozpc99/Jims-School-of-Motoring](https://github.com/ozpc99/Jims-School-of-Motoring)
+
+2. Click the green 'Use this template' button and select 'Create a new repository'.
+
+3. Fill out the form to initialise your repository.
+
+
+#### Cloning to a GitPod Workspace
+4. Navigate to your new repository and click the green GitPod 'Open' button. 
+
+5. Fill out the form for your workspace settings and GitPod will now create a new workspace from that repository.
+
+- Further documentation is available on the GitPod website: [Getting Started](https://www.gitpod.io/docs/introduction/getting-started)
+
+#### Cloning to a Codespaces Workspace
+
+2. Click the grey '<> Code' button.
+
+3. Select the 'Codespaces' tab. And click the green 'Create codespace on master' button.
+
+4. Fill out the form for your workspace settings and Codespaces will now create a new workspace from that repository.
+
+- Further documentation is available on the GitHub website: [Creating a codespace for a repository](https://docs.github.com/en/codespaces/developing-in-codespaces/creating-a-codespace-for-a-repository)
+
+
 
 # Testing
+
+## Manual Testing
 
 ## Code Validation
 
@@ -615,29 +724,318 @@ The success page displays an invoice for the user to go over the details of thei
 
 
 # Deployment
-<!-- Document Deployment Procedure -->
+*NB- The steps taken to deploy may have changed since this deployment. Please refer to the relevant documentation below:*
 
-## ElephantSQL
-<!-- Document database setup -->
+- *ElephantSQL*: https://www.elephantsql.com/docs/index.html
 
-## Amazon Web Services (AWS)
-<!-- Document AWS S3 Bucket Setup -->
+- *Heroku*: https://devcenter.heroku.com/
 
-## Heroku
-<!-- Document value of using Heroku -->
+The steps taken to deploy this application are as follows:
 
-# References & Acknowledgements
 
-## Code
+1. Log in to [ElephantSQL.com](https://www.elephantsql.com/)
+2. Access the dashboard and click 'Create New Instance"
+3. Set up the plan- for this deployment the 'Tiny Turtle (Free)' plan was used.
+4. Select a region- for this deployment the 'EU-West (Ireland)' region was used.
+5. Click 'Review' and if the details are correct click 'Create Instance'.
+6. Return to the dashboard and click on the database instance name for this deployment.
+7. In the URL section, copy the URL to the postgres database.
 
-## Media
+8. Log in to [Heroku.com](https://www.heroku.com)
+9. On your dashboard, click 'New' to create a new app.
+10. Name the app and choose a region (region closest to you is preferred). For this deployment- the 'EU-West (Ireland)' region was used. Click 'Create app'. In the Deploy tab, under Deployment Method, select GitHub and connect the repository.
+11. Open the app's settings by clicking the 'Settings' tab.
+12. In the config vars section add the var- 'DATABASE_URL' and for the value, paste in the database URL from ElephantSQL.
 
-### Images
+13. In the IDE, open a new terminal and install dj_database_url and psycopg2 by typing the command:
+
+        pip3 install dj_database_url==0.5.0 psycopg2
+
+14. Create a requirements.txt file if there isn't one already, or update the existing one by typing the command:
+
+        pip freeze > requirements.txt
+
+15. In settings.py, import dj_database_url underneath the import for os like so:
+
+        import os
+        import dj_database_url
+
+16. Still within settings.py, scroll to the DATABASES section and update it to the following code so that the original connection to sqlite3 is commented out and it instead connects to the new ElephantSQL database. Paste in the database URL from ElephantSQL like so:
+
+        # DATABASES = {
+        #     'default': {
+        #         'ENGINE': 'django.db.backends.sqlite3',
+        #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        #     }
+        # }
+
+        DATABASES = {
+            'default': dj_database_url.parse('your-database-url-here')
+        }
+
+WARNING: Do not commit this file with the database string in the code. This step is only temporary to make the initial migration.
+
+17. In the terminal, run the showmigrations command to confirm connection to the external ElephantSQL database.
+
+        python3 manage.py showmigrations
+
+18. If successful, the terminal will display a list of migrations but none of them should be checked off.
+
+19. Migrate the database models to the new database.
+
+        python3 manage.py migrate
+
+20. Create a superuser for the new database.
+
+        python3 manage.py createsuperuser
+
+21. To prevent exposing the database URL when making commits to GitHub, it will need to be deleted from settings.py. The DATABASES section should look like this:
+
+        if 'DATABASE_URL' in os.environ:
+            DATABASES = {
+                'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+            }
+        else:
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.sqlite3',
+                    'NAME': BASE_DIR / 'db.sqlite3',
+                }
+            }
+
+22. To confirm the database has been successfully populated, head back to ElephantSQL.com and in the database page, click 'BROWSER'. From there, click the Table queries button and select 'auth_user'. Click 'Execute' and if successful, it should display the newly created superuser details. This confirms the tables have been created and the database is set up ready to receive data.
+
+23. Back on Heroku, add another config var called 'SECRET_KEY' and set its value to a Django Secret Key.
+
+    In settings.py, ensure the secret key is removed prior to any commits and instead fetches it from the env vars. The can be achieved with the following code:
+
+        SECRET_KEY = os.environ.get('SECRET_KEY')
+
+    For security reasons its recommended to generate a new key, this can be done at https://djecrety.ir/.
+
+    We'll also need the 'STRIPE_PUBLIC_KEY' and 'STRIPE_SECRET_KEY' added to the list of config vars along with 'STRIPE_WH_SECRET' for the webhook.
+
+    While here, create another config var called DISABLE_COLLECTSTATIC and set its value to 1. This will prevent Heroku from collecting static files when it builds the site because S3 will be used to host them instead.
+
+24. Back in the IDE, install gunicorn by typing the command:
+
+        pip3 install gunicorn
+
+25. Make sure the requirements.txt file is up to date with all the necessary packages. To check which packages are installed, type the command:
+
+        pip list
+
+    To update the requirements.txt file, type the command:
+
+        pip freeze > requirements.txt
+
+26. We'll also need a Procfile so Heroku knows what type of app to build, create a new file at root directory level called 'Procfile' and type in the following code:
+
+        web: gunicorn your-app-name-here.wsgi:application
+
+27. Create a runtime.txt file at root directory level and copy in the following code:
+
+        python-3.9.18
+
+    This will tell Heroku which version of Python to run.
+
+28. In settings.py, ensure DEBUG is set to True, only if 'DEVELOPMENT' is in the environment. 
+This can be achieved with the following code:
+
+        DEBUG = 'DEVELOPMENT' in os.environ
+
+29. On Heroku, in the Deploy tab choose GitHub as the deployment method and enable automatic deploys.
+
+30. Push changes to github from the IDE using:
+
+        git add .
+        git commit -m "your commit message here"
+        git push
+
+    Heroku should start automatically building the app shortly thereafter. If not, manually deploy from the Deploy tab.
+
+### Amazon Web Services (Setup S3 Bucket)
+
+31. Log in/Sign Up to Amazon Web Services at [aws.amazon.com](https://aws.amazon.com/).
+
+32. After signing in, access the 'AWS Management Console' under the 'My Account' dropdown.
+
+33. Search for 'S3' in the Services search field accessed from the Services dropdown.
+
+34. Click 'Create Bucket' and give it a name (recommended to match Heroku app name).
+
+35. Select a Region closest to you (recommended same as for ElephantSQL database). For this deployment, 'EU-West (Ireland)' was used.
+
+36. Uncheck 'Block all public access' since the static files will need to be publicly accessible.
+
+37. Open the bucket by clicking on its name.
+    
+    Navigate to the Properties tab and enable 'Static website hosting'.
+
+    Check 'Use this bucket to host a website'. For the index and error document, example file names were used for this deployment- 'index.html' and 'error.html'.
+
+    Navigate to the Permissions tab and in the CORS configuration, paste in the following code and click Save:
+
+        [
+            {
+                "AllowedHeaders": [
+                    "Authorization"
+                ],
+                "AllowedMethods": [
+                    "GET"
+                ],
+                "AllowedOrigins": [
+                    "*"
+                ],
+                "ExposeHeaders": []
+            }
+        ]       
+
+    - Navigate to the Bucket Policy tab and select Policy Generator to create a security policy.
+    - Set the Policy Type to 'S3 Bucket Policy'.
+    - Allow all principals by typing '*'.
+    - Set the Actions to 'Get Object'.
+    - Copy the ARN from the Bucket Policy tab and paste it in the field in the Policy Generator.
+    - Click 'Add Statement' and 'Generate Policy'.
+    - Copy the Policy JSON document and paste it into the Policy Generator.
+    - At the end of the Resource Key, add a '*' to allow access to all.
+    - In the 'Access Control List' tab, accessed from the 'Permissions' tab, enable Public Access for Everyone by checking List Objects and clicking Save.
+
+38. Set up AWS IAM.
+
+    - In the Services dropdown, select IAM
+    - Click Groups and create a new group.
+    - Click Policies and create a policy.
+    - Click the JSON tab and import managed policies.
+    - Add the AmazonS3FullAccess Policy.
+    - Paste the bucket ARN twice into the "Resource" list in the JSON file. Put a '*' at the end of one of the ARNs to enable access to both the bucket itself and all objects within it.
+    - Click Review Policy, give it a name and description.
+    - Click Create Policy.
+    - Navigate to Groups, click the group name and in the Permissions tab, click Attach Policy.
+    - Search for the policy name, select it and click Attach Policy.
+
+    - Create a user to place in the group. On the Users page, click Add User and give a username. Enable programmatic access and click Next. Add the user to the group and click Create User.
+    - Download the .csv file and keep it safe. This file contains the access keys needed for this user.
+
+39. Connect Django to S3
+
+    - Back in the IDE, open a terminal and install Boto3 and Django Storages.
+
+            pip3 install boto3
+
+            pip3 install django-storages
+
+    - Remember to update requirements.txt
+
+            pip freeze > requirements.txt
+
+    - In settings.py, add 'django-storages' to the list of INSTALLED APPS.
+
+    - While in settings.py, add the AWS settings like so:
+
+            if 'USE_AWS' in os.environ:
+                # Cache control
+                AWS_S3_OBJECT_PARAMETERS = {
+                    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+                    'CacheControl': 'max-age=94608000',
+                }
+
+                # Bucket Config
+                AWS_STORAGE_BUCKET_NAME = 'your-bucket-name-here'
+                AWS_S3_REGION_NAME = 'your-region-here'
+                AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+                AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+                AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+                # Static and media files
+                STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+                STATICFILES_LOCATION = 'static'
+                DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+                MEDIAFILES_LOCATION = 'media'
+
+                # Override static and media URLs in production
+                STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
+                MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+
+    - Add the 'AWS_ACCESS_KEY_ID' and 'AWS_SECRET_ACCESS_KEY' to the Heroku config vars. Remember, the keys can be found on the .csv downloaded from AWS earlier.
+
+    - Add another config var called 'USE_AWS' and set its value to True.
+
+    - Remove the DISABLE_COLLECTSTATIC var from the list.
+
+    - In the IDE, create a file at root directory level called 'custom_storages.py'
+    - Within this file paste in the following code:
+
+            from django.conf import settings
+            from storages.backends.s3boto3 import S3Boto3Storage
+
+            class StaticStorage(S3Boto3Storage):
+                location = settings.STATICFILES_LOCATION
+
+
+            class MediaStorage(S3Boto3Storage):
+                location = settings.MEDIAFILES_LOCATION
+
+    - In settings.py add 'storages' to the list of INSTALLED_APPS.
+
+    - Push changes to GitHub. Inspect build on Heroku.
+
+40. Upload media files (images) to S3.
+
+    - Create a new folder at the same level as 'static' called 'media'.
+    - Upload images to the media folder.
+    - Grant public access to all images.
+
+### Site Configuration.
+
+41. Ensure a superuser has been successfully created by logging into Django Admin at https://'your-heroku-site-name-here'/admin
+
+42. In the admin, add a Lesson Price to the Price model. 
+
+43. Go to Stripe Dashboard for Developers and add an endpoint. For Endpoint URL, type the Heroku site URL followed by '/checkout/wh/'. Select 'Receive All Events' and Add Endpoint. Copy the Webhook Signing Secret and update the STRIPE_WH_SECRET config var value in Heroku. Send a test webhook from Stripe to test the webhook is working, you might need to restart dynos in Heroku for the env var changes to take effect.
+
+44. To test a successful Stripe Checkout purchase on the checkout page, use Stripe's test card '4242 4242 4242 4242'.
+
+45. Site is now set up for publication.
+
+
+
+# Acknowledgements
+
+## Images
+
+[hero.jpg](https://www.freepik.com/free-photo/man-driving-car-from-rear-view_1120663.htm#query=driving&position=1&from_view=search&track=sph&uuid=03311ad9-0bf6-41e2-aeee-aafbadee5f4b)
+by fanjianhua on Freepik
 
 ## Icons
 
-### Font Awesome Icons
+Icons used on the site are provided by FontAwesome 6. The icons used are:
+
+- fas fa-3x fa-sync-alt fa-spin
+- fa-solid fa-triangle-exclamation
+- fa-solid fa-circle-info
+- fa-solid fa-print
+- fa-solid fa-phone
+- fa-solid fa-clipboard-list
+- fa-solid fa-circle-check
+- fa-solid fa-circle-exclamation
+- fa-solid fa-user
+- fa-regular fa-clock
+- fa-solid fa-clock-rotate-left
+- fa-solid fa-desktop
+- fa-solid fa-envelope
+- fa-solid fa-pen
+- fa-solid fa-square-plus
+- fa-solid fa-house
+- fa-solid fa-id-card
+- fa-solid fa-calendar-check
+- fa-solid fa-calendar-day
+- fa-solid fa-floppy-disk
 
 ## Fonts
 
-### Google Fonts
+Fonts used on the site are provided by Google Fonts. The fonts are:
+
+- Montserrat
+- Share Tech
+- Stardos Stencil
