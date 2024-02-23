@@ -12,7 +12,7 @@
 }
 
 .cancelled-text {
-    font-family: "Stardos Stencil", sans-serif;
+    font-family: var(--stardos_stencil);
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
