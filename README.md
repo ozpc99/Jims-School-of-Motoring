@@ -808,16 +808,26 @@ For cloning to other virtual IDEs, create a new workspace in your virtual IDE an
     </tr>
     <tr>
         <td>Profile Page Edit Details Pen Icon Links</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+            Each pen icon link should open up a modal with a form to edit it's respective data value. The form should be validated and update the data in the database.
+        </td>
+        <td>
+            Clicked each link and filled out each form in turn with valid and invalid data.
+        </td>
+        <td>
+            Each modal opened respectively. Each form only accepted valid data. Data changes were immediately reflected upon page, success message appeared in Bootstrap alert.
+        </td>
         <td>Y</td>
     </tr>
     <tr>
         <td>Profile Page myLessons Coming Up List</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+        List should display 5 soonest lesson bookings, it should exclude cancelled or previous lessons. List should update whenever changes are made to user's bookings. List items should link to booking invoice.
+        </td>
+        <td>Viewed list. Clicked each list item.</td>
+        <td>
+        List displayed as expected. List updated as expected. List item link redirected to invoice when clicked.
+        </td>
         <td>Y</td>
     </tr>
     <tr>
