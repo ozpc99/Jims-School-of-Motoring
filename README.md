@@ -711,6 +711,57 @@ For cloning to other virtual IDEs, create a new workspace in your virtual IDE an
 # Testing
 
 ## Manual Testing
+#### All manual tests have been carried out in the following browsers:
+- Google Chrome
+- Mozilla Firefox
+- Microsoft Edge
+
+To pass each test, the feature must have met each expectation in all the browsers used for testing.
+
+To test for responsiveness, Developer Tools were used in each browser for both desktop screen sizes.
+The screen width was adjusted to simulate a variety of screen sizes.
+
+#### Test environment variables for responsiveness in a real world application:
+- Desktop (27" Monitor) resolution: 1920 x 1080.
+- Laptop (15" Screen) resolution: 1280 x 720.
+- Mobile Phone (Samsung Galaxy Note 9) resolution: 412 x 846. Tested in Google Chrome for Mobile.
+
+#### Bugs Encountered While Testing:
+<u>Date: 22/02/2024</u>
+
+<u>Description</u>
+
+CSS not being updated in deployed site after changes made, pushed to GitHub and automatically deployed.
+
+<u>Background</u>
+
+While testing the deployed site in Google Chrome (default browser), the CSS files were not updating whenever changes were made. Notably, the CSS for the 'CANCELLED' stamp was not applied when viewing the lessons page and the CSS for the Invoice page was also not applied. 
+
+<u>Debugging Process</u>
+
+1. Initially it was thought this was an issue with S3 not retrieving and overwriting the updated files, however when inspecting the bucket and opening the file this was not the case. The updated file was there.
+
+2. The settings.py file was also inspected to ensure the STATIC_FILES dirs were correct and consistent.
+
+3. Heroku config vars were compared with settings.py vars side by side to check for differences.
+
+4. 'type=text/css' attributes were added to link tags in the HTML templates.
+
+5. Ran tests again, not resolved.
+
+6. Viewed site in Microsoft Edge.
+
+7. CSS was being applied in Edge.
+
+<u>Conclusion</u>
+
+Google Chrome was relying on cached files. Cleared the cache, restarted and updated the browser and the CSS was applied correctly.
+
+<u>Resolved?</u>
+
+Yes
+
+### Manual Testing Table
 
 <table>
     <tr>
@@ -822,97 +873,186 @@ For cloning to other virtual IDEs, create a new workspace in your virtual IDE an
     <tr>
         <td>Profile Page myLessons Coming Up List</td>
         <td>
-        List should display 5 soonest lesson bookings, it should exclude cancelled or previous lessons. List should update whenever changes are made to user's bookings. List items should link to booking invoice.
+            List should display 5 soonest lesson bookings, it should exclude cancelled or previous lessons. List should update whenever changes are made to user's bookings. List items should link to booking invoice.
         </td>
         <td>Viewed list. Clicked each list item.</td>
         <td>
-        List displayed as expected. List updated as expected. List item link redirected to invoice when clicked.
+            List displayed as expected. List updated as expected. List item link redirected to invoice when clicked.
         </td>
         <td>Y</td>
     </tr>
     <tr>
         <td>Lessons Page Nav Tabs</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+            Nav Tabs should open the related tab pane content when clicked
+        </td>
+        <td>Clicked each nab tab.</td>
+        <td>Each tab pane opened displaying the correct content.</td>
         <td>Y</td>
     </tr>
     <tr>
         <td>Lessons Page All Lessons Table</td>
         <td>
+            All lessons booked by that user should be displayed in a table with the data appropriated in the correct column.
+            All lessons should be displayed, sorted in order of soonest lesson first.
             Any lessons that are cancelled have red background and cancelled stamp applied. Any previous lessons have previous icon.
         </td>
-        <td></td>
-        <td></td>
+        <td>
+            Made three bookings.
+            Went to django admin panel and cancelled one booking and changed lesson date of another to be in the past.
+            Returned to all lessons table.
+        </td>
+        <td>
+            All data was displayed in correct column.
+            Lessons were displayed in correct order.
+            Cancelled lessons had cancelled stamp applied and bootstrap table-red applied to the tr.
+            Previous lessons had previous icon applied and bootstrap table-secondary applied to the tr.
+        </td>
         <td>Y</td>
     </tr>
     <tr>
         <td>Lessons Page Coming Up Table</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+            Only lessons with lesson date in the future should be displayed.
+            Appropriate data should be in correct column.
+            No cancelled or previous lessons should be displayed here.
+        </td>
+        <td>
+            Viewed coming up table.
+        </td>
+        <td>
+            Only future lessons were displayed.
+            Appropriate data was in correct column.
+            No cancelled or previous lessons were displayed there.
+        </td>
         <td>Y</td>
     </tr>
     <tr>
         <td>Lessons Page Previous Table</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+            Only lessons with lesson date in the past should be displayed.
+            Appropriate data should be in correct column.
+        </td>
+        <td>
+            Viewed previous table.
+        </td>
+        <td>
+            Only lessons in the past were displayed.
+            Appropriate data was in correct column
+        </td>
         <td>Y</td>
     </tr>
     <tr>
         <td>Online Booking Lesson Type Selection</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+            Only lesson types defined in model field choices should be displayed.
+            Continue button should store selection in session storage and redirect to meeting point selection page.
+        </td>
+        <td>
+            Added print statement to confirm value was in session storage.
+            Filled out form and clicked button.
+        </td>
+        <td>
+            Was redirected to meeting point selection page.
+            Terminal displayed session storage value.
+        </td>
         <td>Y</td>
     </tr>
     <tr>
         <td>Online Booking Lesson Meeting Point Selection</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>Form should collect and store address field values in session storage and redirect to lesson date selection.</td>
+        <td>
+            Added print statement to confirm value was in session storage.
+            Filled out form and clicked button.
+        </td>
+        <td>Was redirected to lesson date selection page. Terminal printed session storage values.</td>
         <td>Y</td>
     </tr>
     <tr>
         <td>Online Booking Lesson Date Selection</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+            Selection should display only available dates (dates not already fully booked) in next 30 days (from tomorrow).
+            Store value in session storage.
+            Redirect to lesson time selection when submitted.
+        </td>
+        <td>
+            Added print statement to confirm value was in session storage.
+            Added bookings to model all on same day so day was fully booked.
+            Viewed selection dates.
+            Filled out form and clicked button.
+        </td>
+        <td>
+            Only dates not fully booked were displayed.
+            Terminal printed session storage value.
+            Was redirected to lesson time selection page.
+        </td>
         <td>Y</td>
     </tr>
     <tr>
         <td>Online Booking Lesson Time Selection</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+            Selection should only display available times (times not already booked) on the lesson date the user selected.
+            Store value in session storage and redirect to checkout page when form is submitted.
+        </td>
+        <td>
+            Created bookings in model where only one time was left unbooked.
+            Added print statement to confirm value was in session storage.
+            Viewed selection times.
+            Filled out form and clicked button.
+        </td>
+        <td>
+            Only time not booked on that day were displayed.
+            Terminal printed session storage value.
+            Was redirected to the checkout page.
+        </td>
         <td>Y</td>
     </tr>
     <tr>
         <td>Online Booking Checkout</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+            Lesson Details should be retrieved from session storage and displayed correctly.
+            Student Details should be retrieved from Profile model and displayed correctly.
+            Stripe test payment should work as expected, create a payment intent and charge the user.
+            Upon successful payment, booking should be created in model associated with user profile and contain correct lesson details user has submitted.
+            Session storage is cleared post checkout.
+            User is redirected to success page.
+        </td>
+        <td>
+            Added print statement to views to print session values.
+            Opened stripe dashboard for inspection.
+            Filled out a booking and went to checkout page.
+            Inspected student and lesson details to see if they matched profile and data inputted in form.
+            Filled out form and entered Stripe success test card no. as payment.
+            Filled out form and entered Stripe failed test card no. as payment.
+            Submitted checkout form.
+        </td>
+        <td>
+            Lesson and student details were displayed correctly.
+            Test card was successful when used success card. Stripe dashboard displayed creation of payment intent, that the intent was successful and the card was charged the correct amount.
+            Was redirected to success page.
+            Test card was unsuccessful when used failed card. Error message was displayed, stripe card field had appropriate red styling applied, card errors displayed correctly.
+            Terminal did not print session values associated with booking model views, proving data was deleted post checkout.
+        </td>
         <td>Y</td>
     </tr>
     <tr>
         <td>Online Booking Checkout Success Page</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+            Success page should take autogenerated UUID booking ref no. as parameter. Unique ref and success page for every booking.
+            Should display success message with booking ref.
+            Invoice should be display correct information relevant to lesson booking and user profile.
+        </td>
+        <td>
+            After successful checkout, inspected success page.
+        </td>
+        <td>
+            Page URL was unique to booking ref no.
+            Success alert message displayed with booking ref.
+            Invoice displayed correct details relevant to lesson booking and user profile.
+        </td>
         <td>Y</td>
     </tr>
 </table>
-
-## Code Validation
-
-### HTML5 Validation
-
-### CSS3 Validation
-
-### Python3 PEP8 Compliance
-
-### JavaScript Linting
 
 
 # Deployment
