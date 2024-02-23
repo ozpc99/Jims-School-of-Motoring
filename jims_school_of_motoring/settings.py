@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'userprofile',
     'booking',
     'checkout',
-    'django-storages',
+    'storages',
 ]
 
 MIDDLEWARE = [
