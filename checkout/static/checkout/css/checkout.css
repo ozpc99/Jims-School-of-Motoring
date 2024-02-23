@@ -1,4 +1,4 @@
-@import "static/css/base.css";
+@import url('/static/css/base.css');
 
 /* Styled to Match Bootstrap 'form-control' Class */
 .StripeElement {

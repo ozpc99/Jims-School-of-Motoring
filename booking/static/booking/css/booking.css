@@ -1,4 +1,4 @@
-@import "static/css/base.css";
+@import url('/static/css/base.css');
 
 @media (max-width: 767px) {
     #myTab {
