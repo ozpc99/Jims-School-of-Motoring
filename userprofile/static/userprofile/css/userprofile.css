@@ -1,7 +1,3 @@
-@import url('/static/css/base.css');
-
-@import url('https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap');
-
 /* Styling for Amend/Cancel table cells if Booking is Cancelled */
 .cancelled-text-cell, .previous-text-cell {
     position: relative;
